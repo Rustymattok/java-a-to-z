@@ -34,7 +34,7 @@ public class Triangle {
 
 	public boolean checkArea(Point a, Point b, Point c){
 		boolean flag = true;
-		if( a.getX() == b.getX() && a.getX() == c.getX() || a.getY()==b.getY() && a.getY() == c.getY() ){
+		if(((b.getX() - a.getX()) * (c.getY() - a.getY()) - ((c.getX() - a.getX()) * (b.getY() - a.getY()))) == 0){
 			flag =  false;
 		}
 		return flag;
