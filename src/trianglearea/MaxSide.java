@@ -6,9 +6,9 @@ public class MaxSide
 
     public MaxSide (Triangle triangle){
 
-        double a = triangle.getSizeAB();
-        double b = triangle.getSizeBC();
-        double c = triangle.getSizeAC();
+        double a = triangle.getA().distanceTo(triangle.getB());
+        double b = triangle.getB().distanceTo(triangle.getC());
+        double c = triangle.getA().distanceTo(triangle.getC());
 
         if (a > b && b < c){
             maxSide = a;

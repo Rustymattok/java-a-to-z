@@ -10,8 +10,7 @@ public class Point{
 	}
 	
 	public double distanceTo(Point point){
-		//todo for what this method?
-		return -1;
+		return Math.sqrt(Math.pow((getX() - point.getX()), 2) + Math.pow((getY() - point.getY()), 2));
 	}
 
 	public double getX()

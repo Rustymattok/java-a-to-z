@@ -5,11 +5,12 @@ public class Factorial
     private int n;
 
     public Factorial(int n){
+
         this.n = n;
     }
 
-    public void factorial(){
-        int result;
+    public double getFactorial(){
+        double result;
         do
         {
             result = 1;
@@ -24,7 +25,7 @@ public class Factorial
                 result = 1;
             }
         } while (n < 0);
-        System.out.println(result);
+        return result;
     }
 
 }

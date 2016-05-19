@@ -4,17 +4,14 @@ public class Triangle {
 	private Point a;
 	private Point b;
 	private Point c;
-	private double sizeAB;
-	private double sizeBC;
-	private double sizeAC;
+//	private double sizeAB;
+//	private double sizeBC;
+//	private double sizeAC;
 
 	public Triangle(Point a, Point b, Point c) {
 		this.a = a;
 		this.b = b;
 		this.c = c;
-		sizeAB = Math.sqrt(Math.pow((a.getX() - b.getX()), 2) + Math.pow((a.getY() - b.getY()), 2));
-		sizeBC = Math.sqrt(Math.pow((b.getX() - c.getX()), 2) + Math.pow((b.getY() - c.getY()), 2));
-		sizeAC = Math.sqrt(Math.pow((a.getX() - c.getX()), 2) + Math.pow((a.getY() - c.getY()), 2));
 	}
 
 	public double area() {
@@ -25,8 +22,8 @@ public class Triangle {
 			return -1;
 		}else
 		{
-			p = (getSizeAB() + getSizeBC() + getSizeAC())/2;
-			area = Math.sqrt((p * (p - getSizeAB()) * (p - getSizeBC()) * (p - getSizeAC())));
+			p = (a.distanceTo(b) + b.distanceTo(c) + a.distanceTo(c))/2;
+			area = Math.sqrt((p * (p - a.distanceTo(b)) * (p - b.distanceTo(c)) * (p - a.distanceTo(c))));
 			area = Math.rint(100.0 * area) / 100.0;
 			return area;
 		}
@@ -55,18 +52,4 @@ public class Triangle {
 		return c;
 	}
 
-	public double getSizeAB()
-	{
-		return sizeAB;
-	}
-
-	public double getSizeBC()
-	{
-		return sizeBC;
-	}
-
-	public double getSizeAC()
-	{
-		return sizeAC;
-	}
 }
