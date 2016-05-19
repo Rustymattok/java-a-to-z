@@ -4,9 +4,6 @@ public class Triangle {
 	private Point a;
 	private Point b;
 	private Point c;
-//	private double sizeAB;
-//	private double sizeBC;
-//	private double sizeAC;
 
 	public Triangle(Point a, Point b, Point c) {
 		this.a = a;
