@@ -27,11 +27,7 @@ public class Triangle {
 	}
 
 	public boolean checkArea(Point a, Point b, Point c){
-		boolean flag = true;
-		if(((b.getX() - a.getX()) * (c.getY() - a.getY()) - ((c.getX() - a.getX()) * (b.getY() - a.getY()))) == 0){
-			flag =  false;
-		}
-		return flag;
+		return ((b.getX() - a.getX()) * (c.getY() - a.getY()) - ((c.getX() - a.getX()) * (b.getY() - a.getY()))) != 0 ;
 	}
 
 	public Point getA()
