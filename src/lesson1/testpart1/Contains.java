@@ -10,16 +10,22 @@ public class Contains
         boolean flag = false;
         char [] a = first.toCharArray();
         char [] b = second.toCharArray();
+        flag = contains.contain(a,b);
+        System.out.println(flag);
+    }
+
+    public boolean contain(char[] a,char[] b){
+        boolean flag = false;
         for (int i = 0; i < a.length ; i++)
         {
             if (a[i] == b[0]){
-                if ( contains.compare(i, a, b)){
-                    flag = contains.compare(i,a,b);
+                if (compare(i, a, b)){
+                    flag = compare(i,a,b);
                     break;
                 }
             }
         }
-        System.out.println(flag);
+        return flag;
     }
 
     public boolean compare(int k,char[] a,char[] b){
