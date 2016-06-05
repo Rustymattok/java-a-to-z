@@ -1,9 +1,7 @@
-package ru.makarov.tracker.start;
+package ru.makarov.start;
 
-import ru.makarov.tracker.model.*;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import ru.makarov.model.Item;
+
 import java.util.Random;
 
 public class Tracker
@@ -29,37 +27,13 @@ public class Tracker
         return result;
     }
 
-    public Item editItem(String id){
-        Item item = new Item();//todo не нравится что то
-
-        if (id != null){
-            item = findByID(id);
-            String name ="";
-            String description ="";
-            BufferedReader readerName = new BufferedReader(new InputStreamReader(System.in));
-            BufferedReader readerDescription = new BufferedReader(new InputStreamReader(System.in));
-            try
-            {
-                System.out.print("Введите имя заявки: ");
-                name = readerName.readLine();
-                System.out.print("ВВедите описание: ");
-                description = readerDescription.readLine();
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-            item.setName(name);
-            item.setDescription(description);
-            item.setDate();
-        }
-        return item;
-    }
-
     public Item[] removeItem(String id){
         for (int i = 0; i < items.length ; i++)
         {
             if(items[i] == findByID(id)){
+                if (findByID(id) != null){
+                    System.out.println("Р—Р°СЏРІРєР° " + id + " СѓРґР°Р»РµРЅР°");
+                }
                 items[i] = null;
                 sortItems(items);
                 break;
@@ -79,9 +53,9 @@ public class Tracker
                 break;
             }
             position++;
-            System.out.println("имя заявки: " + item.getName() + "." + " описание: " + item.getDescription() + "."
-                    + " id-заявки ноиер  " + position + ": = " + item.getID() + "." +
-            " дата создания заявки: " + item.getDate());
+            System.out.println("РёРјСЏ Р·Р°СЏРІРєРё: " + item.getName() + "." + "        РѕРїРёСЃР°РЅРёРµ: " + item.getDescription() + "."
+                    + "         id-Р·Р°СЏРІРєРё РЅРѕРёРµСЂ  " + position + ": = " + item.getID() + "." +
+            "        РґР°С‚Р° СЃРѕР·РґР°РЅРёСЏ Р·Р°СЏРІРєРё: " + item.getDate());
         }
     }
 

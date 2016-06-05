@@ -1,3 +1,9 @@
-ru\makarov\tracker\start\Tracker.class
+ru\makarov\start\ConsoleInput.class
+ru\makarov\start\Tracker.class
+ru\makarov\start\ShowMenu.class
+ru\makarov\interfaces\Input.class
+ru\makarov\tracker\StartUI$1.class
 ru\makarov\tracker\StartUI.class
-ru\makarov\tracker\model\Item.class
+ru\makarov\model\Choose.class
+ru\makarov\model\Item.class
+ru\makarov\start\StubInput.class

@@ -1,3 +1,8 @@
-d:\Учеба\Java-учеба\java-a-to-z\src\lesson2\task2\src\main\java\tracker\start\Tracker.java
-d:\Учеба\Java-учеба\java-a-to-z\src\lesson2\task2\src\main\java\tracker\model\Item.java
-d:\Учеба\Java-учеба\java-a-to-z\src\lesson2\task2\src\main\java\tracker\StartUI.java
+D:\Учеба\Java-учеба\java-a-to-z\src\lesson2\task2\src\main\java\tracker\models\Item.java
+D:\Учеба\Java-учеба\java-a-to-z\src\lesson2\task2\src\main\java\tracker\interfaces\Input.java
+D:\Учеба\Java-учеба\java-a-to-z\src\lesson2\task2\src\main\java\tracker\start\Tracker.java
+D:\Учеба\Java-учеба\java-a-to-z\src\lesson2\task2\src\main\java\tracker\start\ShowMenu.java
+D:\Учеба\Java-учеба\java-a-to-z\src\lesson2\task2\src\main\java\tracker\start\ConsoleInput.java
+D:\Учеба\Java-учеба\java-a-to-z\src\lesson2\task2\src\main\java\tracker\StartUI.java
+D:\Учеба\Java-учеба\java-a-to-z\src\lesson2\task2\src\main\java\tracker\models\Choose.java
+D:\Учеба\Java-учеба\java-a-to-z\src\lesson2\task2\src\main\java\tracker\start\StubInput.java
