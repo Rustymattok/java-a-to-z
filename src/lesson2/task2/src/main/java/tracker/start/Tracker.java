@@ -4,6 +4,7 @@ import ru.makarov.model.Item;
 
 import java.util.Random;
 
+
 public class Tracker
 {
     private Item[] items = new Item[10];
@@ -27,13 +28,11 @@ public class Tracker
         return result;
     }
 
-    public Item[] removeItem(String id){
+    public Item[] deleteItem(String id){
+        Item item = findByID(id);
         for (int i = 0; i < items.length ; i++)
         {
-            if(items[i] == findByID(id)){
-                if (findByID(id) != null){
-                    System.out.println("Заявка " + id + " удалена");
-                }
+            if(items[i] == item){
                 items[i] = null;
                 sortItems(items);
                 break;
@@ -44,19 +43,6 @@ public class Tracker
 
     private String generateID(){
         return (System.currentTimeMillis()/1000000000)/100 + String.valueOf(random.nextInt(100));
-    }
-
-    public void showItems(){
-        int position = 0 ;
-        for(Item item : items ){
-            if (items[position] == null){
-                break;
-            }
-            position++;
-            System.out.println("имя заявки: " + item.getName() + "." + "        описание: " + item.getDescription() + "."
-                    + "         id-заявки ноиер  " + position + ": = " + item.getID() + "." +
-            "        дата создания заявки: " + item.getDate());
-        }
     }
 
     public void sortItems(Item[] items){
@@ -77,3 +63,5 @@ public class Tracker
     }
 
 }
+
+

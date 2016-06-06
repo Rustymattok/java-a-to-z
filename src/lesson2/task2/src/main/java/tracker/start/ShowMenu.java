@@ -2,6 +2,9 @@ package ru.makarov.start;
 
 
 import ru.makarov.model.Choose;
+import ru.makarov.model.Item;
+
+import java.util.Scanner;
 
 import java.util.Scanner;
 
@@ -56,16 +59,16 @@ public class ShowMenu
         String result = getScanner();
         switch (result.charAt(0)){
             case 'a':
-                choose = Choose.ADDItem;
+                choose = Choose.ADDITEM;
                 break;
             case 'b':
-                choose = Choose.SHOWItems;
+                choose = Choose.SHOWITEMS;
                 break;
             case 'c':
-                choose = Choose.EDITItem;
+                choose = Choose.EDITITEM;
                 break;
             case 'd':
-                choose = Choose.REMOVEItem;
+                choose = Choose.REMOVEITEM;
                 break;
             case 'e':
                 choose = Choose.EXIT;
@@ -73,7 +76,21 @@ public class ShowMenu
             default:
                 System.out.println("Некорректный ввод :");
                 getChoose();
+
         }
         return choose;
+    }
+
+    public void showItems(Item[] items){
+        int position = 0 ;
+        for(Item item : items ){
+            if (items[position] == null){
+                break;
+            }
+            position++;
+            System.out.println("имя заявки: " + item.getName() + "." + "        описание: " + item.getDescription() + "."
+                    + "         id-заявки ноиер  " + position + ": = " + item.getID() + "." +
+            "        дата создания заявки: " + item.getDate());
+        }
     }
 }
