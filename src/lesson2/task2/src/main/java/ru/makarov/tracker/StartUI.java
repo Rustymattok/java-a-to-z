@@ -1,17 +1,15 @@
 package ru.makarov.tracker;
 
-
-import ru.makarov.interfaces.Input;
-import ru.makarov.model.Choose;
-import ru.makarov.model.Item;
-import ru.makarov.start.ShowMenu;
-import ru.makarov.start.StubInput;
-import ru.makarov.start.Tracker;
+import ru.makarov.tracker.models.Choose;
+import ru.makarov.tracker.start.ShowMenu;
+import ru.makarov.tracker.start.Tracker;
+import ru.makarov.tracker.interfaces.Input;
+import ru.makarov.tracker.models.Item;
+import ru.makarov.tracker.start.StubInput;
 
 public class StartUI
 {
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         ShowMenu menu = new ShowMenu();
         Tracker tracker = new Tracker();
         //ConsoleInput input = new ConsoleInput();
@@ -25,15 +23,15 @@ public class StartUI
         Choose choose = menu.getChoose();
         switch (choose)
         {
-            case ADDItem:
+            case ADDITEM:
                 Item item = new Item();
                 tracker.addItem(input.addItem(item));
                 System.out.println("Заявка id - " + item.getID() + " создана");
                 acton(tracker,input,menu);
                 break;
-            case EDITItem:
+            case EDITITEM:
                 //todo сделать редактирование - должен быть выбор списка.
-                tracker.showItems();
+                menu.showItems(tracker.getItems());
                 menu.showEdit();
                 if (tracker.getItems()[0] == null){
                     System.out.println("Заявок не существует  ");
@@ -45,22 +43,21 @@ public class StartUI
                     Item item1 = tracker.findByID(idEdit);
                     if (item1.getID() != null)
                     {
-                        item1.setName("");
-                        item1.setDescription("");
+                        tracker.updateItem(idEdit);
                         input.addItem(item1);
                     }
                     System.out.println("Заявка id - " + item1.getID() + " изменена");
                 }
-                    tracker.showItems();
+                menu.showItems(tracker.getItems());
                 acton(tracker, input, menu);
                 break;
-            case SHOWItems:
-                tracker.showItems();
+            case SHOWITEMS:
+                menu.showItems(tracker.getItems());
                 acton(tracker,input,menu);
                 break;
-            case REMOVEItem:
+            case REMOVEITEM:
                 //todo сделать удаление - должен быть выбор списка
-                tracker.showItems();
+                menu.showItems(tracker.getItems());
                 menu.showRemove();
                 if (tracker.getItems()[0] == null){
                     System.out.println("Заявок не существует  ");
@@ -68,9 +65,9 @@ public class StartUI
                 {
                     System.out.print("ID заявки: ");
                     String id = menu.getScanner();
-                    tracker.removeItem(id);
+                    tracker.deleteItem(id);
                 }
-                tracker.showItems();
+                menu.showItems(tracker.getItems());
                 acton(tracker,input,menu);
                 break;
             case EXIT:

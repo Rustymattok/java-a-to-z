@@ -1,15 +1,12 @@
-package ru.makarov.start;
+package ru.makarov.tracker.start;
 
 
-import ru.makarov.model.Choose;
-import ru.makarov.model.Item;
-
-import java.util.Scanner;
+import ru.makarov.tracker.models.Choose;
+import ru.makarov.tracker.models.Item;
 
 import java.util.Scanner;
 
-public class ShowMenu
-{
+public class ShowMenu {
     private Choose choose;
     private Scanner sensor = new Scanner(System.in);
 
@@ -48,13 +45,11 @@ public class ShowMenu
         System.out.println("-------------------------------------------- ");
     }
 
-    public String getScanner()
-    {
+    public String getScanner() {
         return sensor.nextLine();
     }
 
-    public Choose getChoose()
-    {
+    public Choose getChoose() {
         showChoose();
         String result = getScanner();
         switch (result.charAt(0)){
@@ -75,8 +70,7 @@ public class ShowMenu
                 break;
             default:
                 System.out.println("Некорректный ввод :");
-                getChoose();
-
+                choose = Choose.EXIT;
         }
         return choose;
     }

@@ -1,4 +1,4 @@
-package ru.makarov.model;
+package ru.makarov.tracker.models;
 
 
 import java.util.Date;

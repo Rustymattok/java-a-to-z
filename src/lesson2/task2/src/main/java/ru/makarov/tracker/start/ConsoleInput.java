@@ -1,17 +1,15 @@
-package ru.makarov.start;
+package ru.makarov.tracker.start;
 
-import ru.makarov.interfaces.Input;
-import ru.makarov.model.Item;
+import ru.makarov.tracker.interfaces.Input;
+import ru.makarov.tracker.models.Item;
 
 import java.util.Scanner;
 
-public class ConsoleInput implements Input
-{
+public class ConsoleInput implements Input {
     private Scanner scanner = new Scanner(System.in);
 
     @Override
-    public Item addItem(Item item)
-    {
+    public Item addItem(Item item) {
          System.out.print("Введите имя заявки:         - ");
          item.setName(text());
          System.out.print("Введите описание заявки:    - ");
