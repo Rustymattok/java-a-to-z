@@ -52,27 +52,27 @@ public class ShowMenu {
     public Choose getChoose() {
         showChoose();
         String result = getScanner();
-        switch (result.charAt(0)){
-            case 'a':
-                choose = Choose.ADDITEM;
-                break;
-            case 'b':
-                choose = Choose.SHOWITEMS;
-                break;
-            case 'c':
-                choose = Choose.EDITITEM;
-                break;
-            case 'd':
-                choose = Choose.REMOVEITEM;
-                break;
-            case 'e':
-                choose = Choose.EXIT;
-                break;
-            default:
-                System.out.println("Некорректный ввод :");
-                choose = Choose.EXIT;
-        }
-        return choose;
+            switch (result.charAt(0))
+            {
+                case 'a':
+                    choose = Choose.ADDITEM;
+                    break;
+                case 'b':
+                    choose = Choose.SHOWITEMS;
+                    break;
+                case 'c':
+                    choose = Choose.EDITITEM;
+                    break;
+                case 'd':
+                    choose = Choose.REMOVEITEM;
+                    break;
+                case 'e':
+                    choose = Choose.EXIT;
+                    break;
+                default:
+                    choose = null;
+            }
+       return choose;
     }
 
     public void showItems(Item[] items){
@@ -82,7 +82,7 @@ public class ShowMenu {
                 break;
             }
             position++;
-            System.out.println("имя заявки: " + item.getName() + "." + "        описание: " + item.getDescription() + "."
+            System.out.println("имя заяви: " + item.getName() + "." + "        описание: " + item.getDescription() + "."
                     + "         id-заявки ноиер  " + position + ": = " + item.getID() + "." +
             "        дата создания заявки: " + item.getDate());
         }
