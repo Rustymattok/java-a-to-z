@@ -50,28 +50,45 @@ public class ShowMenu {
     }
 
     public Choose getChoose() {
-        showChoose();
-        String result = getScanner();
-            switch (result.charAt(0))
+        boolean flag ;
+        do
+        {
+            showChoose();
+            try
             {
-                case 'a':
-                    choose = Choose.ADDITEM;
-                    break;
-                case 'b':
-                    choose = Choose.SHOWITEMS;
-                    break;
-                case 'c':
-                    choose = Choose.EDITITEM;
-                    break;
-                case 'd':
-                    choose = Choose.REMOVEITEM;
-                    break;
-                case 'e':
-                    choose = Choose.EXIT;
-                    break;
-                default:
-                    choose = null;
+                String result = getScanner();
+                switch (result.charAt(0))
+                {
+                    case 'a':
+                        choose = Choose.ADDITEM;
+                        flag = false;
+                        break;
+                    case 'b':
+                        choose = Choose.SHOWITEMS;
+                        flag = false;
+                        break;
+                    case 'c':
+                        choose = Choose.EDITITEM;
+                        flag = false;
+                        break;
+                    case 'd':
+                        choose = Choose.REMOVEITEM;
+                        flag = false;
+                        break;
+                    case 'e':
+                        choose = Choose.EXIT;
+                        flag = false;
+                        break;
+                    default:
+                        System.out.println("Неверно введена команда, повторите ввод: ");
+                        flag = true;
+                }
+            }catch (Exception e)
+            {
+                System.out.println("Неверно введена команда, повторите ввод: ");
+                flag = true;
             }
+        }while (flag);
        return choose;
     }
 
