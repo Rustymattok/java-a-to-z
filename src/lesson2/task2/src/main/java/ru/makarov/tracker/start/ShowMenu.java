@@ -54,11 +54,9 @@ public class ShowMenu {
         do
         {
             showChoose();
-            try
-            {
                 String result = getScanner();
-                switch (result.charAt(0))
-                {
+            if (result != null && !result.isEmpty()) {
+                switch (result.charAt(0)) {
                     case 'a':
                         choose = Choose.ADDITEM;
                         flag = false;
@@ -83,8 +81,8 @@ public class ShowMenu {
                         System.out.println("Неверно введена команда, повторите ввод: ");
                         flag = true;
                 }
-            }catch (Exception e)
-            {
+            }
+            else {
                 System.out.println("Неверно введена команда, повторите ввод: ");
                 flag = true;
             }
@@ -99,9 +97,8 @@ public class ShowMenu {
                 break;
             }
             position++;
-            System.out.println("имя заяви: " + item.getName() + "." + "        описание: " + item.getDescription() + "."
-                    + "         id-заявки ноиер  " + position + ": = " + item.getID() + "." +
-            "        дата создания заявки: " + item.getDate());
+            System.out.printf("имя заяви: %s описание: %s id-заявки ноиер %d : = %s дата создания заявки:  %s",
+                    item.getName(), item.getDescription(), position, item.getID(), item.getDate());
         }
     }
 }
