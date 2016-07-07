@@ -11,7 +11,9 @@ public  abstract class ChessFigure {
     }
 
     public abstract void show();
-    public abstract boolean moveRules(ChessBoard board, Position position, Position movePosition);
+    public abstract boolean isNormalMove(ChessBoard board,Position position, Position movePosition);
+    public abstract boolean isCurvMove(ChessBoard board,Position position, Position movePosition);
+    public abstract boolean isEmptyField(ChessBoard board, Position position);
 
     public Position getPosition() {
         return position;
