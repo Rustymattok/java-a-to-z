@@ -5,46 +5,40 @@ import chess.fabrica.ChessFigure;
 import chess.Position;
 
 public class ChessPawn extends ChessFigure {
+    private Position position;
 
     public ChessPawn(Position position){
         super(position);
+        this.position = position;
     }
 
     @Override
-    public boolean isNormalMove(ChessBoard board,Position position, Position movePosition) {
-        boolean flag = false;
-        if (position.getY() == movePosition.getY())
-            if (board.getBorder()[position.getX()+1][position.getY()] == 0 || board.getBorder()[position.getX()- 1][position.getY()] == 0) {
-                if (movePosition.getX()- position.getX() == 1 || position.getX() - movePosition.getX() == 1) {
-                    flag = true;
-                }
-            }
-        return flag;
-    }
-
-    @Override
-    public boolean isEmptyField(ChessBoard board, Position position) {
-        boolean flag = false;
-        if (board.getBorder()[position.getX()][position.getY()] != 1) {
-            flag = true;
-        }
-        return flag;
-    }
-
-    public void show(){
+    public void show() {
         System.out.println("пешка!!!!");
     }
 
     @Override
-    public boolean isCurvMove(ChessBoard board, Position position, Position movePosition) {
+    public boolean move(ChessBoard board, Position movePosition) {
         boolean flag = false;
-        if (position.getY() == movePosition.getY())
-            if (    board.getBorder()[position.getX()+1][position.getY()-1] == 1 || board.getBorder()[position.getX()- 1][position.getY()-1] == 1 ||
-                    board.getBorder()[position.getX()+1][position.getY()+1] == 1 || board.getBorder()[position.getX()- 1][position.getY()-1] == 1 ) {
-                if (movePosition.getX()- position.getX() == 1 || position.getX() - movePosition.getX() == 1) {
+        if (board.getBorder()[position.getX()][position.getY()] != 1) {
+            if (position.getY() == movePosition.getY()) {
+                flag = true;
+            } else if (movePosition.getX() - position.getX() == 1 || movePosition.getY() - position.getY() == 1) {
+                if (board.getBorder()[movePosition.getX()][movePosition.getY()] == 0) {
                     flag = true;
                 }
             }
-        return flag;
+        }
+            return flag;
+    }
+
+    @Override
+    public Position getPosition() {
+        return position;
+    }
+
+    @Override
+    public void setPosition(Position position) {
+        this.position = position;
     }
 }
