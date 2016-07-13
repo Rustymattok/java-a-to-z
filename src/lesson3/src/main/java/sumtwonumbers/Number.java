@@ -2,10 +2,17 @@ package sumtwonumbers;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-
+/**
+ * This class describe number's parametres.
+ */
 public class Number {
+    /**
+     * @param Integer number - value.
+     */
     private Integer number;
-
+    /**
+     * Constructor - initialization of parameters using console.
+     */
     public Number() {
         boolean flag = false;
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
