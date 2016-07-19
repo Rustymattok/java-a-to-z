@@ -1,5 +1,4 @@
 package evenodd;
-
 /**
  * Class for init application.
  */
