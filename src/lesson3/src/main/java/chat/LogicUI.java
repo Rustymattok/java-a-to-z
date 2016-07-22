@@ -4,8 +4,8 @@ package chat;
  */
 public class LogicUI {
     /**
-     * @param logicClient - logic of Client.
-     *  @param logicServer - logic of Server.
+     * @param logicClient - logic of ClientServer.
+     *  @param logicServer - logic of ComputerServer.
      */
     private LogicClient logicClient;
     private LogicServer logicServer;
@@ -18,7 +18,7 @@ public class LogicUI {
      * Logic of UI.
      */
     public void init() {
-        logicServer.getServer().init();
+        logicServer.getComputerServer().init();
         logicClient.enterText();
         while (!logicClient.getText().equals("finish")) {
             logicServer.serverShow();

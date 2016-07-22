@@ -17,7 +17,7 @@ public class Logic {
         int a = Math.abs(number1.getNumber());
         int b = Math.abs(number2.getNumber());
         int c = Math.abs(number3.getNumber());
-
+//todo сделать метод max(a, max(b, c))
         if (a < b && b < c){
             number = number1;
         }else if(b < c){

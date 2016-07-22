@@ -1,67 +1,74 @@
 package chat;
 
 import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 /**
- * This class describe server parametres.
+ * This class server clients work.
  */
 public class Server {
+    private ServerSocket serverSocket;
+    private Socket socket;
+    private ClientServer clientServer;
+    private ComputerServer computerServer;
+    private String fileServer;
     /**
-     * @param server - String parametre way for server's doc.
-     * @param text - text in the doc server file.
-     * @param fileReader - thread for reading file.
-     * @param chooseText - massive for keeping parametrs of text in buffer.
+     * Konsturctor for init server.
+     * @param port
      */
-    final String server = "D:\\Учеба\\Java-учеба\\java-a-to-z\\src\\lesson3\\src\\main\\java\\chat\\file\\server.txt";
-    private String text;
-    private BufferedReader fileReader;
-    private String[] chooseText = new String[getSize()];
-
-    public Server() {
-    }
-    /**
-     * This method use for init in buffer from file.
-     */
-    public void init(){
-        try {
-            fileReader = new BufferedReader(new FileReader(server));
-            int count = 0;
-            while ((text=fileReader.readLine()) != null){
-                chooseText[count] = text;
-                count++;
-            }
-            fileReader.close();
-        } catch (IOException e) {
-            File filecreat = new File(server);
+    public Server(int port,String fileLog, String fileServer){
+        this.fileServer = fileServer;
+        clientServer = new ClientServer(fileServer);
+        computerServer = new ComputerServer(fileLog);
             try {
-                filecreat.createNewFile();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-        }
-    }
-    /**
-     * This method for reciveing counts of lines in doc file for server.
-     * @return count - size of massive String.
-     */
-    public int getSize() {
-        int count = 0;
-        try {
-            fileReader = new BufferedReader(new FileReader(server));
-            while ((text = fileReader.readLine()) != null) {
-                count++;
-            }
-            fileReader.close();
+            serverSocket = new ServerSocket(port);
+            System.out.println("ждем подключения");
+            socket = serverSocket.accept();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return count;
+        System.out.println("подключение состоялось");
     }
 
-    public String[] getChooseText() {
-        return chooseText;
+    /**
+     *  method for start work with logic chat.
+     */
+    public void startWork(){
+        InputStream inputStream = null;
+        try {
+            inputStream = socket.getInputStream();
+            OutputStream outputStream = socket.getOutputStream();
+            DataInputStream in = new DataInputStream(inputStream);
+            DataOutputStream out = new DataOutputStream(outputStream);
+            String text = null;
+            while (true){
+                text = in.readUTF();
+                System.out.println("Клиент: " + text);
+                LogicServer logicServer = new LogicServer(computerServer,fileServer);
+                LogicClient logicClient = new LogicClient(clientServer);
+                text = logicServer.enterText();
+                System.out.println("Сервер :" + text);
+                out.writeUTF(text);
+                out.flush();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void setChooseText(String[] chooseText) {
-        this.chooseText = chooseText;
+    public ComputerServer getComputerServer() {
+        return computerServer;
+    }
+
+    public void setComputerServer(ComputerServer computerServer) {
+        this.computerServer = computerServer;
+    }
+
+    public ClientServer getClientServer() {
+        return clientServer;
+    }
+
+    public void setClientServer(ClientServer clientServer) {
+        this.clientServer = clientServer;
     }
 }

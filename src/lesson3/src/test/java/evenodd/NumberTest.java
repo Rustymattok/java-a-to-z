@@ -19,7 +19,6 @@ public class NumberTest {
     public void whenShouldCheckNumberEven(){
         boolean result = false;
         result = logic.even();
-        System.out.println("Четное " + result);
         assertThat(result, is(true));//todo эта строка в этом случае не нужна?
     }
     /**
@@ -29,7 +28,6 @@ public class NumberTest {
     public void whenShouldCheckNumberOdd(){
         boolean result = false;
         result = logic.odd();
-        System.out.println("Не Четное " + result);
         assertThat(result,is(true));//todo эта строка в этом случае не нужна?
     }
 }

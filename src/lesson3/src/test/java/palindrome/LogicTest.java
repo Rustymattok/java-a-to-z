@@ -19,7 +19,6 @@ public class LogicTest {
     @Test
     public void whenShouldCheckCompareString(){
         boolean result  = logic.compareString(text,logic.reverseText(text));
-        System.out.println(result);
         assertThat(result,is(true));
     }
 }
