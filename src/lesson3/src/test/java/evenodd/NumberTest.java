@@ -11,13 +11,14 @@ public class NumberTest {
     /**
      * @param logic - initiated parameter of Logic.
      */
-    private final Logic logic = new Logic(new Number(2));
+    private Logic logic;
     /**
      * whenShouldCheckNumberEven() - this method check for even.
      */
     @Test
     public void whenShouldCheckNumberEven(){
         boolean result = false;
+        logic = new Logic(new Number(2));
         result = logic.even();
         assertThat(result, is(true));//todo эта строка в этом случае не нужна?
     }
@@ -27,6 +28,7 @@ public class NumberTest {
     @Test
     public void whenShouldCheckNumberOdd(){
         boolean result = false;
+        logic = new Logic(new Number(3));
         result = logic.odd();
         assertThat(result,is(true));//todo эта строка в этом случае не нужна?
     }
