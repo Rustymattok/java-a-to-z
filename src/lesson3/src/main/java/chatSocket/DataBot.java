@@ -1,4 +1,4 @@
-package chatSocket;
+package chatsocket;
 /**
  * Data for Bot, if args = null.
  */

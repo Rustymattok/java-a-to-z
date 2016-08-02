@@ -1,4 +1,4 @@
-package chatSocket;
+package chatsocket;
 
 import java.io.FileWriter;
 import java.io.IOException;

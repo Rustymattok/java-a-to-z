@@ -1,4 +1,4 @@
-package chatSocket;
+package chatsocket;
 
 import java.io.*;
 import java.util.Random;
@@ -12,6 +12,7 @@ public class ServerLogic {
      */
     private String fileServer;
     private String[] list;
+    private ShowInterface showInterface = new ShowInterface();
 
     /**
      * init Logic.
@@ -30,7 +31,7 @@ public class ServerLogic {
                 }
                 fileWriter.flush();
                 fileWriter.close();
-                ShowInterface.fileCreted();
+                showInterface.fileCreted();
             } catch (IOException e) {
                 e.printStackTrace();
             }

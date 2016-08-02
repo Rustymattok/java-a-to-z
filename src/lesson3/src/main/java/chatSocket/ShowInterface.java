@@ -1,4 +1,4 @@
-package chatSocket;
+package chatsocket;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,20 +9,20 @@ import java.net.InetAddress;
  */
 public class ShowInterface {
 
-    public static void waitConnect(){
+    public void waitConnect(){
         System.out.println("ожидаем подключния клиента.....");
     }
 
-    public static void connection(){
+    public void connection(){
         System.out.println("подключено");
     }
 
-    public static void nameText(String name,String text){
+    public void nameText(String name,String text){
         System.out.printf("%s : %s",name,text);
         System.out.println();
     }
 
-    public static String enterServerBotLog(String kindOfFile) {
+    public String enterServerBotLog(String kindOfFile) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String result = null;
         try {
@@ -43,7 +43,7 @@ public class ShowInterface {
         return result;
     }
 
-    public static String enterName(){
+    public String enterName(){
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String result = null;
         try {
@@ -54,37 +54,37 @@ public class ShowInterface {
         return result;
     }
 
-    public static void showMassagefromServer(String text){
+    public void showMassagefromServer(String text){
         System.out.println(text);
     }
 
-    public static String yourName() {
+    public String yourName() {
         return "Введите ваше имя ";
     }
 
-    public static void welcomeToChat(){
+    public void welcomeToChat(){
         for (int i = 0; i <20 ; i++) {
             System.out.println();
         }
         System.out.println("добро пожаловать в чат");
     }
 
-    public static String forClientLog(String name,String text){
+    public String forClientLog(String name,String text){
         return name + ": " + text;
     }
 
-    public static void showText(String text){
+    public void showText(String text){
         System.out.println(text);
     }
 
-    public static void fileCreted(){
+    public void fileCreted(){
         System.out.println("новый файл создан");
     }
 
-    public static void showAdressServer(InetAddress inetAddress){
+    public void showAdressServer(InetAddress inetAddress){
         System.out.println("адресс для подключения: "+ inetAddress);
     }
-    public static void showMenuChat(){
+    public void showMenuChat(){
         System.out.println("Добро пожаловать");
         System.out.println("Введите server  -  если хотите запустить текущее приложение как сервер");
         System.out.println("Введите client  - если хотите запустить текущее приложение как клиент");

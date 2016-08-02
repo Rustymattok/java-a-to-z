@@ -1,4 +1,4 @@
-package chatSocket;
+package chatsocket;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,6 +16,7 @@ public class Client {
      */
     private  Socket socket;
     private String name;
+    private ShowInterface showInterface = new ShowInterface();
 
     /**
      * Konstructor for connection with server.
@@ -24,7 +25,7 @@ public class Client {
     public Client(String adress){
         try {
             socket = new Socket(adress,Server.PORT);//todo указать адресс через InetAddress
-            ShowInterface.connection();
+            showInterface.connection();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -42,10 +43,10 @@ public class Client {
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             FileLog fileLog = new FileLog(clientLog);
-            ShowInterface.showMassagefromServer(in.readLine());
-            name = ShowInterface.enterName();
+            showInterface.showMassagefromServer(in.readLine());
+            name = showInterface.enterName();
             out.println(name);
-            ShowInterface.welcomeToChat();
+            showInterface.welcomeToChat();
             while (true){
                 text = reader.readLine();
                 if (text.equals("finish")){
@@ -53,11 +54,11 @@ public class Client {
                     break;
                 }
                  out.println(text);
-                 text = ShowInterface.forClientLog("Вы",text);
+                 text = showInterface.forClientLog("Вы",text);
                  fileLog.saveLog(text);
                  textFromServer = in.readLine();
                  fileLog.saveLog(textFromServer);
-                 ShowInterface.showText(textFromServer);
+                showInterface.showText(textFromServer);
                  out.flush();
             }
         } catch (IOException e) {
