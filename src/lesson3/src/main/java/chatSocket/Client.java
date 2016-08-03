@@ -42,7 +42,7 @@ public class Client {
             PrintWriter out = new PrintWriter(socket.getOutputStream(),true);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            FileLog fileLog = new FileLog(clientLog);
+            FileLog fileLog = new FileLog(clientLog,"clientLog.txt");
             showInterface.showMassagefromServer(in.readLine());
             name = showInterface.enterName();
             out.println(name);

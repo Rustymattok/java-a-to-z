@@ -50,7 +50,7 @@ public class Server {
             out.println(showInterface.yourName());
             out.flush();
             String name = in.readLine();
-            FileLog fileLog = new FileLog(serverLog);
+            FileLog fileLog = new FileLog(serverLog,"serverLog.txt");
             while ((text = in.readLine()) != null) {
                 if (text.equals("finish")) {
                     socket.close();

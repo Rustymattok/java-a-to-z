@@ -19,6 +19,9 @@ public class ServerLogic {
      * @param fileServer - - way for file Server Bot.
      */
     public ServerLogic(String fileServer) {
+        if (fileServer.equals("")){
+            fileServer = System.getProperty("user.home") + "\\temp\\server.txt";
+        }
         this.fileServer = fileServer;
         File file = new File(fileServer);
         if(!file.exists()){
