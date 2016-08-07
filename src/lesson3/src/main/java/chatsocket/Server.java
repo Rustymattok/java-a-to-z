@@ -41,7 +41,7 @@ public class Server {
      */
     public void startWork(String serverLog,String serverBot) {
         try {
-            String text;
+            String text = "";
             String messageServer = "";
             boolean flag = true;
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
@@ -51,10 +51,11 @@ public class Server {
             out.flush();
             String name = in.readLine();
             FileLog fileLog = new FileLog(serverLog,"serverLog.txt");
-            while ((text = in.readLine()) != null) {
+            while ((socket.isConnected())){
+                text = in.readLine();
                 if (text.equals("finish")) {
                     socket.close();
-                    break;
+                    return;
                 }
                 flag = logicUI(text, flag);
                 showInterface.nameText(name, text);

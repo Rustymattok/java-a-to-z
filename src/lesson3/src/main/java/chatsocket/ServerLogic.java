@@ -46,7 +46,7 @@ public class ServerLogic {
         try {
             int count = 0;
             BufferedReader bufferedReader = new BufferedReader(new FileReader(fileServer));
-            list = new String[getSize()];
+            list = new String[getSize() + 1];
             String text = "";
             while ((text != null)){
                 text = bufferedReader.readLine();

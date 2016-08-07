@@ -83,6 +83,7 @@ public class ShowInterface {
 
     public void showAdressServer(InetAddress inetAddress){
         System.out.println("адресс для подключения: "+ inetAddress);
+        System.out.println("если клиент будет подключаться на этой же машине, то не вводите ни чего");
     }
     public void showMenuChat(){
         System.out.println("Добро пожаловать");
