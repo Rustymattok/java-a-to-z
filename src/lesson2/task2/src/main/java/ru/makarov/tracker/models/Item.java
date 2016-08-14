@@ -1,9 +1,16 @@
 package ru.makarov.tracker.models;
 
-
 import java.util.Date;
-
+/**
+ * Class describe Item  - parameteres and its methods.
+ */
 public class Item{
+    /**
+     * @param id - id for item.
+     * @param name - name for item.
+     * @param description - description of item.
+     * @param date - date of ctreated item.
+     */
     private String id;
     private String name;
     private String description;

@@ -1,11 +1,11 @@
 package ru.makarov.tracker.start;
 
-
 import ru.makarov.tracker.models.Choose;
 import ru.makarov.tracker.models.Item;
-
 import java.util.Scanner;
-
+/**
+ * Class for show interface .
+ */
 public class ShowMenu {
     private Choose choose;
     private Scanner sensor = new Scanner(System.in);
@@ -45,49 +45,38 @@ public class ShowMenu {
         System.out.println("-------------------------------------------- ");
     }
 
-    public String getScanner() {
-        return sensor.nextLine();
+    public void showCommandForName(){
+        System.out.print("Введите имя заявки:         - ");
     }
 
-    public Choose getChoose() {
-        boolean flag ;
-        do
-        {
-            showChoose();
-                String result = getScanner();
-            if (result != null && !result.isEmpty()) {
-                switch (result.charAt(0)) {
-                    case 'a':
-                        choose = Choose.ADDITEM;
-                        flag = false;
-                        break;
-                    case 'b':
-                        choose = Choose.SHOWITEMS;
-                        flag = false;
-                        break;
-                    case 'c':
-                        choose = Choose.EDITITEM;
-                        flag = false;
-                        break;
-                    case 'd':
-                        choose = Choose.REMOVEITEM;
-                        flag = false;
-                        break;
-                    case 'e':
-                        choose = Choose.EXIT;
-                        flag = false;
-                        break;
-                    default:
-                        System.out.println("Неверно введена команда, повторите ввод: ");
-                        flag = true;
-                }
-            }
-            else {
-                System.out.println("Неверно введена команда, повторите ввод: ");
-                flag = true;
-            }
-        }while (flag);
-       return choose;
+    public void showCommandForDescribe(){
+        System.out.print("Введите описание заявки:    - ");
+    }
+
+    public void showErrorOfEnter(){
+        System.out.println("Неверно введена команда, повторите ввод: ");
+    }
+
+    public void createdItem(String s){
+        System.out.printf("Заявка id - %s создана ", s);
+        System.out.println();
+    }
+
+    public void showNoItems(){
+        System.out.println("Заявок не существует  ");
+    }
+
+    public void showTextIdNumber(){
+        System.out.print("ID заявки: ");
+    }
+
+    public void showModifyItems(String s){
+        System.out.printf("Заявка id - %s  изменена",s);
+        System.out.println();
+    }
+
+    public String getScanner() {
+        return sensor.nextLine();
     }
 
     public void showItems(Item[] items){
