@@ -8,7 +8,11 @@ import java.io.IOException;
  */
 public class FileLog {
     private String fileName;
-
+    /**
+     * Check file log,if it absents new file will be created.
+     * @param fileName - way for log file.
+     * @param nameApp - name of log file.
+     */
     public FileLog(String fileName,String nameApp){
         try {
             if (fileName.equals("")) {
@@ -30,7 +34,10 @@ public class FileLog {
         }
         this.fileName = fileName;
     }
-
+    /**
+     * Method for saving result.
+     * @param text - text for saving in log file.
+     */
     public void saveLog(String text){
         try {
             System.out.println(text + "-------->");
