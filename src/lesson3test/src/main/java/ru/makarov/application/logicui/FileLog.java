@@ -16,19 +16,21 @@ public class FileLog {
     public FileLog(String fileName,String nameApp){
         try {
             if (fileName.equals("")) {
-                fileName = System.getProperty("user.home") + "\\temp";
+                //fileName = System.getProperty("user.home") + "\\temp";
+                fileName = new StringBuilder().append(System.getProperty("user.home")).append("\\temp").toString();
                 File file = new File(fileName);
                 if (!file.exists()) {
                     file.mkdir();
                 }
-                System.out.println(fileName);
+//                System.out.println(fileName);
                 file = new File(fileName, nameApp);
                 if (!file.exists()) {
                     file.createNewFile();
                 }
             }
-            fileName = fileName + "\\" + nameApp;
-            System.out.println(fileName);
+            //fileName = fileName + "\\" + nameApp;
+            fileName = new StringBuilder().append(fileName).append("\\").append(nameApp).toString();
+//            System.out.println(fileName + "------>");
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -40,7 +42,7 @@ public class FileLog {
      */
     public void saveLog(String text){
         try {
-            System.out.println(text + "-------->");
+            System.out.println(text);//todo in realize delet this line.
             FileWriter fileWriter = new FileWriter(fileName, true);
             fileWriter.write(text);
             fileWriter.append(("\r\n"));

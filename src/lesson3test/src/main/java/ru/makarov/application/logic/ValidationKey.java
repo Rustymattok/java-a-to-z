@@ -3,21 +3,23 @@ package ru.makarov.application.logic;
  * This class describe validation entered text.
  */
 public class ValidationKey {
-    private String text;
     private String dir;
     private String mask;
     private String indexLogic;
     private String logFile;
+    private char[] massiv;
+    private int flag = 0;
+    private String text;
 
     public ValidationKey(String text) {
         this.text = text;
+        this.massiv = text.toCharArray();
     }
     /**
      * THis method take diretory.
      * @return String - way of directory.
      */
     public String checkDir(){
-        char[] massiv = text.toCharArray();
         for (int i = 0; i < massiv.length; i++) {
             if(massiv[i] == '-' && massiv[i+1] == 'd'){
                  int index = i + 3;
@@ -27,6 +29,7 @@ public class ValidationKey {
                       length++;
                 }
                 dir = String.copyValueOf(massiv,i + 3,length);
+                flag++;
             }
         }
         return dir;
@@ -36,7 +39,6 @@ public class ValidationKey {
      * @return String - way of mask.
      */
     public String checkMask(){
-        char[] massiv = text.toCharArray();
         for (int i = 0; i < massiv.length; i++) {
             if(massiv[i] == '-' && massiv[i+1] == 'n'){
                 int index = i + 3;
@@ -46,6 +48,7 @@ public class ValidationKey {
                     length++;
                 }
                 mask = String.copyValueOf(massiv,i + 3,length);
+                flag++;
             }
         }
         return  mask;
@@ -55,10 +58,10 @@ public class ValidationKey {
      * @return String - way of logic.
      */
     public String checkLogic(){
-        char[] massiv = text.toCharArray();
         for (int i = 0; i < massiv.length; i++) {
             if(massiv[i] == '-' && (massiv[i+1] == 'm' || massiv[i+1] == 'f' || massiv[i+1] == 'r')){
-                    indexLogic = String.copyValueOf(massiv,i + 1,1);
+                indexLogic = String.copyValueOf(massiv,i + 1,1);
+                flag++;
             }
         }
         return  indexLogic;
@@ -68,7 +71,6 @@ public class ValidationKey {
      * @return String - logFile.
      */
     public String logFile(){
-        char[] massiv = text.toCharArray();
         for (int i = 0; i < massiv.length; i++) {
             if(massiv[i] == '-' && massiv[i+1] == 'o'){
                 int index = i + 3;
@@ -78,8 +80,21 @@ public class ValidationKey {
                     length++;
                 }
                 logFile = String.copyValueOf(massiv,i + 3,length);
+                flag++;
             }
         }
         return logFile;
+    }
+
+    public boolean checkText(){
+        checkDir();
+        checkLogic();
+        checkMask();
+        logFile();
+        return flag == 4 ? true:false;
+    }
+
+    public String getText() {
+        return text;
     }
 }

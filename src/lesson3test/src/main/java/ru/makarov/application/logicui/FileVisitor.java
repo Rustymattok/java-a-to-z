@@ -33,7 +33,8 @@ public class FileVisitor extends SimpleFileVisitor<Path> {
         Path name = path.getFileName();
         if(matcher.matches(name)){
             FileLog fileLog = new FileLog(fileName,logFile);
-            fileLog.saveLog(path.getParent() +"\\" + path.getFileName());
+            //fileLog.saveLog(path.getParent() +"\\" + path.getFileName());
+            fileLog.saveLog(new StringBuilder().append(path.getParent()).append("\\").append(path.getFileName()).toString());
             flag++;
         }
     }

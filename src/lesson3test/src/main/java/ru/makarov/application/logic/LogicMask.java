@@ -2,6 +2,8 @@ package ru.makarov.application.logic;
 
 import ru.makarov.application.interfaces.*;
 import ru.makarov.application.logicui.FileVisitor;
+import ru.makarov.application.logicui.ShowInterface;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -30,10 +32,15 @@ public class LogicMask implements AlgaritmSearch {
      */
     public void startwork(String dir) {
         Path patch1 = Paths.get(dir);
-        String pattern = "glob:" + mask;
+        String pattern = new StringBuilder().append("glob:").append(mask).toString();
+        //String pattern = "glob:" + mask;
         myFileVisitor = new FileVisitor(pattern,dir,logFile);
         try {
-            Files.walkFileTree(patch1, myFileVisitor);
+            if (Files.exists(patch1)) {
+                Files.walkFileTree(patch1, myFileVisitor);
+            }else {
+                new ShowInterface().noFolder();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
