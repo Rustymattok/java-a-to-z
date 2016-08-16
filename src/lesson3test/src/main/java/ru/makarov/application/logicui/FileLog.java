@@ -16,21 +16,17 @@ public class FileLog {
     public FileLog(String fileName,String nameApp){
         try {
             if (fileName.equals("")) {
-                //fileName = System.getProperty("user.home") + "\\temp";
                 fileName = new StringBuilder().append(System.getProperty("user.home")).append("\\temp").toString();
                 File file = new File(fileName);
                 if (!file.exists()) {
                     file.mkdir();
                 }
-//                System.out.println(fileName);
                 file = new File(fileName, nameApp);
                 if (!file.exists()) {
                     file.createNewFile();
                 }
             }
-            //fileName = fileName + "\\" + nameApp;
             fileName = new StringBuilder().append(fileName).append("\\").append(nameApp).toString();
-//            System.out.println(fileName + "------>");
         }catch (IOException e){
             e.printStackTrace();
         }
