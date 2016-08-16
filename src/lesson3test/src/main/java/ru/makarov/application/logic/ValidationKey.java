@@ -20,16 +20,19 @@ public class ValidationKey {
      * @return String - way of directory.
      */
     public String checkDir(){
+        int index;
         for (int i = 0; i < massiv.length; i++) {
             if(massiv[i] == '-' && massiv[i+1] == 'd'){
-                 int index = i + 3;
-                 int length = 0;
-                  while(massiv [index] != ' '){
-                      index ++;
-                      length++;
+                     index = i + 3;
+                     int length = 0;
+                if (index <massiv.length) {
+                    while (massiv[index] != ' ') {
+                        index++;
+                        length++;
+                    }
+                    dir = String.copyValueOf(massiv, i + 3, length);
+                    flag++;
                 }
-                dir = String.copyValueOf(massiv,i + 3,length);
-                flag++;
             }
         }
         return dir;
@@ -41,14 +44,16 @@ public class ValidationKey {
     public String checkMask(){
         for (int i = 0; i < massiv.length; i++) {
             if(massiv[i] == '-' && massiv[i+1] == 'n'){
-                int index = i + 3;
-                int length = 0;
-                while(massiv [index] != ' '){
-                    index ++;
-                    length++;
+                    int index = i + 3;
+                    int length = 0;
+                if(index <massiv.length) {
+                    while (massiv[index] != ' ') {
+                        index++;
+                        length++;
+                    }
+                    mask = String.copyValueOf(massiv, i + 3, length);
+                    flag++;
                 }
-                mask = String.copyValueOf(massiv,i + 3,length);
-                flag++;
             }
         }
         return  mask;
@@ -75,12 +80,14 @@ public class ValidationKey {
             if(massiv[i] == '-' && massiv[i+1] == 'o'){
                 int index = i + 3;
                 int length = 0;
-                while(index != massiv.length){
-                    index ++;
-                    length++;
+                if(index < massiv.length){
+                    while (index != massiv.length) {
+                        index++;
+                        length++;
+                    }
+                    logFile = String.copyValueOf(massiv, i + 3, length);
+                    flag++;
                 }
-                logFile = String.copyValueOf(massiv,i + 3,length);
-                flag++;
             }
         }
         return logFile;

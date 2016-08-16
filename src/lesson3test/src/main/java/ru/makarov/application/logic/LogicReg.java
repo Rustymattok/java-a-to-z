@@ -31,7 +31,6 @@ public class LogicReg implements AlgaritmSearch {
      */
     public void startwork(String dir) {
         Path patch1 = Paths.get(dir);
-        //String pattern = "regex:" + mask;
         String pattern = new StringBuilder().append("regex:").append(mask).toString();
         myFileVisitor = new FileVisitor(pattern,dir,logFile);
         try {

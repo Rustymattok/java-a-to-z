@@ -22,6 +22,7 @@ public class LogicStart {
         if(validationKey.getText().equals(ShowInterface.EXIT)){
             return;
         }
+
         if (validationKey.checkLogic().equals("m") || validationKey.checkLogic().equals("f")) {
             LogicMask logicMask = new LogicMask(validationKey.logFile(), validationKey.checkMask());
             logicUI = new LogicUI(logicMask);

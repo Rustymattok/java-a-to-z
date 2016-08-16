@@ -33,7 +33,6 @@ public class LogicMask implements AlgaritmSearch {
     public void startwork(String dir) {
         Path patch1 = Paths.get(dir);
         String pattern = new StringBuilder().append("glob:").append(mask).toString();
-        //String pattern = "glob:" + mask;
         myFileVisitor = new FileVisitor(pattern,dir,logFile);
         try {
             if (Files.exists(patch1)) {
