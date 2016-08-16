@@ -2,8 +2,10 @@ package ru.makarov.tracker.start;
 
 import ru.makarov.tracker.models.Choose;
 import ru.makarov.tracker.models.Item;
+
 import java.util.Date;
 import java.util.Random;
+
 /**
  * Logic of tracker.
  */
@@ -20,6 +22,7 @@ public class Tracker {
     private ShowMenu menu = new ShowMenu();
     /**
      * Add items
+     *
      * @param item - item wich you need to add to list.
      * @return list of items.
      */
@@ -30,15 +33,14 @@ public class Tracker {
     }
     /**
      * Find item using ID.
+     *
      * @param id - index for searching.
      * @return item by index.
      */
     public Item findByID(String id) {
         Item result = null;
-        for (Item item : items)
-        {
-            if (item != null && item.getID().equals(id))
-            {
+        for (Item item : items) {
+            if (item != null && item.getID().equals(id)) {
                 result = item;
             }
         }
@@ -46,57 +48,59 @@ public class Tracker {
     }
     /**
      * Find item by description.
+     *
      * @param description - parameter for searchind.
      * @return item by description.
      */
-    public Item findByDec(String description){
+    public Item findByDec(String description) {
         Item result = null;
-        for(Item item : items ){
-            if(item != null && item.getDescription().equals(description)){
+        for (Item item : items) {
+            if (item != null && item.getDescription().equals(description)) {
                 result = item;
             }
         }
-        return  result;
+        return result;
     }
     /**
      * Find item by Name.
+     *
      * @param name - parameter for searching.
      * @return item by name.
      */
-    public Item findByName (String name){
+    public Item findByName(String name) {
         Item result = null;
-        for(Item item : items ){
-            if(item != null && item.getName().equals(name)){
+        for (Item item : items) {
+            if (item != null && item.getName().equals(name)) {
                 result = item;
             }
         }
-        return  result;
+        return result;
     }
     /**
      * Find item by Date.
+     *
      * @param date - parameter for searching.
      * @return item by Date.
      */
-    public Item findByDate( Date date){
+    public Item findByDate(Date date) {
         Item result = null;
-        for(Item item : items ){
-            if(item != null && item.getDate().equals(date)){
+        for (Item item : items) {
+            if (item != null && item.getDate().equals(date)) {
                 result = item;
             }
         }
-        return  result;
+        return result;
     }
     /**
      * Delete item by index.
+     *
      * @param id - parameter for index.
      * @return list of items after deleting.
      */
     public Item[] deleteItem(String id) {
         Item item = findByID(id);
-        for (int i = 0; i < items.length; i++)
-        {
-            if (items[i].equals(item))
-            {
+        for (int i = 0; i < items.length; i++) {
+            if (items[i].equals(item)) {
                 items[i] = null;
                 sortItems(items);
                 break;
@@ -106,15 +110,14 @@ public class Tracker {
     }
     /**
      * Update item by index.
+     *
      * @param id - index for update.
      * @return updated item.
      */
     public Item[] updateItem(String id) {
         Item item = findByID(id);
-        for (int i = 0; i < items.length; i++)
-        {
-            if (items[i].equals(item))
-            {
+        for (int i = 0; i < items.length; i++) {
+            if (items[i].equals(item)) {
                 items[i].setName("");
                 items[i].setDescription("");
                 break;
@@ -126,17 +129,15 @@ public class Tracker {
     private String generateID() {
         return (System.currentTimeMillis() / 1000000000) / 100 + String.valueOf(random.nextInt(100));
     }
-
     /**
      * Sort list of items.
+     *
      * @param items - list for sorting.
      */
     public void sortItems(Item[] items) {
         Item b;
-        for (int i = 0; i < items.length - 1; i++)
-        {
-            if (items[i] == null && items[i + 1] != null)
-            {
+        for (int i = 0; i < items.length - 1; i++) {
+            if (items[i] == null && items[i + 1] != null) {
                 b = items[i + 1];
                 items[i + 1] = items[i];
                 items[i] = b;
@@ -145,13 +146,13 @@ public class Tracker {
     }
     /**
      * Choose type of active in menu.
+     *
      * @return type of active.
      */
     public Choose getChoose() {
-        boolean flag ;
+        boolean flag;
         Choose choose = null;
-        do
-        {
+        do {
             menu.showChoose();
             String result = menu.getScanner();
             if (result != null && !result.isEmpty()) {
@@ -180,16 +181,15 @@ public class Tracker {
                         menu.showErrorOfEnter();
                         flag = true;
                 }
-            }
-            else {
+            } else {
                 menu.showErrorOfEnter();
                 flag = true;
             }
-        }while (flag);
+        } while (flag);
         return choose;
     }
 
-    public Item[] getItems () {
-            return items;
-        }
+    public Item[] getItems() {
+        return items;
+    }
 }

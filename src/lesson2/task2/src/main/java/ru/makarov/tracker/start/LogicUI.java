@@ -3,6 +3,7 @@ package ru.makarov.tracker.start;
 import ru.makarov.tracker.interfaces.Input;
 import ru.makarov.tracker.models.Choose;
 import ru.makarov.tracker.models.Item;
+
 /**
  * Class for logic methods.
  */
@@ -26,11 +27,9 @@ public class LogicUI {
                 Item item = new Item();
                 tracker.addItem(input.addItem(item));
                 menu.createdItem(item.getID());
-//                System.out.println("Заявка id - " + item.getID() + " создана");
                 acton();
                 break;
             case EDITITEM:
-                //todo сделать редактирование - должен быть выбор списка.
                 menu.showItems(tracker.getItems());
                 menu.showEdit();
                 if (tracker.getItems()[0] == null) {
@@ -53,7 +52,6 @@ public class LogicUI {
                 acton();
                 break;
             case REMOVEITEM:
-                //todo сделать удаление - должен быть выбор списка
                 menu.showItems(tracker.getItems());
                 menu.showRemove();
                 if (tracker.getItems()[0] == null) {

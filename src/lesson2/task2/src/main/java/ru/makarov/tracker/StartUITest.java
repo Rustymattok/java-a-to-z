@@ -11,7 +11,6 @@ public class StartUITest {
     public static void main(String[] args) {
         ShowMenu menu = new ShowMenu();
         Tracker tracker = new Tracker();
-        //ConsoleInput input = new ConsoleInput();
         StubInput input = new StubInput();
         menu.showInfo();
         LogicUI logicUI = new LogicUI(tracker,input,menu);
