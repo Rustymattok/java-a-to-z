@@ -1,7 +1,7 @@
-package foodnew;
+package foodpart1;
 
-import foodnew.logic.ControllQualityNew;
-import foodnew.logic.LogicTest;
+import foodpart1.logic.ControllQualityNew;
+import foodpart1.logic.LogicTest;
 
 /**
  * Class for prelimerry start application.

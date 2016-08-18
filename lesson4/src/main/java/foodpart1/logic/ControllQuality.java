@@ -1,9 +1,9 @@
-package foodnew.logic;
+package foodpart1.logic;
 
-import foodnew.model.Food;
-import foodnew.model.Shop;
-import foodnew.model.Trash;
-import foodnew.model.Warehouse;
+import foodpart1.model.Food;
+import foodpart1.model.Shop;
+import foodpart1.model.Trash;
+import foodpart1.model.Warehouse;
 
 import java.util.ArrayList;
 

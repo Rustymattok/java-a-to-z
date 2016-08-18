@@ -1,6 +1,6 @@
-package foodnew.logic;
+package foodpart1.logic;
 
-import foodnew.model.Food;
+import foodpart1.model.Food;
 
 import java.util.ArrayList;
 import java.util.Date;

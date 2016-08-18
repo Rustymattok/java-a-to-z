@@ -1,4 +1,4 @@
-package foodnew.model;
+package foodpart1.model;
 
 public class WarehouseNew  {
     private Warehouse warehouse;

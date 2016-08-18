@@ -2,6 +2,7 @@ package food;
 
 import food.logic.ControllQuality;
 import food.logic.LogicTest;
+
 /**
  * Class for prelimerry start application.
  */
@@ -14,5 +15,4 @@ public class Test {
 //        System.out.println(controllQuality.getTrashFood().size());
 //        System.out.println(controllQuality.getWarFood().size());
     }
-
 }
