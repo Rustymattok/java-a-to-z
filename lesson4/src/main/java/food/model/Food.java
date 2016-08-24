@@ -27,8 +27,23 @@ public class Food {
      */
     public double calculateDay(){
         double result;
-        result = 100- (expaireDate.getDate() - creatDate.getDate())*100/expaireDate.getDate();
+        result = 100 - (expaireDate.getDate() - creatDate.getDate())*100/expaireDate.getDate();
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Food{" +
+                "name='" + name + '\'' +
+                ", expaireDate=" + expaireDate +
+                ", creatDate=" + creatDate +
+                ", price=" + price +
+                ", discount=" + discount +
+                '}';
+    }
+
+    public void test(){
+        System.out.println(calculateDay());
     }
 
     public String getName() {
