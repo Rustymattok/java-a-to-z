@@ -42,10 +42,6 @@ public class Food {
                 '}';
     }
 
-    public void test(){
-        System.out.println(calculateDay());
-    }
-
     public String getName() {
         return name;
     }

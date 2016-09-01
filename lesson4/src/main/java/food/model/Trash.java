@@ -7,18 +7,18 @@ import java.util.ArrayList;
 public class Trash extends Storage  {
     protected ArrayList<Food> trashFood = new ArrayList<Food>();
 
-    public Trash(ArrayList<Food> foodList) {
-        super(foodList);
+    public Trash(String name,ArrayList<Food> foodList) {
+        super(name,foodList);
     }
     /**
      * Method for init parameter depending of condition.
-     * @param i - index of list.
-     * @return
+     * @param food - food for sort.
+     * @return boolean.
      */
     @Override
-    public boolean isAppropriate(int i) {
+    public boolean isAppropriate(Food food) {
         boolean flag = false;
-        if(getFoodList().get(i).calculateDay() >= CONDITIONFORTRASH) {
+        if(food.calculateDay() >= CONDITIONFORTRASH) {
             flag = true;
         }
         return flag;
@@ -27,15 +27,15 @@ public class Trash extends Storage  {
      * Method for add to list rsult.
      */
     @Override
-    public void add() {
-        for (int i = 0; i < getFoodList().size(); i++) {
-            if (isAppropriate(i)) {
-                trashFood.add(getFoodList().get(i));
-            }
+    public void add(Food food) {
+            if (isAppropriate(food)) {
+                trashFood.add(food);
         }
     }
 
-    public ArrayList<Food> getTrashFood() {
+    @Override
+    public ArrayList<Food> getFoodList() {
         return trashFood;
     }
+
 }

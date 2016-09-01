@@ -13,22 +13,22 @@ public abstract class Storage {
     protected static final double CONDITIONFORTRASH = 100;
     protected static final double DISCONT = 25;
     private ArrayList<Food> foodList;
+    private String name;
 
-    public Storage(ArrayList<Food> foodList) {
+    public Storage(String name,ArrayList<Food> foodList) {
         this.foodList = foodList;
+        this.name = name;
     }
     /**
      * Method for init parameter depending of condition.
-     * @param i - index of list.
-     * @return
+     * @param food - if ok for condition .
+     * @return true.
      */
-    public abstract boolean isAppropriate(int i);
+    public abstract boolean isAppropriate(Food food);
     /**
      * Method for add to list rsult.
      */
-    public abstract void add();
+    public abstract void add(Food food);
 
-    public ArrayList<Food> getFoodList() {
-        return foodList;
-    }
+    public abstract ArrayList<Food> getFoodList();
 }

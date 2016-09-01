@@ -1,43 +1,41 @@
 package food.logic;
 
 import food.model.Food;
-import food.model.Shop;
-import food.model.Trash;
-import food.model.Warehouse;
+import food.model.Storage;
 import java.util.ArrayList;
 /**
  * Class for sort foods.
  */
 public class ControllQuality {
-    /**
-     * @param shop - List of foods in shop.
-     * @param warehouse - List of warehouse in shop.
-     * @param trash - List of trash in shop.
-     */
-    private Shop shop;
-    private Warehouse warehouse;
-    private Trash trash;
+    private ArrayList<Storage> storeges =  new ArrayList<Storage>();
+    private ArrayList<Food> list;
+
+    public ControllQuality(ArrayList<Food> list) {
+        this.list = list;
+    }
     /**
      *Method for start logic.
      */
-    public void action (ArrayList<Food> foods){
-        shop = new Shop(foods);
-        warehouse = new Warehouse(foods);
-        trash = new Trash(foods);
-        warehouse.add();
-        shop.add();
-        trash.add();
+    public void action(){
+        for (int i = 0; i < storeges.size(); i++) {
+            for (int j = 0; j < list.size(); j++) {
+                storeges.get(i).add(list.get(j));
+            }
+        }
+    }
+    /**
+     * This method add object of Storage to the Storage's list.
+     * @param storage - Shop , Warhous or Trash.
+     */
+    public void addStorage(Storage storage){
+            storeges.add(storage);
     }
 
-    public Shop getShop() {
-        return shop;
+    public ArrayList<Storage> getStoreges() {
+        return storeges;
     }
 
-    public Warehouse getWarehouse() {
-        return warehouse;
-    }
-
-    public Trash getTrash() {
-        return trash;
+    public ArrayList<Food> getList() {
+        return list;
     }
 }

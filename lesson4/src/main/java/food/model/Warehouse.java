@@ -7,18 +7,18 @@ import java.util.ArrayList;
 public class Warehouse extends Storage {
     protected ArrayList<Food> warFood = new ArrayList<Food>();
 
-    public Warehouse(ArrayList<Food> foodList) {
-        super(foodList);
+    public Warehouse(String name,ArrayList<Food> foodList) {
+        super(name,foodList);
     }
     /**
      * Method for init parameter depending of condition.
-     * @param i - index of list.
+     * @param food - food - food for sort.
      * @return
      */
     @Override
-    public boolean isAppropriate(int i) {
+    public boolean isAppropriate(Food food) {
         boolean flag = false;
-        if(getFoodList().get(i).calculateDay() <= CONDITIONFORWARHOUS) {
+        if(food.calculateDay() <=  CONDITIONFORWARHOUS) {
             flag = true;
         }
         return flag;
@@ -27,14 +27,15 @@ public class Warehouse extends Storage {
      * Method for add to list result.
      */
     @Override
-    public void add() {
-        for (int i = 0; i < getFoodList().size(); i++)
-            if (isAppropriate(i)) {
-                warFood.add(getFoodList().get(i));
+    public void add(Food food) {
+            if (isAppropriate(food)) {
+                warFood.add(food);
             }
     }
 
-    public ArrayList<Food> getWarFood() {
+    @Override
+    public ArrayList<Food> getFoodList() {
         return warFood;
     }
+
 }

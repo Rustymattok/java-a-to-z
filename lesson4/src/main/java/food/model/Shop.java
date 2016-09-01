@@ -7,23 +7,23 @@ import java.util.ArrayList;
     public class Shop extends Storage {
     protected ArrayList<Food> shopFood = new ArrayList<Food>();
 
-    public Shop(ArrayList<Food> foodList) {
-        super(foodList);
+    public Shop(String name, ArrayList<Food> foodList) {
+        super(name,foodList);
     }
     /**
      * Method for init parameter depending of condition.
-     * @param i - index of list.
+     * @param  food - food for sort.
      * @return
      */
     @Override
-    public boolean isAppropriate(int i) {
+    public boolean isAppropriate(Food food) {
         boolean flag = false;
-            if(getFoodList().get(i).calculateDay() > CONDITIONFORWARHOUS && getFoodList().get(i).calculateDay() < CONDITIONFORSHOP) {
+            if(food.calculateDay() > CONDITIONFORWARHOUS && food.calculateDay() < CONDITIONFORSHOP) {
                 flag = true;
         }
-        if(getFoodList().get(i).calculateDay() >= CONDITIONFORSHOP && getFoodList().get(i).calculateDay() <=  CONDITIONFORTRASH){
+        if(food.calculateDay() >= CONDITIONFORSHOP && food.calculateDay() <  CONDITIONFORTRASH){
             flag = true;
-            getFoodList().get(i).setDiscount(DISCONT);
+            food.setDiscount(DISCONT);
         }
         return flag;
     }
@@ -31,14 +31,16 @@ import java.util.ArrayList;
      * Method for add to list rsult.
      */
     @Override
-    public void add() {
-        for (int i = 0; i < getFoodList().size(); i++)
-            if (isAppropriate(i)) {
-                shopFood.add(getFoodList().get(i));
-            }
+    public void add(Food food) {
+        if (isAppropriate(food)) {
+            shopFood.add(food);
+        }
     }
 
-    public ArrayList<Food> getShopFood() {
+    @Override
+    public ArrayList<Food> getFoodList() {
         return shopFood;
     }
+
+
 }
