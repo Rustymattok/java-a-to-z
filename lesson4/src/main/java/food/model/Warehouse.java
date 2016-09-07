@@ -28,9 +28,7 @@ public class Warehouse extends Storage {
      */
     @Override
     public void add(Food food) {
-            if (isAppropriate(food)) {
-                warFood.add(food);
-            }
+        warFood.add(food);
     }
 
     @Override

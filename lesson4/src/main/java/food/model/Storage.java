@@ -15,6 +15,10 @@ public abstract class Storage {
     private ArrayList<Food> foodList;
     private String name;
 
+    public Storage() {
+        name = "new Storage";
+    }
+
     public Storage(String name,ArrayList<Food> foodList) {
         this.foodList = foodList;
         this.name = name;

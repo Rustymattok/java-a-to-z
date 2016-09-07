@@ -1,17 +1,12 @@
 package food;
 
 import food.logic.ControllQuality;
-/**
- * Class for show prelimery result.
- */
-public class ShowMenu {
-protected ControllQuality controllQuality;
+import food.logic.RControllQuality;
 
-    public ShowMenu(){
+public class RShowMenu  {
+    protected RControllQuality controllQuality;
 
-    }
-
-    public ShowMenu(ControllQuality controllQuality) {
+    public RShowMenu(RControllQuality controllQuality) {
         this.controllQuality = controllQuality;
     }
 

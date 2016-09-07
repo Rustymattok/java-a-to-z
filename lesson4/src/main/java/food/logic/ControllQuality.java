@@ -10,6 +10,9 @@ public class ControllQuality {
     private ArrayList<Storage> storeges =  new ArrayList<Storage>();
     private ArrayList<Food> list;
 
+    public ControllQuality() {
+    }
+
     public ControllQuality(ArrayList<Food> list) {
         this.list = list;
     }
@@ -19,6 +22,7 @@ public class ControllQuality {
     public void action(){
         for (int i = 0; i < storeges.size(); i++) {
             for (int j = 0; j < list.size(); j++) {
+                if (storeges.get(i).isAppropriate(list.get(j)))
                 storeges.get(i).add(list.get(j));
             }
         }
