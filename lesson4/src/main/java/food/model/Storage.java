@@ -1,38 +1,25 @@
 package food.model;
-
-import java.util.ArrayList;
 /**
  * Abstract class for comon porpereties of Food.
  */
-public abstract class Storage {
+public interface Storage {
     /**
      * Final parameters.
      */
-    protected static final double CONDITIONFORWARHOUS = 25;
-    protected static final double CONDITIONFORSHOP = 75;
-    protected static final double CONDITIONFORTRASH = 100;
-    protected static final double DISCONT = 25;
-    private ArrayList<Food> foodList;
-    private String name;
-
-    public Storage() {
-        name = "new Storage";
-    }
-
-    public Storage(String name,ArrayList<Food> foodList) {
-        this.foodList = foodList;
-        this.name = name;
-    }
+    double CONDITIONFORWARHOUS = 25;
+    double CONDITIONFORSHOP = 75;
+    double CONDITIONFORTRASH = 100;
+    double DISCONT = 25;
     /**
      * Method for init parameter depending of condition.
      * @param food - if ok for condition .
      * @return true.
      */
-    public abstract boolean isAppropriate(Food food);
+    boolean isAppropriate(Food food);
     /**
      * Method for add to list rsult.
      */
-    public abstract void add(Food food);
+    void add(Food food);
 
-    public abstract ArrayList<Food> getFoodList();
 }
+

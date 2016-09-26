@@ -1,8 +1,8 @@
 package testfood;
 
 import food.logic.ControllQuality;
-import food.logic.LogicTest;
 import food.model.Shop;
+import food.model.SmallWarhouse;
 import food.model.Trash;
 import food.model.Warehouse;
 import org.junit.Test;
@@ -12,37 +12,61 @@ import static org.hamcrest.core.Is.is;
  * Class for make tests.
  */
 public class ControllQualityTest {
-    private ControllQuality contr = new ControllQuality(new LogicTest().initList());
+    private ControllQuality controllQuality = new ControllQuality();
+    private LogicTest logicTest;
     /**
      * This method use for inet storages and make sort.
      */
     public void initForTest(){
-        contr.addStorage(new Shop("магнит",new LogicTest().initList()));
-        contr.addStorage(new Warehouse("1st",new LogicTest().initList()));
-        contr.addStorage(new Trash("магнит",new LogicTest().initList()));
+         logicTest = new LogicTest();
+         logicTest.initList();
     }
 
     @Test
     public void whenShouldCheckActionShop(){
          initForTest();
-         contr.action();
-         double result = contr.getStoreges().get(0).getFoodList().size();
-         assertThat(result,is((double)3));
+         Shop shop = new Shop();
+         controllQuality.addStorage(shop);
+         for (int i = 0; i < logicTest.getList().size(); i++) {
+            controllQuality.action(logicTest.getList().get(i));
+         }
+         double result = shop.getShopFood().size();
+         assertThat(result, is((double) 3));
+    }
+
+    @Test
+    public void whenShouldCheckActionSmallWarhouse(){
+        initForTest();
+        SmallWarhouse smallWarhouse = new  SmallWarhouse();
+        controllQuality.addStorage(smallWarhouse);
+        for (int i = 0; i < logicTest.getList().size(); i++) {
+            controllQuality.action(logicTest.getList().get(i));
+        }
+        double result = smallWarhouse.getWarFood().size();
+        assertThat(result,is((double)2));
     }
 
     @Test
     public void whenShouldCheckActionWarhous(){
         initForTest();
-        contr.action();
-        double result = contr.getStoreges().get(1).getFoodList().size();
+        Warehouse warehouse = new Warehouse();
+        controllQuality.addStorage(warehouse);
+        for (int i = 0; i < logicTest.getList().size(); i++) {
+            controllQuality.action(logicTest.getList().get(i));
+        }
+        double result = warehouse.getWarFood().size();
         assertThat(result,is((double)5));
     }
 
     @Test
     public void whenShouldCheckActionTrash(){
         initForTest();
-        contr.action();
-        double result = contr.getStoreges().get(2).getFoodList().size();
+        Trash trash = new Trash();
+        controllQuality.addStorage(trash);
+        for (int i = 0; i < logicTest.getList().size(); i++) {
+            controllQuality.action(logicTest.getList().get(i));
+        }
+        double result = trash.getTrashFood().size();
         assertThat(result,is((double)1));
     }
 }

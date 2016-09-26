@@ -4,18 +4,13 @@ import java.util.ArrayList;
 /**
  * Class describe foo for Trash.
  */
-public class Trash extends Storage  {
+public class Trash implements Storage {
     protected ArrayList<Food> trashFood = new ArrayList<Food>();
-
-    public Trash(String name,ArrayList<Food> foodList) {
-        super(name,foodList);
-    }
     /**
-     * Method for init parameter depending of condition.
-     * @param food - food for sort.
-     * @return boolean.
+     *
+     * @param food - if ok for condition .
+     * @return
      */
-    @Override
     public boolean isAppropriate(Food food) {
         boolean flag = false;
         if(food.calculateDay() >= CONDITIONFORTRASH) {
@@ -24,18 +19,17 @@ public class Trash extends Storage  {
         return flag;
     }
     /**
-     * Method for add to list rsult.
+     * This method add to the list of foods food.
+     * @param food
      */
-    @Override
     public void add(Food food) {
-            if (isAppropriate(food)) {
-                trashFood.add(food);
-        }
+        trashFood.add(food);
     }
 
-    @Override
-    public ArrayList<Food> getFoodList() {
+    //todo убрать после тестов
+
+
+    public ArrayList<Food> getTrashFood() {
         return trashFood;
     }
-
 }

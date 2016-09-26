@@ -8,22 +8,16 @@ import java.util.ArrayList;
  */
 public class ControllQuality {
     private ArrayList<Storage> storeges =  new ArrayList<Storage>();
-    private ArrayList<Food> list;
-
-    public ControllQuality() {
-    }
-
-    public ControllQuality(ArrayList<Food> list) {
-        this.list = list;
-    }
     /**
      *Method for start logic.
      */
-    public void action(){
-        for (int i = 0; i < storeges.size(); i++) {
-            for (int j = 0; j < list.size(); j++) {
-                if (storeges.get(i).isAppropriate(list.get(j)))
-                storeges.get(i).add(list.get(j));
+    public void action(Food food){
+        boolean flag =false;
+        for(Storage storage : this.storeges){
+            if(storage.isAppropriate(food)){
+                storage.add(food);
+                flag = true;
+                break;
             }
         }
     }
@@ -32,14 +26,6 @@ public class ControllQuality {
      * @param storage - Shop , Warhous or Trash.
      */
     public void addStorage(Storage storage){
-            storeges.add(storage);
-    }
-
-    public ArrayList<Storage> getStoreges() {
-        return storeges;
-    }
-
-    public ArrayList<Food> getList() {
-        return list;
+        this.storeges.add(storage);
     }
 }

@@ -4,18 +4,13 @@ import java.util.ArrayList;
 /**
  * Class describe foo for Warehouse.
  */
-public class Warehouse extends Storage {
+public class Warehouse implements Storage {
     protected ArrayList<Food> warFood = new ArrayList<Food>();
-
-    public Warehouse(String name,ArrayList<Food> foodList) {
-        super(name,foodList);
-    }
     /**
-     * Method for init parameter depending of condition.
-     * @param food - food - food for sort.
+     *
+     * @param food - if ok for condition .
      * @return
      */
-    @Override
     public boolean isAppropriate(Food food) {
         boolean flag = false;
         if(food.calculateDay() <=  CONDITIONFORWARHOUS) {
@@ -24,16 +19,16 @@ public class Warehouse extends Storage {
         return flag;
     }
     /**
-     * Method for add to list result.
+     * This method add to the list of foods food.
+     * @param food
      */
-    @Override
     public void add(Food food) {
         warFood.add(food);
     }
 
-    @Override
-    public ArrayList<Food> getFoodList() {
+    //todo убрать после теста
+
+    public ArrayList<Food> getWarFood() {
         return warFood;
     }
-
 }
