@@ -26,9 +26,6 @@ public class Trash implements Storage {
         trashFood.add(food);
     }
 
-    //todo убрать после тестов
-
-
     public ArrayList<Food> getTrashFood() {
         return trashFood;
     }
