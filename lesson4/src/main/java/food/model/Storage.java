@@ -1,6 +1,6 @@
 package food.model;
 /**
- * Abstract class for comon porpereties of Food.
+ * Interface for comon porpereties of Food.
  */
 public interface Storage {
     /**
