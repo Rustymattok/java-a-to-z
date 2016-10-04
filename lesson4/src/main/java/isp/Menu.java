@@ -1,21 +1,23 @@
 package isp;
+
+import java.util.ArrayList;
 /**
- * Class wich describe menu.
+ * Class creat common menu with different items.
  */
-public class Menu implements MainMenu,Chapter,UnderChapter {
+public class Menu implements Information   {
+    private ArrayList<Node> nodeList = new ArrayList<Node>();
 
-    public void chapter(String text) {
-        System.out.printf("--%s",text);
-        System.out.println();
+    public void add(Node node) {
+        nodeList.add(node);
     }
 
-    public void commonChapter(String text) {
-        System.out.printf("%s",text);
-        System.out.println();
-    }
-
-    public void undershupter(String text) {
-        System.out.printf("----%s",text);
-        System.out.println();
+    public void info() {
+        int flag = 0;
+        for (Node node : nodeList) {
+            System.out.printf("%s.%s", node.getName(), node.getKeyName());
+            flag++;
+            System.out.println();
+            node.info();
+        }
     }
 }
