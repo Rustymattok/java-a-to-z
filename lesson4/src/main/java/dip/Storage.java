@@ -4,6 +4,6 @@ package dip;
  */
 public interface Storage extends Show {
     void creat(User user);
-    void edit(User user,String name,int age,int id );
+    void edit(User user, String name, int age,int id);
     void delete(User user);
 }

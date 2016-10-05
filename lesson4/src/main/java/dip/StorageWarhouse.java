@@ -5,25 +5,26 @@ import java.util.ArrayList;
  * Class for test of Storage application.
  */
 public class StorageWarhouse implements Storage {
-    CompareInt compareInt;
     /**
-     * @param liatUser - list of User .
+     * @param compareInt - parameter of interface to choose different logic for validation.
+     * @param listUser - list of items (Users).
      */
+    ValidateImp compareInt;
     private ArrayList<User> listUser = new ArrayList<User>();
 
-    public StorageWarhouse(CompareInt compareInt) {
+    public StorageWarhouse(ValidateImp compareInt) {
         this.compareInt = compareInt;
     }
-    /**
-     * Add to the list of User new User.
-     * @param user
-     */
+
+
     public void creat(User user) {
-        listUser.add(user);
+        if(!compareInt.validate(user,listUser)){
+            listUser.add(user);
+        }
     }
 
-    public void edit(User user,String name,int age,int id ) {
-        if(compareInt.compare(user.getName(),user.getAge(),user.getId())){
+    public void edit(User user, String name, int age,int id) {
+        if(compareInt.validate(user, listUser)){
             user.setName(name);
             user.setAge(age);
             user.setId(id);
@@ -31,7 +32,14 @@ public class StorageWarhouse implements Storage {
     }
 
     public void delete(User user) {
-
+        int index = 0;
+        for(User userDelete: listUser){
+            if (compareInt.validate(user,userDelete)){
+                listUser.remove(index);
+                break;
+            }
+            index++;
+        }
     }
 
     public ArrayList<User> getListUser() {
@@ -42,5 +50,6 @@ public class StorageWarhouse implements Storage {
         for(User user : listUser){
             System.out.println(user.getName() + "   " + user.getAge() + "   " +  user.getId());
         }
+        System.out.println();
     }
 }
