@@ -17,7 +17,10 @@ public class SimpleGenerator implements Template {
         int flag = 0;
         for (int i = 0; i < values.length ; i++) {
             if(validate(text)) {
-                text = text.replace(values[i].getKey(), values[i].getValue());
+                String key = "${";
+                key = key.concat(values[i].getKey());
+                key = key.concat("}");
+                text = text.replace(key, values[i].getValue());
                 flag ++;
             }
         }
