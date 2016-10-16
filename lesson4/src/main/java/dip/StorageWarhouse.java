@@ -6,7 +6,7 @@ import java.util.ArrayList;
  */
 public class StorageWarhouse implements Storage {
     /**
-     * @param compareInt - parameter of interface to choose different logic for validation.
+     * @param compareInt - parameter of game.interface to choose different logic for validation.
      * @param listUser - list of items (Users).
      */
     ValidateImp compareInt;

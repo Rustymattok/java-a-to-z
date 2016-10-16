@@ -5,7 +5,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 /**
- * Class for Show interface.
+ * Class for Show game.interface.
  */
 public class ShowInterface {
      final static String EXIT = "exit";

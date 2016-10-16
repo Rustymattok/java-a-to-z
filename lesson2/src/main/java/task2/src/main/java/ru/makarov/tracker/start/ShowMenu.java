@@ -3,7 +3,7 @@ package ru.makarov.tracker.start;
 import ru.makarov.tracker.models.Item;
 import java.util.Scanner;
 /**
- * Class for show interface .
+ * Class for show game.interface .
  */
 public class ShowMenu {
     private Scanner sensor = new Scanner(System.in);

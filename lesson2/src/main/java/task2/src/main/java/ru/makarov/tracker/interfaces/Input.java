@@ -2,8 +2,8 @@ package ru.makarov.tracker.interfaces;
 
 import ru.makarov.tracker.models.Item;
 /**
- * Common interface for add Item.
+ * Common game.interface for add Item.
  */
-public interface Input {
+public game.interface Input {
     Item addItem(Item item);
 }

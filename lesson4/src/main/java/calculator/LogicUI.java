@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
  */
 public class LogicUI {
     /**
-     * @param showMenu - parameter for interface of show Menu.
+     * @param showMenu - parameter for game.interface of show Menu.
      * @param calc - parameter for init logic of SimpleCalc.
      */
     private ShowMenu showMenu;
