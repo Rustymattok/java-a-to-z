@@ -118,7 +118,7 @@ public class ValidationConsole implements Validation,Condition {
                 if(field.getListPoint().get((field.getSIZE() + 1) * j).getRes() == person.getVision() ){
                     index ++;
                 }
-                if(index == 3){
+                if(index == field.getSIZE()){
                     flag = true;
                     break;
                 }
@@ -140,7 +140,7 @@ public class ValidationConsole implements Validation,Condition {
                 if(field.getListPoint().get((field.getSIZE()-1) * (j + 1)).getRes() == person.getVision() ){
                     index ++;
                 }
-                if(index == 3){
+                if(index == field.getSIZE()){
                     flag = true;
                     break;
                 }
