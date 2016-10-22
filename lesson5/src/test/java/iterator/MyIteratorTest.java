@@ -8,8 +8,8 @@ import static org.hamcrest.core.Is.is;
  */
 public class MyIteratorTest {
     /**
-     * Allow to check work of hasNext. THis iterator made for take even.
-     * The common quantity of even should be 4 in our sample.
+     * Allow to check work of hasNext. THis iterator made for take simple.
+     * The common quantity of simple should be 4 in our sample.
      * @throws Exception
      */
     @Test
@@ -26,7 +26,7 @@ public class MyIteratorTest {
 
     }
     /**
-     * Allow to check work of next. THis iterator made for take even.
+     * Allow to check work of next. THis iterator made for take simple.
      * @throws Exception
      */
     @Test

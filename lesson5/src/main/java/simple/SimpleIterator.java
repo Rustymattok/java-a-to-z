@@ -1,12 +1,14 @@
-package iterator;
+package simple;
+
+import java.util.Iterator;
 /**
  *Class discribe own Iterator.
  */
-public class MyIterator implements Iterator {
+public class SimpleIterator implements Iterator{
     private int index = 0;
     private Integer[] arr;
 
-    public MyIterator(Integer[] arr) {
+    public SimpleIterator(Integer[] arr) {
         this.arr = arr;
     }
     /**
@@ -17,11 +19,13 @@ public class MyIterator implements Iterator {
         boolean flag = false;
         Integer rezult;
         int mIndex = this.index;
+        int i;
         while(mIndex < arr.length){
             rezult = arr[mIndex++];
-            if(rezult%2 == 0){
+            for (i = 2; (rezult%i) > 0 ; i++) {
+            }
+            if (i == rezult ){
                 flag = true;
-                break;
             }
         }
         return flag;
@@ -30,14 +34,18 @@ public class MyIterator implements Iterator {
      * Take parameter of masive and move index depends of conditions. Only for simple parameters.
      * @return rezult.
      */
-    public Object  next() {
+    public Object next() {
         Integer rezult = null;
+        int i;
         while (index < arr.length){
             rezult = arr[index++];
-            if (rezult%2 == 0){
+            for (i = 2; (rezult%i) > 0 ; i++) {
+            }
+            if (i == rezult ){
                 break;
             }
         }
         return rezult;
     }
 }
+
