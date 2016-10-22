@@ -13,7 +13,7 @@ public class NumberTest {
      */
     private Logic logic;
     /**
-     * whenShouldCheckNumberEven() - this method check for even.
+     * whenShouldCheckNumberEven() - this method check for simple.
      */
     @Test
     public void whenShouldCheckNumberEven(){

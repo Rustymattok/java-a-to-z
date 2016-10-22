@@ -21,7 +21,7 @@ public class Logic {
             number.setDiscribe(Discribe.ODD);
     }
     /**
-     * even() - method for test number for even.
+     * simple() - method for test number for simple.
      */
     public boolean even() {
         boolean flag = false;
