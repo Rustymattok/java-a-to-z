@@ -1,4 +1,4 @@
-package simple;
+package part1.iterator.simple;
 
 import org.junit.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -8,8 +8,8 @@ import static org.hamcrest.core.Is.is;
  */
 public class SimpleIteratorTest {
     /**
-     * Allow to check work of hasNext. THis iterator made for take simple.
-     * The common quantity of simple should be 4 in our sample.
+     * Allow to check work of hasNext. THis part1iterator.bigIterator.iterator made for take part1iterator.bigIterator.simple.
+     * The common quantity of part1iterator.bigIterator.simple should be 4 in our sample.
      */
     @Test
     public void whenShouldCheckHasNext(){
@@ -23,7 +23,7 @@ public class SimpleIteratorTest {
         assertThat(count,is((int)4));
     }
     /**
-     * Allow to check work of next. THis iterator made for take simple.
+     * Allow to check work of next. THis part1iterator.bigIterator.iterator made for take part1iterator.bigIterator.simple.
      */
     @Test
     public void whenShouldCheckNext(){

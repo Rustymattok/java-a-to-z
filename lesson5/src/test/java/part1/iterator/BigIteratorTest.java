@@ -1,6 +1,8 @@
-package bigIterator;
+package part1.iterator;
 
 import org.junit.Test;
+import part1.iterator.bigiterator.BigIterator;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -15,7 +17,7 @@ public class BigIteratorTest {
     private ArrayList<Integer> three = new ArrayList<Integer>(Arrays.asList(7,8,9));
     /**
      * Allow to check work of hasNext.
-     * The common quantity of simple should be 9 in our sample.
+     * The common quantity of part1iterator.bigIterator.simple should be 9 in our sample.
      * @throws Exception
      */
     @Test

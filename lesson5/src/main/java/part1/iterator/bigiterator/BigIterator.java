@@ -1,4 +1,4 @@
-package bigIterator;
+package part1.iterator.bigiterator;
 
 import java.util.Iterator;
 /**

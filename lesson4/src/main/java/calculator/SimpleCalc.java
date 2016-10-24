@@ -1,6 +1,6 @@
 package calculator;
 /**
- * Class of Logic simple logic.
+ * Class of Logic part1iterator.bigIterator.simple logic.
  */
 public class SimpleCalc {
     public SimpleCalc() {

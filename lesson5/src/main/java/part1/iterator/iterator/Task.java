@@ -1,4 +1,4 @@
-package iterator;
+package part1.iterator.iterator;
 /**
  * Class for using Iterator with conditions.
  */

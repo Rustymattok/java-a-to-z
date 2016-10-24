@@ -13,7 +13,7 @@ public class NumberTest {
      */
     private Logic logic;
     /**
-     * whenShouldCheckNumberEven() - this method check for simple.
+     * whenShouldCheckNumberEven() - this method check for part1iterator.bigIterator.simple.
      */
     @Test
     public void whenShouldCheckNumberEven(){
