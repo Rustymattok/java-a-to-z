@@ -4,13 +4,34 @@ package part2.generic;
  * @param <T>
  */
 public class SimpleGeneric <T> {
+    private final static Object[] EMPTY_ELEMENTDATA = {};
     private Object[] objects;
     private int index;
+    private int size;
 
     public SimpleGeneric(T[] objects) {
         this.objects = objects;
         this.index = 0;
+        this.size = objects.length;
     }
+
+    public SimpleGeneric(int length){
+        if (length > 0) {
+            this.objects = new Object[length];
+            this.size = length;
+        } else if (length == 0) {
+            this.objects = EMPTY_ELEMENTDATA;
+        } else {
+            throw new IllegalArgumentException("Illegal Capacity: "+
+                    length);
+        }
+    }
+
+    public SimpleGeneric(){
+        this.size = 0;
+        this.objects = EMPTY_ELEMENTDATA;
+    }
+
     /**
      * This method allow to add new element in massive. The size of massive is flexible.
      * @param object - add new object to massive.
@@ -23,6 +44,7 @@ public class SimpleGeneric <T> {
         objects = new Object [copy.length];
         System.arraycopy(copy,0,objects,0,copy.length);
         index++;
+        size++;
     }
     /**
      * This method allow edite object in massive. It depends of index in massive.
@@ -45,6 +67,7 @@ public class SimpleGeneric <T> {
             System.arraycopy(objects,index + 1,copy,index,objects.length - index - 1);
         }
         objects = copy;
+        size--;
         return  objects;
     }
     /**
@@ -62,4 +85,7 @@ public class SimpleGeneric <T> {
         }
     }
 
+    public int size() {
+        return size;
+    }
 }
