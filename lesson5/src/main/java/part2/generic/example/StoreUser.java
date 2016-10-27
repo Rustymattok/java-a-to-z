@@ -16,12 +16,11 @@ public class StoreUser implements Store<User> {
     }
 
     public void add(User object) {
-        list.add((User) object);
+        list.add(object);
     }
 
-    public SimpleGeneric<User> remove(int index) {
+    public void remove(int index) {
         list.delete(index);
-        return list;
     }
 
     public void  show(){

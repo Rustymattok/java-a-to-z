@@ -10,5 +10,5 @@ public abstract class Base {
     }
 
     abstract String getId();
-    abstract void seID(String id);
+    abstract void setID(String id);
 }

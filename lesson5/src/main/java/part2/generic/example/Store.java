@@ -9,5 +9,5 @@ import part2.generic.SimpleGeneric;
 public interface Store<T extends Base> {
     T getByIndex(int index);
     void add(T object);
-    SimpleGeneric<T> remove (int index);
+    void remove (int index);
 }
