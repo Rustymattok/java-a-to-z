@@ -25,6 +25,17 @@ public class MyArrayList<T> implements ContainerArray<T>{
     public MyArrayList() {
         this.elementData = new Object[DEFAULT_CAPACITY];
     }
+
+    public MyArrayList(int sizeCapacity){
+        if (sizeCapacity > 0) {
+            this.elementData = new Object[sizeCapacity];
+        } else if (sizeCapacity == 0) {
+            this.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;
+        } else {
+            throw new IllegalArgumentException("Illegal Capacity: "+
+                    sizeCapacity);
+        }
+    }
     /**
      * Method increase size o massive.
      */
@@ -49,6 +60,14 @@ public class MyArrayList<T> implements ContainerArray<T>{
         checkCapacity();
         elementData[position++] = object;
     }
+
+    public void add(int index, T object) {
+        checkCapacity();
+        System.arraycopy(elementData, index, elementData, index + 1, position - index);
+        elementData[index] = object;
+        position++;
+    }
+
     /**
      * This method take object of massive by Index.
      * @param index

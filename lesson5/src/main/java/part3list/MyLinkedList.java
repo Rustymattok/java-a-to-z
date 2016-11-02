@@ -29,6 +29,28 @@ public class MyLinkedList <T> implements ContainerArray<T> {
         }
         size++;
     }
+    public void add(int index, T element) {
+        if (index == size)
+            linkLast(element);
+        else
+            linkBefore(element,node(index));
+        size++;
+    }
+
+    private void linkBefore(T element, MyNode<T> node) {
+        MyNode<T> pred = node.prev;
+        MyNode<T> newMode = new MyNode<T>(element,pred,node);
+        node.prev = newMode;
+        if (pred == null)
+            first = newMode;
+        else
+            pred.next = newMode;
+    }
+
+    private void linkLast(T element) {
+       add(element);
+    }
+
     /**
      * This method return node by index.
      * @param index

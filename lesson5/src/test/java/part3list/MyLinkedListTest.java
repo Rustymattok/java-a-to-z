@@ -2,6 +2,8 @@ package part3list;
 
 import org.junit.Test;
 
+import java.util.Iterator;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -38,5 +40,21 @@ public class MyLinkedListTest {
         list.add("Test5");
         String result = list.getArr(2);
         assertThat(result, is("Test3"));
+    }
+    @Test
+    public void whenShouldCheckAddByIndex(){
+        list = new MyLinkedList<String>();
+        list.add("Test1");
+        list.add("Test2");
+        list.add("Test3");
+        list.add("Test4");
+        list.add("Test5");
+        list.add(2,"Test");
+        Iterator it = list.iterator();
+        while (it.hasNext()){
+            System.out.println(it.next());
+        }
+       // String result = list.getArr(5);
+     //   assertThat(result, is("Test"));
     }
 }
