@@ -58,4 +58,18 @@ public class MyLinkedListTest {
         String result = list.getArr(2);
         assertThat(result, is("Test"));
     }
+    /**
+     * This method allow to check method remove.
+     */
+    @Test
+    public void whenShouldCheckRemoveByIndex(){
+        list = new MyLinkedList<String>();
+        list.add("Test1");
+        list.add("Test2");
+        list.add("Test3");
+        list.add("Test4");
+        list.add("Test5");
+        String result = list.remove(2);
+        assertThat(result, is("Test3"));
+    }
 }

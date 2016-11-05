@@ -63,6 +63,40 @@ public class MyLinkedList <T> implements ContainerArray<T> {
         }
         size++;
     }
+    /**
+     * This method allow to orgonize moving lists, during removing.
+     */
+    public T linkRemove(MyNode<T> node){
+        final T element = node.object;
+        final MyNode<T> next = node.next;
+        final MyNode<T> prev = node.prev;
+
+        if (prev == null) {
+            first = next;
+        } else {
+            prev.next = next;
+            node.prev = null;
+        }
+
+        if (next == null) {
+            last = prev;
+        } else {
+            next.prev = prev;
+            node.next = null;
+        }
+
+        node.object = null;
+        size--;
+        return element;
+    }
+    /**
+     * This method remove element from list by Index.
+     * @param index - position of element in the list.
+     * @return element which will be delete.
+     */
+    public T remove(int index){
+        return  linkRemove(node(index));
+    }
 
     /**
      * This method return node by index.
