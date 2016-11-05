@@ -41,6 +41,11 @@ public class MyLinkedListTest {
         String result = list.getArr(2);
         assertThat(result, is("Test3"));
     }
+    /**
+     * This method allow to check method get.
+     * If get object by index equel choosed.
+     * @throws Exception
+     */
     @Test
     public void whenShouldCheckAddByIndex(){
         list = new MyLinkedList<String>();
@@ -50,11 +55,7 @@ public class MyLinkedListTest {
         list.add("Test4");
         list.add("Test5");
         list.add(2,"Test");
-        Iterator it = list.iterator();
-        while (it.hasNext()){
-            System.out.println(it.next());
-        }
-       // String result = list.getArr(5);
-     //   assertThat(result, is("Test"));
+        String result = list.getArr(2);
+        assertThat(result, is("Test"));
     }
 }

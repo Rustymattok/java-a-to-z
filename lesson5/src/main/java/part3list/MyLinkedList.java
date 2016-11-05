@@ -7,6 +7,7 @@ import java.util.NoSuchElementException;
  * @param <T>
  */
 public class MyLinkedList <T> implements ContainerArray<T> {
+
     /**
      * Node befor and after.
      * @param size - size of list.
@@ -19,36 +20,48 @@ public class MyLinkedList <T> implements ContainerArray<T> {
      * @param object
      */
     public void add(T object) {
+        linkLast(object);
+    }
+    /**
+     * This method for add element in our list.
+     * @param index - index of element.
+     * @param element - object which we add.
+     */
+    public void add(int index, T element) {
+        if (index == size)
+            linkLast(element);
+        else {
+            MyNode<T> node = node(index);
+            linkBefore(element, node);
+        }
+    }
+
+    private void linkBefore(T element, MyNode<T> node) {
+        MyNode<T> param = node.prev;
+        MyNode<T> newMode = new MyNode<T>(element,node.next,node.prev);
+        node.prev = newMode;
+        if (node.equals(first)) {
+            first = newMode;
+            first.next = node;
+        }
+        else {
+            param.next = newMode;
+            newMode.next = node;
+        }
+       size++;
+    }
+
+    private void linkLast(T element) {
         MyNode<T> next = last;
-        MyNode<T> newMode = new MyNode<T>(object,next,null);
+        MyNode<T> newMode = new MyNode<T>(element,next,null);
         this.last = newMode;
         if(next == null) {
             first = newMode;
         }else{
             next.next = newMode;
+            newMode.prev = next;
         }
         size++;
-    }
-    public void add(int index, T element) {
-        if (index == size)
-            linkLast(element);
-        else
-            linkBefore(element,node(index));
-        size++;
-    }
-
-    private void linkBefore(T element, MyNode<T> node) {
-        MyNode<T> pred = node.prev;
-        MyNode<T> newMode = new MyNode<T>(element,pred,node);
-        node.prev = newMode;
-        if (pred == null)
-            first = newMode;
-        else
-            pred.next = newMode;
-    }
-
-    private void linkLast(T element) {
-       add(element);
     }
 
     /**
@@ -76,6 +89,10 @@ public class MyLinkedList <T> implements ContainerArray<T> {
         return  node(index).getObject();
     }
 
+    public MyNode<T> getA(int index) {
+        return  node(index);
+    }
+
     public int getSize() {
         return size;
     }
@@ -101,6 +118,11 @@ public class MyLinkedList <T> implements ContainerArray<T> {
         public T getObject() {
             return object;
         }
+
+        public void setObject(T object) {
+            this.object = object;
+        }
+
     }
     /**
      * Iterator for this class.
@@ -129,5 +151,6 @@ public class MyLinkedList <T> implements ContainerArray<T> {
 
         }
     }
+
 }
 
