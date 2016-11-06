@@ -76,3 +76,4 @@ public class ValidationConsoleTest {
         assertThat(rezult, is(true));
     }
 }
+

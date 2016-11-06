@@ -13,7 +13,7 @@ public class Role extends Base {
     }
 
     @Override
-    void seID(String id) {
+    void setID(String id) {
         super.id = id;
     }
 }

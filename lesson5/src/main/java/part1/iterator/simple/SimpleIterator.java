@@ -47,5 +47,9 @@ public class SimpleIterator implements Iterator{
         }
         return rezult;
     }
+
+    public void remove() {
+
+    }
 }
 

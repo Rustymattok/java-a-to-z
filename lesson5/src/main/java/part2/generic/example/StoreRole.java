@@ -16,11 +16,10 @@ public class StoreRole implements Store<Role> {
     }
 
     public void add(Role object) {
-        list.add((Role) object);
+        list.add(object);
     }
 
-    public SimpleGeneric<Role> remove(int index) {
+    public void remove(int index) {
         list.delete(index);
-        return list;
     }
 }

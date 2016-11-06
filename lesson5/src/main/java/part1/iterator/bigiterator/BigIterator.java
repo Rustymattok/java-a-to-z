@@ -36,6 +36,10 @@ public class BigIterator implements Container {
                 return rezult;
 
             }
+
+            public void remove() {
+
+            }
         };
     }
 }
