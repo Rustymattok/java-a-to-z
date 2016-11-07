@@ -35,10 +35,7 @@ public class MyStackTest {
         list.add("Test4");
         list.add("Test5");
         String result = list.peek();
-<<<<<<< HEAD
         assertThat(result, is("Test5"));
-=======
-        assertThat(result, is("Test1"));
->>>>>>> github/master
+
     }
 }
