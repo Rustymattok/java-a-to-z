@@ -16,6 +16,10 @@ public class MyQueue<T> extends MyLinkedList<T> implements IQureContainer<T>{
      * @return - element which was deleted.
      */
     public T peek() {
+<<<<<<< HEAD
         return super.remove(0);
+=======
+        return super.remove(super.getSize() - 1);
+>>>>>>> github/master
     }
 }

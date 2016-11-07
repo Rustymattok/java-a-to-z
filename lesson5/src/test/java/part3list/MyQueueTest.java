@@ -35,6 +35,10 @@ public class MyQueueTest {
         list.add("Test4");
         list.add("Test5");
         String result = list.peek();
+<<<<<<< HEAD
         assertThat(result, is("Test1"));
+=======
+        assertThat(result, is("Test5"));
+>>>>>>> github/master
     }
 }
