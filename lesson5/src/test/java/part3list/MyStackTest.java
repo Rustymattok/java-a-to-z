@@ -35,6 +35,6 @@ public class MyStackTest {
         list.add("Test4");
         list.add("Test5");
         String result = list.peek();
-        assertThat(result, is("Test1"));
+        assertThat(result, is("Test5"));
     }
 }

@@ -35,6 +35,6 @@ public class MyQueueTest {
         list.add("Test4");
         list.add("Test5");
         String result = list.peek();
-        assertThat(result, is("Test5"));
+        assertThat(result, is("Test1"));
     }
 }

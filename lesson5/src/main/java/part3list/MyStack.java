@@ -16,6 +16,6 @@ public class MyStack<T> extends MyLinkedList<T> implements IQureContainer<T> {
      * @return - element which was deleted.
      */
     public T peek() {
-        return super.remove(0);
+        return super.remove(super.getSize() - 1);
     }
 }
