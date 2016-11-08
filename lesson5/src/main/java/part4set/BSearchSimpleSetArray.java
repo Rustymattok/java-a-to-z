@@ -73,11 +73,11 @@ public class BSearchSimpleSetArray <T> {
      * @param array -  element of massiv for compare.
      * @return -1 if nothing found.
      */
-    public int bSearch( Object obj, Object[] array ) {
+    private int bSearch( Object obj, Object[] array ) {
         return bSearch( obj, array, 0, position-1);
     }
 
-    public int bSearch( Object obj, Object[] array, int lowerBound, int upperBound ) {
+    private int bSearch( Object obj, Object[] array, int lowerBound, int upperBound ) {
         if ( lowerBound > upperBound ) return -1;
 
         int med = lowerBound + ( upperBound - lowerBound ) / 2;
@@ -94,7 +94,7 @@ public class BSearchSimpleSetArray <T> {
      * @param array -  element of massiv for compare.
      * @return 0 - if hashcode equel 1 - if hashcode of object < element and others.
      */
-    public int compareTo(Object object,Object array){
+    private int compareTo(Object object,Object array){
         int result = 0;
         if(object.hashCode() > array.hashCode()){
             result = 1;
