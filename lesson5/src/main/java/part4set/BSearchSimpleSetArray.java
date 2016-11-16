@@ -152,6 +152,10 @@ public class BSearchSimpleSetArray <T> {
                 throw new NoSuchElementException();
             }
         }
+
+        public void remove() {
+
+        }
     }
 }
 
