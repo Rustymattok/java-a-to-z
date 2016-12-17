@@ -51,4 +51,7 @@ public class Node<T>{
         }
         this.children = children;
     }
+    public Node<T> getChild(){
+        return new Node<T>(value);
+    }
 }

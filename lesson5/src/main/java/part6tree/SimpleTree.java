@@ -13,6 +13,8 @@ public class SimpleTree<T> {
      * Node<T> link for type.
      */
     private Node<T> root;
+    private Node<T> rootN;
+    private int i = 0;
 
     public SimpleTree(T rootValue){
         root = new Node<T>(rootValue);
@@ -24,10 +26,9 @@ public class SimpleTree<T> {
      * @param value
      */
     public void addChildren(Node<T> parent,T value){
-        Node<T> rootN = new Node<T>(value);
-        root.getParent().setParent(parent);
+        rootN = new Node<T>(value);
+        rootN.setParent(parent);
         root.getChildren().add(rootN);
-        root.setParent(parent);
     }
     /**
      * This method allow to take all children.
@@ -39,6 +40,58 @@ public class SimpleTree<T> {
             list.add(root.getChildren().get(i).getValue());
         }
         return   list;
+    }
+    /**
+     * This method allow to check contain T element in Tree.
+     * @param value
+     * @return ture/false.
+     */
+    public boolean contain(T value){
+        boolean result = false;
+        for (int i = 0; i < root.getChildren().size(); i++) {
+            if(root.getChildren().get(i).getValue().equals(value)){
+                result = true;
+            }
+        }
+        return  result;
+    }
+    /**
+     * This method allow to take node by T value.
+     * @param value
+     * @return
+     */
+    public Node<T> findByValue(T value){
+        Node<T> node = null;
+        for (int i = 0; i < root.getChildren().size(); i++) {
+            if(root.getChildren().get(i).getValue().equals(value)){
+                node = root.getChildren().get(i);
+            }
+        }
+        return node;
+    }
+    /**
+     * This method allow to check balance or not this tree.
+     * @return true/ false.
+     */
+    public boolean balanceTree(){
+        boolean result = false;
+        Node<T> node = null;
+        int j;
+        int index = 0;
+        for (int i = 0; i < root.getChildren().size(); i++) {
+            node = root.getChildren().get(i).getParent();
+            j = i + 1;
+            while (j < root.getChildren().size()){
+                if (node.equals(root.getChildren().get(j).getParent())){
+                    index++;
+                }
+                j++;
+            }
+        }
+        if (index == root.getChildren().size()/2){
+            result = true;
+        }
+        return result;
     }
 
     public Node<T> getRoot() {
@@ -69,6 +122,10 @@ public class SimpleTree<T> {
             } else {
                 throw new NoSuchElementException();
             }
+        }
+
+        public void remove() {
+
         }
     }
 }
