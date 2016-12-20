@@ -27,12 +27,10 @@ public class SimpleTreeTest {
         assertThat(result, is((int) 4));
     }
 
-
-
     @Test
     public void whenShouldCheckGetChildren() throws Exception {
         init();
-        List<String> array = list.getChildren();
+        List<Node<String>> array = list.getChildren();
         int result = array.size();
         assertThat(result,is((int)4));
     }
@@ -40,16 +38,18 @@ public class SimpleTreeTest {
     public void whenShouldContain() throws Exception{
         boolean result;
         init();
-        result = list.contain("Makarov");
+        list.addChildren(list.getChildren().get(0),"Treeeeeee");
+        result = list.contain("Treeeeeee");
         assertThat(result, is(true));
     }
     @Test
     public void whenShouldCheckFindByValue(){
         Node<String> node;
         init();
+        list.addChildren(list.getChildren().get(0),"Treeeeeee");
         boolean result = false;
-        node = list.findByValue("Makarov");
-        if(node.equals(list.getRoot().getChildren().get(3))){
+        node = list.findByValue("Treeeeeee");
+        if(node.equals(list.getRoot().getChildren().get(4))){
             result = true;
         }
         assertThat(result, is(true));

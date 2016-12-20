@@ -34,10 +34,10 @@ public class SimpleTree<T> {
      * This method allow to take all children.
      * @return
      */
-    public List<T> getChildren(){
-        List<T> list = new ArrayList<T>();
+    public List<Node<T>> getChildren(){
+        List<Node<T>> list = new ArrayList<Node<T>>();
         for (int i = 0; i < root.getChildren().size(); i++) {
-            list.add(root.getChildren().get(i).getValue());
+            list.add(root.getChildren().get(i));
         }
         return   list;
     }
@@ -88,7 +88,7 @@ public class SimpleTree<T> {
                 j++;
             }
         }
-        if (index == root.getChildren().size()/2){
+        if ((root.getChildren().size())%index == 0){
             result = true;
         }
         return result;
