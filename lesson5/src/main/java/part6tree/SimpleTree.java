@@ -27,7 +27,11 @@ public class SimpleTree<T> {
      */
     public void addChildren(Node<T> parent,T value){
         rootN = new Node<T>(value);
-        rootN.setParent(parent);
+        List<Node<T>> list = new ArrayList<Node<T>>();
+        list = parent.getChildren();
+        list.add(rootN);
+        parent.setChildren(list);
+        rootN.setParent(parent);//todo по логике уставливается родитель нода.
         root.getChildren().add(rootN);
     }
     /**

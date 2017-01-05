@@ -54,4 +54,5 @@ public class Node<T>{
     public Node<T> getChild(){
         return new Node<T>(value);
     }
+
 }

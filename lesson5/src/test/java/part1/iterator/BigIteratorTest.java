@@ -32,6 +32,7 @@ public class BigIteratorTest {
         }
         assertThat(count,is((int)9));
     }
+
     /**
      * Allow to check work of next. In our sample first number should be 1;
      */

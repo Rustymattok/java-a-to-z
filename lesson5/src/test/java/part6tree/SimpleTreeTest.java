@@ -61,4 +61,16 @@ public class SimpleTreeTest {
         result = list.balanceTree();
         assertThat(result, is(true));
     }
+
+    @Test
+    public void whenAddNodeInLeafThenSizeIncrease() {
+        SimpleTree<Integer> tree = new SimpleTree<Integer>(1);
+        Node<Integer> node1 = new Node<Integer>(1);
+        Node<Integer> node2 = new Node<Integer>(2);
+        tree.addChildren(node1, 2);
+        tree.addChildren(node2, 3);
+        Node<Integer> value = tree.findByValue(2);
+        assertThat(value.getValue(), is(2));
+        assertThat(node2.getChildren().size(), is(1));
+    }
 }
