@@ -3,12 +3,16 @@ package test;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.concurrent.ExecutionException;
+
 /**
  * This class describe logic of parsing xml file.
  */
 public class LogicParser {
     private BufferedReader br;
-    private HashMap <Integer,Order> listNew = new HashMap<Integer, Order>();
+    private TreeMap<Integer,Order> listNew = new TreeMap<Integer, Order>();
     private Order order;
     /**
      * Method of parsing common file.
@@ -17,15 +21,18 @@ public class LogicParser {
         try {
             br = new BufferedReader(new FileReader(System.getProperty("user.home") + "\\temp\\orders.xml"));
             String line;
-            while((line = br.readLine()) != null){
-                if(line.startsWith("<A")){
-                    order = parser(line);
-                    listNew.put(order.getId(), order);
+            int i = 0;
+                while ((line = br.readLine()) != null) {
+                        i++;
+                        if (line.startsWith("<A")) {
+                            order = parser(line);
+                            listNew.put(i, order);
+                            checkCondition();
+                        } else if (line.startsWith("<D")) {
+                            listNew.remove(parserDelete(line));
+                        }
                 }
-                else if(line.startsWith("<D")){
-                    listNew.remove(parserDelete(line));
-                }
-            }
+            System.out.println(i);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -78,7 +85,30 @@ public class LogicParser {
         return  new Order(values[0],values[1],values[2],values[3],Integer.parseInt(values[4]));
     }
 
-    public HashMap<Integer, Order> getListNew() {
+    public synchronized  void checkCondition() {
+        for (Map.Entry<Integer, Order> entry : getListNew().entrySet()) {
+            if(order.getOperation().equals("BUY")){
+                    if(order.getName().equals(entry.getValue().getName())){
+                        if(order.getVolume().equals(entry.getValue().getVolume())){
+                            if(Double.parseDouble(order.getPrice()) > Double.parseDouble(entry.getValue().getPrice())){
+                                listNew.remove(entry.getKey());
+                            }
+                        }
+                    }
+            }
+//            if(order.getOperation().equals("SELL")){
+//                if(order.getName().equals(entry.getValue().getName())){
+//                    if(order.getVolume().equals(entry.getValue().getVolume())){
+//                        if(Double.parseDouble(order.getPrice()) < Double.parseDouble(entry.getValue().getPrice())){
+//                            listNew.remove(entry.getKey());
+//                        }
+//                    }
+//                }
+//            }
+        }
+    }
+
+    public TreeMap<Integer, Order> getListNew() {
         return listNew;
     }
 }
