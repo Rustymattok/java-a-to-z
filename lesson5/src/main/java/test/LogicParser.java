@@ -2,10 +2,8 @@ package test;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.concurrent.ExecutionException;
+import java.util.*;
+import java.util.Iterator;
 
 /**
  * This class describe logic of parsing xml file.
@@ -27,12 +25,11 @@ public class LogicParser {
                         if (line.startsWith("<A")) {
                             order = parser(line);
                             listNew.put(i, order);
-                            checkCondition();
+                            //checkCondition();
                         } else if (line.startsWith("<D")) {
                             listNew.remove(parserDelete(line));
                         }
                 }
-            System.out.println(i);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -85,17 +82,38 @@ public class LogicParser {
         return  new Order(values[0],values[1],values[2],values[3],Integer.parseInt(values[4]));
     }
 
-    public synchronized  void checkCondition() {
-        for (Map.Entry<Integer, Order> entry : getListNew().entrySet()) {
-            if(order.getOperation().equals("BUY")){
-                    if(order.getName().equals(entry.getValue().getName())){
-                        if(order.getVolume().equals(entry.getValue().getVolume())){
-                            if(Double.parseDouble(order.getPrice()) > Double.parseDouble(entry.getValue().getPrice())){
-                                listNew.remove(entry.getKey());
+    public void checkCondition() {
+        MyIterator<Order> it = new MyIterator(listNew);
+
+        while (it.hasNext()) {
+            Order orderCheck = it.next();
+            Order orderCompare = it.next();
+            if(orderCheck != null && orderCompare != null) {
+                if (orderCheck.getOperation().equals("BUY")) {
+                    if (orderCheck.getName().equals(orderCompare.getName())) {
+                        if (orderCheck.getVolume().equals(orderCompare.getVolume())) {
+                            if (Double.parseDouble(orderCheck.getPrice()) > Double.parseDouble(orderCompare.getPrice())) {
+                                it.remove(orderCompare);
                             }
                         }
                     }
+                }
             }
+        }
+
+//        for (Map.Entry<Integer, Order> entry : getListNew().entrySet()) {
+//        if (order.getOperation().equals("BUY")) {
+//            if (order.getName().equals(entry.getValue().getName())) {
+//                if (order.getVolume().equals(entry.getValue().getVolume())) {
+//                    if (Double.parseDouble(order.getPrice()) > Double.parseDouble(entry.getValue().getPrice())) {
+//                        listNew.remove(entry.getKey());
+//                    }
+//                }
+//            }
+//        }
+//    }
+
+
 //            if(order.getOperation().equals("SELL")){
 //                if(order.getName().equals(entry.getValue().getName())){
 //                    if(order.getVolume().equals(entry.getValue().getVolume())){
@@ -106,7 +124,6 @@ public class LogicParser {
 //                }
 //            }
         }
-    }
 
     public TreeMap<Integer, Order> getListNew() {
         return listNew;

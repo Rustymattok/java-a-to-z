@@ -7,7 +7,10 @@ public class Order {
     private Integer id;
     private String volume;
 
-    public Order(String name, String operation, String price,String volume,Integer id) {
+    public Order() {
+    }
+
+    public Order(String name, String operation, String price, String volume, Integer id) {
         this.name = name;
         this.operation = operation;
         this.price = price;
