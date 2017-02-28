@@ -28,7 +28,6 @@ public class MyIterator<T> implements Iterator<T> {
         }
     }
 
-    public void remove(Order order) {
-        listNew.remove(order);
-    }
+//    public void remove() {
+//    }
 }

@@ -13,7 +13,6 @@ public class LogicParserTest {
         LogicParser logicParser = new LogicParser();
         long startTime = System.currentTimeMillis();
         logicParser.bufferFile();
-        logicParser.checkCondition();
         long totalTime = System.currentTimeMillis() - startTime;
         System.out.println(totalTime);
         System.out.println("Quantities of orders : = " + logicParser.getListNew().size());

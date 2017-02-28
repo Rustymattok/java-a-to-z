@@ -25,7 +25,7 @@ public class LogicParser {
                         if (line.startsWith("<A")) {
                             order = parser(line);
                             listNew.put(i, order);
-                            //checkCondition();
+                            checkCondition();
                         } else if (line.startsWith("<D")) {
                             listNew.remove(parserDelete(line));
                         }
@@ -84,16 +84,14 @@ public class LogicParser {
 
     public void checkCondition() {
         MyIterator<Order> it = new MyIterator(listNew);
-
         while (it.hasNext()) {
-            Order orderCheck = it.next();
             Order orderCompare = it.next();
-            if(orderCheck != null && orderCompare != null) {
-                if (orderCheck.getOperation().equals("BUY")) {
-                    if (orderCheck.getName().equals(orderCompare.getName())) {
-                        if (orderCheck.getVolume().equals(orderCompare.getVolume())) {
-                            if (Double.parseDouble(orderCheck.getPrice()) > Double.parseDouble(orderCompare.getPrice())) {
-                                it.remove(orderCompare);
+            if(order != null && orderCompare != null) {
+                if (order.getOperation().equals("BUY")) {
+                    if (order.getName().equals(orderCompare.getName())) {
+                        if (order.getVolume().equals(orderCompare.getVolume())) {
+                            if (Double.parseDouble(order.getPrice()) > Double.parseDouble(orderCompare.getPrice())) {
+                                it.remove();
                             }
                         }
                     }
