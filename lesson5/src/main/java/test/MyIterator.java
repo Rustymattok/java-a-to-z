@@ -1,14 +1,15 @@
 package test;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.TreeMap;
 
 public class MyIterator<T> implements Iterator<T> {
-    private TreeMap<Integer,Order> listNew;
+    private HashMap<Integer,Order> listNew;
     private int indexP = 0;
 
-    public MyIterator(TreeMap<Integer, Order> listNew) {
+    public MyIterator(HashMap<Integer, Order> listNew) {
         this.listNew = listNew;
     }
 
@@ -28,6 +29,7 @@ public class MyIterator<T> implements Iterator<T> {
         }
     }
 
-//    public void remove() {
-//    }
+    public void remove() {
+        listNew.remove(indexP++);
+    }
 }

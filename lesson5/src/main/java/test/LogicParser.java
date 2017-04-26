@@ -10,7 +10,8 @@ import java.util.Iterator;
  */
 public class LogicParser {
     private BufferedReader br;
-    private TreeMap<Integer,Order> listNew = new TreeMap<Integer, Order>();
+    private HashMap<Integer,Order> listNew = new HashMap<Integer, Order>();
+    private HashMap<Integer,Order> listRemove = new HashMap<Integer, Order>();
     private Order order;
     /**
      * Method of parsing common file.
@@ -25,11 +26,12 @@ public class LogicParser {
                         if (line.startsWith("<A")) {
                             order = parser(line);
                             listNew.put(i, order);
-                            checkCondition();
+//                            checkCondition();
                         } else if (line.startsWith("<D")) {
                             listNew.remove(parserDelete(line));
                         }
                 }
+            checkCondition();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -91,7 +93,8 @@ public class LogicParser {
                     if (order.getName().equals(orderCompare.getName())) {
                         if (order.getVolume().equals(orderCompare.getVolume())) {
                             if (Double.parseDouble(order.getPrice()) > Double.parseDouble(orderCompare.getPrice())) {
-                                it.remove();
+                                listNew.remove(orderCompare);
+                                listRemove.put(orderCompare.getId(),orderCompare);
                             }
                         }
                     }
@@ -123,7 +126,11 @@ public class LogicParser {
 //            }
         }
 
-    public TreeMap<Integer, Order> getListNew() {
+    public HashMap<Integer, Order> getListNew() {
         return listNew;
+    }
+
+    public HashMap<Integer, Order> getListRemove() {
+        return listRemove;
     }
 }
