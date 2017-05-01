@@ -16,8 +16,8 @@ public class LogicParserTest {
         logicParser.bufferFile();
         long totalTime = System.currentTimeMillis() - startTime;
         System.out.println(totalTime);
-//        System.out.println("Quantities of orders : = " + logicParser.getListRemove().size());
-        for (HashMap.Entry<Integer, Order> entry : logicParser.getListRemove().entrySet()) {
+//        System.out.println("Quantities of orders : = " + logicParser.getListSorted().size());
+        for (HashMap.Entry<Integer, Order> entry : logicParser.getListSorted().entrySet()) {
             if(entry.getValue().getOperation().equals("SELL")){
                 count++;
                 System.out.println(entry.getValue().getPrice() + "      " + entry.getKey() );

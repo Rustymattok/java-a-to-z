@@ -3,32 +3,30 @@ package test;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.*;
-import java.util.Iterator;
 
 /**
  * This class describe logic of parsing xml file.
  */
 public class LogicParser {
-    private BufferedReader br;
-    private HashMap<Integer,Order> listNew = new HashMap<Integer, Order>();
-    private HashMap<Integer,Order> listRemove = new HashMap<Integer, Order>();
+
+    private HashMap<Integer,Order> listFromParser = new HashMap<Integer, Order>();
+    private HashMap<Integer,Order> listSorted = new HashMap<Integer, Order>();
     private Order order;
     /**
      * Method of parsing common file.
      */
     void bufferFile(){
         try {
-            br = new BufferedReader(new FileReader(System.getProperty("user.home") + "\\temp\\orders.xml"));
+            BufferedReader br = new BufferedReader(new FileReader(System.getProperty("user.home") + "\\temp\\orders.xml"));
             String line;
             int i = 0;
                 while ((line = br.readLine()) != null) {
                         i++;
                         if (line.startsWith("<A")) {
                             order = parser(line);
-                            listNew.put(i, order);
-//                            checkCondition();
+                            listFromParser.put(i, order);
                         } else if (line.startsWith("<D")) {
-                            listNew.remove(parserDelete(line));
+                            listFromParser.remove(parserDelete(line));
                         }
                 }
             checkCondition();
@@ -85,7 +83,7 @@ public class LogicParser {
     }
 
     public void checkCondition() {
-        MyIterator<Order> it = new MyIterator(listNew);
+        MyIterator<Order> it = new MyIterator(listFromParser);
         while (it.hasNext()) {
             Order orderCompare = it.next();
             if(order != null && orderCompare != null) {
@@ -93,8 +91,8 @@ public class LogicParser {
                     if (order.getName().equals(orderCompare.getName())) {
                         if (order.getVolume().equals(orderCompare.getVolume())) {
                             if (Double.parseDouble(order.getPrice()) > Double.parseDouble(orderCompare.getPrice())) {
-                                listNew.remove(orderCompare);
-                                listRemove.put(orderCompare.getId(),orderCompare);
+                                listFromParser.remove(orderCompare);
+                                listSorted.put(orderCompare.getId(),orderCompare);
                             }
                         }
                     }
@@ -102,35 +100,13 @@ public class LogicParser {
             }
         }
 
-//        for (Map.Entry<Integer, Order> entry : getListNew().entrySet()) {
-//        if (order.getOperation().equals("BUY")) {
-//            if (order.getName().equals(entry.getValue().getName())) {
-//                if (order.getVolume().equals(entry.getValue().getVolume())) {
-//                    if (Double.parseDouble(order.getPrice()) > Double.parseDouble(entry.getValue().getPrice())) {
-//                        listNew.remove(entry.getKey());
-//                    }
-//                }
-//            }
-//        }
-//    }
-
-
-//            if(order.getOperation().equals("SELL")){
-//                if(order.getName().equals(entry.getValue().getName())){
-//                    if(order.getVolume().equals(entry.getValue().getVolume())){
-//                        if(Double.parseDouble(order.getPrice()) < Double.parseDouble(entry.getValue().getPrice())){
-//                            listNew.remove(entry.getKey());
-//                        }
-//                    }
-//                }
-//            }
         }
 
-    public HashMap<Integer, Order> getListNew() {
-        return listNew;
+    public HashMap<Integer, Order> getListFromParser() {
+        return listFromParser;
     }
 
-    public HashMap<Integer, Order> getListRemove() {
-        return listRemove;
+    public HashMap<Integer, Order> getListSorted() {
+        return listSorted;
     }
 }
