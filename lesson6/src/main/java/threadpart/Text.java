@@ -4,7 +4,7 @@ package threadpart;
  */
 public class Text {
 
-    private String text;
+    private  final String text;
 
     public Text(String text) {
         this.text = text;

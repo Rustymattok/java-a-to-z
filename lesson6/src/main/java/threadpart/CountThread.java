@@ -26,7 +26,7 @@ public class CountThread implements Runnable{
         count = 0;
         int i = 0;
         symbol = text.getText().toCharArray();
-        while(i < text.getText().length()) {
+        while(i < symbol.length) {
             if(!Thread.interrupted()) {
                 if (name.equals("space")) {
                     if (symbol[i] == ' ') {
