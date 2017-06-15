@@ -77,7 +77,7 @@ public class UserStorage implements BaseFunctions{
      * @param user2 - balance where we transfer money.
      * @param sum -  amount of money for transfer.
      */
-    public void  amount(User user1, User user2, int sum){
+    public  synchronized void  amount(User user1, User user2, int sum){
 
         if ( user1.getAmount() > sum) {
             int amount = (int) (user2.getAmount() + sum);

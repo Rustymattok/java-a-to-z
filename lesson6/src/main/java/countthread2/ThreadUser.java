@@ -15,10 +15,7 @@ public class ThreadUser implements  Runnable{
 
     @Override
     public  void run() {
-        synchronized (userStorage) {
             //todo нужно предусмотреть наличие user и user2 в UserStorage, также предусмотреть проверку баланса.
             userStorage.amount(user, user2, 150);
-        }
-
     }
 }
