@@ -15,13 +15,14 @@ public class ThreadSearchTextTest {
      */
     @Test
     public void whenShouldCheckSearchText(){
-        MyFileVisitor myFileVisitor = new MyFileVisitor();
+        Deque deque = new Deque();
+        MyFileVisitor myFileVisitor = new MyFileVisitor(deque);
         Path path =  Paths.get("F:\\JAVA\\testDir");
         try {
             Files.walkFileTree(path,myFileVisitor);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        assertThat(TakeFile.getList().size(),is(7));
+        assertThat(deque.getSize(),is(7));
     }
 }

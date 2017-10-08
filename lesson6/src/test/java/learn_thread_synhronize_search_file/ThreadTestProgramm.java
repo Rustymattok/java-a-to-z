@@ -12,8 +12,9 @@ public class ThreadTestProgramm {
      */
     @Test
     public void whenShouldCheckAppl(){
-        LogicLog logicLog = new LogicLog("hello");
-        MyFileVisitor myFileVisitor = new MyFileVisitor();
+        Deque deque = new Deque();
+        LogicLog logicLog = new LogicLog(deque,"hello");
+        MyFileVisitor myFileVisitor = new MyFileVisitor(deque);
         Path path = Paths.get("F:\\JAVA\\testDir");
         ThreadTextSearch threadSearchFile = new ThreadTextSearch(logicLog);
         ThreadFileSearch threadSearchText = new ThreadFileSearch(myFileVisitor,path);
@@ -21,6 +22,7 @@ public class ThreadTestProgramm {
         Thread threadT = new Thread(threadSearchText);
         threadT.start();
         try {
+            Thread.sleep(2000);
             threadT.join();
             threadF.start();
             threadF.join();
