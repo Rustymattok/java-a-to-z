@@ -3,10 +3,10 @@ import java.io.*;
 /**
  * Class describe loggic of searching needed file by text.
  */
-public class SeachLogic {
+final  class SeachLogic {
     private String text;
 
-    public SeachLogic(String text) {
+     SeachLogic(String text) {
         this.text = text;
     }
     /**
@@ -14,7 +14,7 @@ public class SeachLogic {
      * @param fileName - way of file which should be parse.
      * @return true/false.
      */
-    public boolean searchText(String fileName) {
+    final boolean searchText(String fileName) {
         boolean flag = false;
         BufferedReader bufferedReader = null;
         try {

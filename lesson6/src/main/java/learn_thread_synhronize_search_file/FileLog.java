@@ -5,13 +5,13 @@ import java.io.*;
 /**
  * This class for creat or write in logFile. By default the name of file log.txt.
  */
-public class FileLog {
+final class FileLog {
     private String nameApp;
     /**
      * Init Log file. Constructor ( if it absent) create directory user/temp.
      * This is the way where log file will be locate.
      */
-    public FileLog() {
+      FileLog() {
         try {
                 nameApp = "log.txt";
                 File file = new File(new StringBuilder().append(System.getProperty("user.home")).append("\\temp").toString(),nameApp);
@@ -27,7 +27,7 @@ public class FileLog {
      *
      * @param text - text for saving in log file.
      */
-    public void saveLog(String text) {
+    final  void saveLog(String text) {
         try {
             String  wayFile = new StringBuilder().append(System.getProperty("user.home")).append("\\temp\\").append(nameApp).toString();
             FileWriter fileWriter = new FileWriter(wayFile, true);

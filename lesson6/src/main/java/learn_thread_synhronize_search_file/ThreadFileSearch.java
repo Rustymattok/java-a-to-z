@@ -12,7 +12,7 @@ public class ThreadFileSearch implements Runnable {
     private MyFileVisitor myVisitor;
     private Path path ;
 
-    public ThreadFileSearch(MyFileVisitor myVisitor, Path path) {
+     ThreadFileSearch(MyFileVisitor myVisitor, Path path) {
         this.myVisitor = myVisitor;
         this.path = path;
     }

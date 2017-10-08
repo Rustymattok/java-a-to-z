@@ -7,7 +7,8 @@ public class ThreadTextSearch implements Runnable {
      * @param logicLog - parameter from LogicLog which has responsability for searching text.
      */
     private LogicLog logicLog;
-    public ThreadTextSearch(LogicLog logicLog) {
+
+     ThreadTextSearch(LogicLog logicLog) {
         this.logicLog = logicLog;
     }
 
@@ -16,7 +17,7 @@ public class ThreadTextSearch implements Runnable {
         action();
     }
 
-    public void action(){
+    final void action(){
             logicLog.actionSearch();
     }
 }

@@ -6,6 +6,11 @@ import java.nio.file.attribute.BasicFileAttributes;
  * Class allow to make search dir by dir. Standart library.
  */
 public class MyFileVisitor extends SimpleFileVisitor<Path> {
+    private Deque deque;
+
+     public MyFileVisitor(Deque deque) {
+        this.deque = deque;
+    }
 
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
@@ -18,7 +23,8 @@ public class MyFileVisitor extends SimpleFileVisitor<Path> {
      */
     public void find(Path path){
         String way = new StringBuilder().append(path.getParent().toString()).append("\\").append(path.getFileName().toString()).toString();
-        TakeFile.addFile(way);
+        //TakeFile.addFile(way);
+        deque.addFile(way);
     }
 
 }
