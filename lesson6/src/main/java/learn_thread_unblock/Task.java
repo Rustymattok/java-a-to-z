@@ -6,6 +6,7 @@ public class Task {
 
     private String name;
     private int version;
+    private int id;
 
     public Task(String name) {
         this.name = name;
@@ -25,4 +26,11 @@ public class Task {
         return version;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

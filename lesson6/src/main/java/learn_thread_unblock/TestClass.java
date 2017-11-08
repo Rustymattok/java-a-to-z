@@ -5,7 +5,8 @@ package learn_thread_unblock;
 public class TestClass {
     public static void main(String[] args) {
         final ThreadCollection threadCollection = new ThreadCollection();
-        threadCollection.add(new Task("privet1"));
+        Task task1 = new Task("privet1");
+        threadCollection.add(task1);
         threadCollection.add(new Task("privet2"));
         threadCollection.add(new Task("privet3"));
         threadCollection.add(new Task("privet4"));
@@ -20,12 +21,12 @@ public class TestClass {
             e.printStackTrace();
         }
 
-        for ( int i = 0; i < 30; i++) {
+        for ( int i = 0; i < 10; i++) {
             int y = i;
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    threadCollection.update(3,"ahahah" + y);
+                    threadCollection.update(task1);
                 }
             }).start();
         }

@@ -11,17 +11,17 @@ public class ThreadCollection {
 
     private ConcurrentHashMap<Integer,Task> list = new ConcurrentHashMap<Integer,Task>();
     private int id =  0;
-   // Lock lock = new ReentrantLock();
     public void add(Task task) {
         id++;
         list.put(id,task);
+        task.setId(id);
     }
 
-    public void update(int id, String newName){
-        int version = list.get(id).getVersion();
+    public void update(Task task){
+        int version = task.getVersion();
         BiFunction<Integer,Task,Task> biFunction = (k, v) -> {
-            if (list.get(id).getVersion() == version ) {
-                v.setName(newName);
+            if (task.getVersion() == version ) {
+                v.setName("Edited!");
             }else{
                 try {
                     throw new OptimalException("Косяк");
@@ -31,8 +31,7 @@ public class ThreadCollection {
             }
             return v;
         };
-            list.computeIfPresent(id,biFunction);
-
+            list.computeIfPresent(task.getId(),biFunction);
     }
 
     public void show(){
