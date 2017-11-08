@@ -1,5 +1,6 @@
 package testthreadver1;
 
+import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 /**
  * Class describe game board. It consist form massive block .
@@ -7,15 +8,16 @@ import java.util.concurrent.locks.ReentrantLock;
 public class GameTable {
 
     private ReentrantLock [][] border;
-    private int x;
-    private int y;
+    private ReentrantLock lock = new ReentrantLock();
+    private int xSize;
+    private int ySize;
 
-    public GameTable(int x, int y) {
-        this.x = x;
-        this.y = y;
-        border = new ReentrantLock[x][y];
-        for (int i = 0; i < x; i++) {
-            for (int j = 0; j < y; j++) {
+    public GameTable(int xSize, int ySize) {
+        this.xSize = xSize;
+        this.ySize = ySize;
+        border = new ReentrantLock[xSize][ySize];
+        for (int i = 0; i < xSize; i++) {
+            for (int j = 0; j < ySize; j++) {
                 border[i][j]= new ReentrantLock();
             }
         }
@@ -26,8 +28,8 @@ public class GameTable {
      */
     public int checkBorder(){
         int count = 0;
-        for (int i = 0; i < x; i++) {
-            for (int j = 0; j < y; j++) {
+        for (int i = 0; i < xSize; i++) {
+            for (int j = 0; j < ySize; j++) {
                 if(border[i][j].isLocked()){
                     count++;
                 }
@@ -46,13 +48,14 @@ public class GameTable {
     /**
      * This method using for showing result.
      */
-    public synchronized void showBorder(){
+    public  void showBorder(){
+        lock.lock();
         System.out.println();
         System.out.println();
         System.out.println();
         System.out.println();
-        for (int i = 0; i < x; i++) {
-            for (int j = 0; j < y; j++) {
+        for (int i = 0; i < xSize; i++) {
+            for (int j = 0; j < ySize; j++) {
                 if (border[i][j].isLocked()) {
                     System.out.print(" X ");
                 } else {
@@ -61,18 +64,19 @@ public class GameTable {
             }
             System.out.println();
         }
+        lock.unlock();
     }
 
     public ReentrantLock[][] getBorder() {
         return border;
     }
 
-    public int getX() {
-        return x;
+    public int getxSize() {
+        return xSize;
     }
 
-    public int getY() {
-        return y;
+    public int getySize() {
+        return ySize;
     }
 }
 

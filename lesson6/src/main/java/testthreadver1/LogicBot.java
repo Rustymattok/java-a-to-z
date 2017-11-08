@@ -1,7 +1,9 @@
 package testthreadver1;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
-
+/**
+ * Class describe logic of person . It seems like bot.
+ */
 public class LogicBot implements Logic{
 
     private GameTable gameTable;
@@ -11,12 +13,16 @@ public class LogicBot implements Logic{
     public LogicBot(GameTable gameTable) {
         this.gameTable = gameTable;
     }
-
+    /**
+     * Put our person on table.
+     */
     @Override
     public void initPerson() {
         gameTable.initPerson(x,y);
     }
-
+    /**
+     * This method has responsobilty for moving of person.
+     */
     @Override
     public  void movePerson() {
         MoveVariation moveVariation = null;
@@ -53,7 +59,10 @@ public class LogicBot implements Logic{
             }
         }
     }
-
+    /**
+     * This method should be use for BOT. It generate random position on board of person.
+     * @return moveVariation of person.
+     */
     @Override
     public MoveVariation generateRandom() {
         Random random = new Random();
@@ -74,16 +83,26 @@ public class LogicBot implements Logic{
         }
         return moveVariation;
     }
-
+    /**
+     * This method allow to check in borde or out if border.
+     * @param xP - coordinate.
+     * @param yP - - coordinate.
+     * @return true/false.
+     */
     @Override
     public boolean checkBorder(int xP, int yP) {
         boolean flag = true;
-        if (xP > gameTable.getX() || yP > gameTable.getY() || xP < 0 || yP < 0)  {
+        if (xP > gameTable.getxSize() || yP > gameTable.getySize() || xP < 0 || yP < 0)  {
             flag = false;
         }
         return flag;
     }
-
+    /**
+      * Method for check postion lock or not unlock in boarder.
+      * @param xP - coordinate.
+      * @param yP - coordinate.
+      * @return true.false.
+     */
     @Override
     public boolean checkLock(int xP, int yP) {
         boolean flag = false;
