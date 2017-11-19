@@ -1,0 +1,23 @@
+CREATE DATABASE "myJava"
+  WITH OWNER = postgres
+       ENCODING = 'UTF8'
+       TABLESPACE = pg_default
+       LC_COLLATE = 'Russian_Russia.1251'
+       LC_CTYPE = 'Russian_Russia.1251'
+       CONNECTION LIMIT = -1;
+
+create table my_task(
+id serial primary key,
+nameTask character varying (2000),
+statusRole integer
+);
+
+create table comments(
+id serial primary key,
+textComment text,
+mytask_id integer references my_task(id)
+);
+
+insert into my_task(nameTask,statusRole) values('help',1);
+insert into comments (textComment,mytask_id) values('helpdddddddd',1);
+select * from comments
