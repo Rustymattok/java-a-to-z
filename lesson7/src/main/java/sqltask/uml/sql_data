@@ -1,4 +1,4 @@
-CREATE DATABASE "myJava"
+CREATE DATABASE "javaTask"
   WITH OWNER = postgres
        ENCODING = 'UTF8'
        TABLESPACE = pg_default
@@ -6,7 +6,7 @@ CREATE DATABASE "myJava"
        LC_CTYPE = 'Russian_Russia.1251'
        CONNECTION LIMIT = -1;
 
-create table my_task(
+create table task(
 id serial primary key,
 nameTask character varying (2000),
 statusRole integer
@@ -15,9 +15,17 @@ statusRole integer
 create table comments(
 id serial primary key,
 textComment text,
-mytask_id integer references my_task(id)
+task_id integer references task(id)
 );
 
-insert into my_task(nameTask,statusRole) values('help',1);
-insert into comments (textComment,mytask_id) values('helpdddddddd',1);
+create table filesTask(
+id serial primary key,
+nameFile character varying (2000),
+file_id integer references task(id)
+);
+
+insert into task(nameTask,statusRole) values('help',1);
+insert into comments (textComment,task_id) values('helpdddddddd',1);
+insert into filesTask (nameFile,file_id) values('file way',1);
 select * from comments
+ 
