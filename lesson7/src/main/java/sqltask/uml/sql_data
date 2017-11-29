@@ -6,26 +6,70 @@ CREATE DATABASE "javaTask"
        LC_CTYPE = 'Russian_Russia.1251'
        CONNECTION LIMIT = -1;
 
+-- USER - ROLE = MANY - TO - MANY
+
+create table role(
+id serial primary key,
+nameRole character varying (2000)
+);
+create table users(
+id serial primary key,
+nameuser character varying (2000),
+);
+create table users_role(
+id serial primary key,
+users_id integer references users(id),
+role_id integer references role(id),
+);
+
+-- ROLE - RULES = MANY - TO - MANY
+
+create table roles(
+id serial primary key,
+kindRole character varying (2000)
+);
+create table item_roles(
+id serial primary key,
+role_id integer references role(id),
+roles_id integer references roles(id)
+);
+
+--ITEM - USER = ONE - TO - ONE
+
 create table task(
 id serial primary key,
-nameTask character varying (2000),
-statusRole integer
+task_name character varying (2000),
+users_id integer references users(id)
 );
+
+-- ITEM - COMMENTS = ONE - TO - MANY
 
 create table comments(
 id serial primary key,
-textComment text,
+comment character varying (2000),
 task_id integer references task(id)
 );
 
-create table filesTask(
+-- ITEM - ATTACHES = ONE - TO - MANY
+
+create table files(
 id serial primary key,
-nameFile character varying (2000),
-file_id integer references task(id)
+name character varying (2000)
+task_id integer references task(id)
 );
 
-insert into task(nameTask,statusRole) values('help',1);
-insert into comments (textComment,task_id) values('helpdddddddd',1);
-insert into filesTask (nameFile,file_id) values('file way',1);
-select * from comments
- 
+-- ITEM - CATEGORY = MANY - TO - ONE
+
+create table chooseTask(
+id serial primary key,
+name character varying (2000)
+task_id integer references task(id)
+);
+
+-- ITEM - STATE = MANY - TO - ONE
+
+create table roleTask(
+id serial primary key,
+name character varying (2000)
+task_id integer references task(id)
+);
