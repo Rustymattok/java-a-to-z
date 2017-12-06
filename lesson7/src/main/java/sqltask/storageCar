@@ -1,0 +1,37 @@
+create table transmisia(
+id serial primary key,
+name character varying (2000)
+);
+
+create table huge(
+id serial primary key,
+name character varying (2000)
+);
+
+create table korobka(
+id serial primary key,
+name character varying (2000)
+);
+
+create table car(
+id serial primary key,
+name character varying (2000),
+transmisia_id integer references transmisia(id),
+huge_id integer references huge(id),
+korobka_id integer references korobka(id)
+);
+
+--Вывести все машины.
+
+select *from car;
+
+--Вывести все неиспользуемые детали.
+
+select t.name, g.name,h.name,k.name from car as t
+left outer join transmisia as g on
+g.id = t.transmisia_id
+left outer join huge as h on
+h.id = t.huge_id
+left outer join korobka as k on
+k.id = t.korobka_id
+where t.transmisia_id is null or t.huge_id is null or t.korobka_id is null;
