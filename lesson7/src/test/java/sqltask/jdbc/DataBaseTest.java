@@ -5,6 +5,7 @@ public class DataBaseTest {
     @Test
     public void whenShouldCheckAction() throws InterruptedException {
         DataBase dataBase = new DataBase("jdbc:postgresql://localhost:5432","nametest2","postgres","admin");
+        dataBase.setN(10);
         dataBase.connectToDataBase();
         dataBase.initTable();
         dataBase.readTest();

@@ -14,7 +14,8 @@ public class DataBase {
     private String user;
     private String password;
     private ResultSet rs;
-    String fullWaytoData;
+    private String fullWayToData;
+    private String nameTable;
     private int n;
 
     public DataBase(String url, String nameData, String user, String password) {
@@ -25,14 +26,15 @@ public class DataBase {
         this.nameData = nameData;
         this.user = user;
         this.password = password;
-        fullWaytoData = new StringBuilder().append(url).append("/").append(nameData).toString();
+        fullWayToData = new StringBuilder().append(url).append("/").append(nameData).toString();
+        nameTable = "numbers";
     }
     /**
      * Method for connection to dataBase.//todo it works
      */
     public void connectToDataBase(){
         try {
-            con = DriverManager.getConnection(fullWaytoData,user,password);
+            con = DriverManager.getConnection(fullWayToData,user,password);
         } catch (SQLException e) {
             System.out.println("created dataBase");
             creatNewDataBase();
@@ -44,9 +46,9 @@ public class DataBase {
     //todo привести порялок метод.
     public void readTest(){
         try {
-            System.out.println("test2");
             st = con.createStatement();
-            rs = st.executeQuery("SELECT * FROM TEST");
+            String taskSQL = new StringBuilder().append("SELECT * FROM").append(" ").append(nameTable).toString();
+            rs = st.executeQuery(taskSQL);
             while (rs.next())
             {
                 System.out.print("Column 1 returned ");
@@ -59,11 +61,13 @@ public class DataBase {
     //todo it works - привести порядок добавления элементов в соответствии с заданием.
     public void initTable(){
             try {
-                con = DriverManager.getConnection(fullWaytoData,user,password);
+                con = DriverManager.getConnection(fullWayToData,user,password);
                 st = con.createStatement();
-                for (int i = 0; i < 10; i++) {
-                    st.execute("CREATE TABLE IF NOT EXISTS numbers (n INTEGER)");
-                    PreparedStatement ps = con.prepareStatement("INSERT INTO  numbers  (n) VALUES (?);");
+                for (int i = 0; i < n; i++) {
+                    String taksCreateTable = new StringBuilder().append("CREATE TABLE IF NOT EXISTS").append(" ").append(nameTable).append(" (n INTEGER)").toString();
+                    st.execute(taksCreateTable);
+                    String taksInsertIntoTable = new StringBuilder().append("INSERT INTO").append(" ").append(nameTable).append("(n) VALUES (?);").toString();
+                    PreparedStatement ps = con.prepareStatement(taksInsertIntoTable);
                     ps.setInt(1, i);
                     ps.executeUpdate();
                 }
@@ -146,5 +150,9 @@ public class DataBase {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setN(int n) {
+        this.n = n;
     }
 }
