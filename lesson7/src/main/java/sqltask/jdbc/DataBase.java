@@ -1,12 +1,9 @@
 package sqltask.jdbc;
-
 import java.sql.*;
-
 /**
  * Class allow to connect to dataBase. and make some injections and operations.
  */
 public class DataBase {
-
     private Connection con;
     private Statement st;
     private String url;
@@ -30,20 +27,20 @@ public class DataBase {
         nameTable = "numbers";
     }
     /**
-     * Method for connection to dataBase.//todo it works
+     * Method for connection to dataBase.
      */
     public void connectToDataBase(){
         try {
-            con = DriverManager.getConnection(fullWayToData,user,password);
+            con = DriverManager.getConnection(fullWayToData, user, password);
+            con.setAutoCommit(false);
         } catch (SQLException e) {
             System.out.println("created dataBase");
             creatNewDataBase();
         }
     }
     /**
-     * Method for read dataBase.//todo it works
+     * Method for read dataBase.
      */
-    //todo привести порялок метод.
     public void readTest(){
         try {
             st = con.createStatement();
@@ -51,32 +48,37 @@ public class DataBase {
             rs = st.executeQuery(taskSQL);
             while (rs.next())
             {
-                System.out.print("Column 1 returned ");
                 System.out.println(rs.getString(1));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    //todo it works - привести порядок добавления элементов в соответствии с заданием.
+    /**
+     * Method for init table depends of N - numbers.
+     */
     public void initTable(){
-            try {
-                con = DriverManager.getConnection(fullWayToData,user,password);
-                st = con.createStatement();
-                for (int i = 0; i < n; i++) {
-                    String taksCreateTable = new StringBuilder().append("CREATE TABLE IF NOT EXISTS").append(" ").append(nameTable).append(" (n INTEGER)").toString();
-                    st.execute(taksCreateTable);
-                    String taksInsertIntoTable = new StringBuilder().append("INSERT INTO").append(" ").append(nameTable).append("(n) VALUES (?);").toString();
-                    PreparedStatement ps = con.prepareStatement(taksInsertIntoTable);
-                    ps.setInt(1, i);
-                    ps.executeUpdate();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
+        try {
+            st = con.createStatement();
+            String taksCreateTable = new StringBuilder().append("CREATE TABLE IF NOT EXISTS").append(" ").append(nameTable).append(" (n INTEGER)").toString();
+            st.execute(taksCreateTable);
+            String taksDeleteTable = new StringBuilder().append("DELETE FROM").append(" ").append(nameTable).toString();
+            st.execute(taksDeleteTable);
+            for (int i = 0; i < n; i++) {
+                String taksInsertIntoTable = new StringBuilder().append("INSERT INTO").append(" ").append(nameTable).append("(n) VALUES (?);").toString();
+                PreparedStatement ps = con.prepareStatement(taksInsertIntoTable);
+                ps.setInt(1, i);
+                ps.executeUpdate();
             }
+            //todo необходимо пониание о корректности методики раставления коммитов для базы данных.
+            con.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
     }
     /**
-     * Method for create new DataBase if it absent.//todo it works
+     * Method for create new DataBase if it absent.
      */
     public void creatNewDataBase(){
         if(con == null) {
@@ -154,5 +156,13 @@ public class DataBase {
 
     public void setN(int n) {
         this.n = n;
+    }
+
+    public int getN() {
+        return n;
+    }
+
+    public String getNameTable() {
+        return nameTable;
     }
 }
