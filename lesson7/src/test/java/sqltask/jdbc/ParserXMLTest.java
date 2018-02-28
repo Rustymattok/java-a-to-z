@@ -14,8 +14,8 @@ import java.io.IOException;
 public class ParserXMLTest {
     @Test
     public void whenShouldCheckAction() throws InterruptedException{
-        DataBase dataBase = new DataBase("jdbc:postgresql://localhost:5432","nametest2","postgres","admin");
-        dataBase.setN(1000000);
+        WorkBase workBase = new WorkBase("jdbc:postgresql://localhost:5432","nametest2","postgres","admin",6);
+        DataBase dataBase = new DataBase(workBase);
         ParseToXML parseToXML = new ParseToXML(dataBase,FilesWayForTest.fileXmlWay);
         parseToXML.takeList();
         XslTransformer xslTransformer = new XslTransformer();

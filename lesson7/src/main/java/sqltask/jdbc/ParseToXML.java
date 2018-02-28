@@ -32,8 +32,8 @@ public class ParseToXML {
     public void readData(){
         try {
             Statement st = dataBase.getCon().createStatement();
-            String taskSQL = new StringBuilder().append("SELECT * FROM").append(" ").append(dataBase.getNameTable()).toString();
-            ResultSet rs = dataBase.getSt().executeQuery(taskSQL);
+            String taskSQL = new StringBuilder().append("SELECT * FROM").append(" ").append(dataBase.getWorkBase().getNameTable()).toString();
+            ResultSet rs = st.executeQuery(taskSQL);
             while (rs.next())
             {
                 list.add(new Entry(new StringBuilder().append("mean of pole").append(" ").append(rs.getString(1)).toString()));

@@ -7,6 +7,10 @@ import java.io.File;
  * Convert processing regarding JAXB.
  */
 public class Jaxb {
+    /**
+     * @param full - parameter describe list of nodes.
+     * @param fuileWay - way for parsing file.
+     */
     private FullList full;
     private String fileWay;
 

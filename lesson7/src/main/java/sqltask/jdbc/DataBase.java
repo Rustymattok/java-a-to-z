@@ -5,33 +5,18 @@ import java.sql.*;
  */
 public class DataBase {
     private Connection con;
-    private Statement st;
-    private String url;
-    private String nameData;
-    private String user;
-    private String password;
-    private ResultSet rs;
-    private String fullWayToData;
-    private String nameTable;
-    private int n;
+    private WorkBase workBase;
 
-    public DataBase(String url, String nameData, String user, String password) {
-        con = null;
-        st = null;
-        rs = null;
-        this.url = url;
-        this.nameData = nameData;
-        this.user = user;
-        this.password = password;
-        fullWayToData = new StringBuilder().append(url).append("/").append(nameData).toString();
-        nameTable = "numbers";
+    public DataBase(WorkBase workBase) {
+        this.workBase = workBase;
     }
     /**
      * Method for connection to dataBase.
      */
     public void connectToDataBase(){
+        String fullWayToData = new StringBuilder().append(workBase.getUrl()).append("/").append(workBase.getNameData()).toString();
         try {
-            con = DriverManager.getConnection(fullWayToData, user, password);
+            con = DriverManager.getConnection(fullWayToData, workBase.getUser(), workBase.getPassword());
             con.setAutoCommit(false);
         } catch (SQLException e) {
             System.out.println("created dataBase");
@@ -43,9 +28,9 @@ public class DataBase {
      */
     public void readTest(){
         try {
-            st = con.createStatement();
-            String taskSQL = new StringBuilder().append("SELECT * FROM").append(" ").append(nameTable).toString();
-            rs = st.executeQuery(taskSQL);
+            Statement st = con.createStatement();
+            String taskSQL = new StringBuilder().append("SELECT * FROM").append(" ").append(workBase.getNameTable()).toString();
+            ResultSet rs = st.executeQuery(taskSQL);
             while (rs.next())
             {
                 System.out.println(rs.getString(1));
@@ -59,13 +44,13 @@ public class DataBase {
      */
     public void initTable(){
         try {
-            st = con.createStatement();
-            String taksCreateTable = new StringBuilder().append("CREATE TABLE IF NOT EXISTS").append(" ").append(nameTable).append(" (n INTEGER)").toString();
+            Statement st = con.createStatement();
+            String taksCreateTable = new StringBuilder().append("CREATE TABLE IF NOT EXISTS").append(" ").append(workBase.getNameTable()).append(" (n INTEGER)").toString();
             st.execute(taksCreateTable);
-            String taksDeleteTable = new StringBuilder().append("DELETE FROM").append(" ").append(nameTable).toString();
+            String taksDeleteTable = new StringBuilder().append("DELETE FROM").append(" ").append(workBase.getNameTable()).toString();
             st.execute(taksDeleteTable);
-            for (int i = 0; i < n; i++) {
-                String taksInsertIntoTable = new StringBuilder().append("INSERT INTO").append(" ").append(nameTable).append("(n) VALUES (?);").toString();
+            for (int i = 0; i < workBase.getNumbersAdd(); i++) {
+                String taksInsertIntoTable = new StringBuilder().append("INSERT INTO").append(" ").append(workBase.getNameTable()).append("(n) VALUES (?);").toString();
                 PreparedStatement ps = con.prepareStatement(taksInsertIntoTable);
                 ps.setInt(1, i);
                 ps.executeUpdate();
@@ -83,9 +68,9 @@ public class DataBase {
     public void creatNewDataBase(){
         if(con == null) {
             try {
-                con = DriverManager.getConnection("jdbc:postgresql://localhost:5432", user, password);
-                st =  con.createStatement();
-                String hrappSQL = new StringBuilder().append("CREATE DATABASE").append(" ").append(nameData).toString();
+                con = DriverManager.getConnection("jdbc:postgresql://localhost:5432", workBase.getUser(), workBase.getPassword());
+                Statement st =  con.createStatement();
+                String hrappSQL = new StringBuilder().append("CREATE DATABASE").append(" ").append(workBase.getNameTable()).toString();
                 st.executeUpdate(hrappSQL);
             }
             catch (SQLException e) {
@@ -97,6 +82,7 @@ public class DataBase {
      * Method for close all operations.
      */
     public void closeData(){
+        Statement st = null;
         try {
             if (con!=null) {
                 con.close();
@@ -117,52 +103,7 @@ public class DataBase {
         this.con = con;
     }
 
-    public Statement getSt() {
-        return st;
-    }
-
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getNameData() {
-        return nameData;
-    }
-
-    public void setNameData(String nameData) {
-        this.nameData = nameData;
-    }
-
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setN(int n) {
-        this.n = n;
-    }
-
-    public int getN() {
-        return n;
-    }
-
-    public String getNameTable() {
-        return nameTable;
+    public WorkBase getWorkBase() {
+        return workBase;
     }
 }
