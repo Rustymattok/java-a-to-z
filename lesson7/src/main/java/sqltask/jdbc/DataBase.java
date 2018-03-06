@@ -1,5 +1,7 @@
 package sqltask.jdbc;
 import java.sql.*;
+import java.util.List;
+
 /**
  * Class allow to connect to dataBase. and make some injections and operations.
  */
@@ -59,7 +61,6 @@ public class DataBase {
             con.commit();
         } catch (SQLException e) {
             e.printStackTrace();
-
         }
     }
     /**
@@ -76,6 +77,24 @@ public class DataBase {
             catch (SQLException e) {
                 e.printStackTrace();
             }
+        }
+    }
+    /**
+     * Method for import dataBase to XML format.
+     * @param list - crteated nodes from data.
+     */
+    public void importToXML(List<Entry> list){
+        try {
+            Statement st = con.createStatement();
+            String taskSQL = new StringBuilder().append("SELECT * FROM").append(" ").append(workBase.getNameTable()).toString();
+            ResultSet rs = st.executeQuery(taskSQL);
+            while (rs.next())
+            {
+                //list.add(new Entry(new StringBuilder().append("mean of pole").append(" ").append(rs.getString(1)).toString()));
+                list.add(new Entry(rs.getString(1).toString()));
+        }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
     /**
@@ -99,9 +118,6 @@ public class DataBase {
         return con;
     }
 
-    public void setCon(Connection con) {
-        this.con = con;
-    }
 
     public WorkBase getWorkBase() {
         return workBase;

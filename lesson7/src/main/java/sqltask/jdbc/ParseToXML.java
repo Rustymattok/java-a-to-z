@@ -30,17 +30,7 @@ public class ParseToXML {
         jaxb.startConvert();
     }
     public void readData(){
-        try {
-            Statement st = dataBase.getCon().createStatement();
-            String taskSQL = new StringBuilder().append("SELECT * FROM").append(" ").append(dataBase.getWorkBase().getNameTable()).toString();
-            ResultSet rs = st.executeQuery(taskSQL);
-            while (rs.next())
-            {
-                list.add(new Entry(new StringBuilder().append("mean of pole").append(" ").append(rs.getString(1)).toString()));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        dataBase.importToXML(list);
     }
 
     public void show(){
