@@ -1,6 +1,6 @@
-package ru.makarov.tracker.interfaces;
+package tracker.interfaces;
 
-import ru.makarov.tracker.models.Item;
+import tracker.models.Item;
 /**
  * Common game.interface for add Item.
  */
