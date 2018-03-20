@@ -1,7 +1,10 @@
-package ru.makarov.tracker.start;
+package tracker.start;
 
-import ru.makarov.tracker.models.Item;
+
+import tracker.models.Item;
+
 import java.util.Scanner;
+
 /**
  * Class for show game.interface .
  */

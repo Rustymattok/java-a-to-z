@@ -1,7 +1,9 @@
-package ru.makarov.tracker.start;
+package tracker.start;
 
-import ru.makarov.tracker.models.Choose;
-import ru.makarov.tracker.models.Item;
+
+
+import tracker.models.Choose;
+import tracker.models.Item;
 
 import java.util.Date;
 import java.util.Random;

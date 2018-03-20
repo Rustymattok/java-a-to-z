@@ -1,8 +1,11 @@
-package ru.makarov.tracker.start;
+package tracker.start;
 
-import ru.makarov.tracker.interfaces.Input;
-import ru.makarov.tracker.models.Item;
+
+import tracker.interfaces.Input;
+import tracker.models.Item;
+
 import java.util.Scanner;
+
 /**
  * Class for enter items using console.
  */

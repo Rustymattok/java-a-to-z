@@ -1,9 +1,11 @@
-package ru.makarov.tracker;
+package tracker;
 
-import ru.makarov.tracker.start.LogicUI;
-import ru.makarov.tracker.start.ShowMenu;
-import ru.makarov.tracker.start.Tracker;
-import ru.makarov.tracker.start.StubInput;
+
+import tracker.start.LogicUI;
+import tracker.start.ShowMenu;
+import tracker.start.StubInput;
+import tracker.start.Tracker;
+
 /**
  * Start aplication without enetering parameters.
  */

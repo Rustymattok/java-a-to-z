@@ -1,4 +1,4 @@
-package ru.makarov.tracker.models;
+package tracker.models;
 /**
  * Enum of type commond for Item.
  */

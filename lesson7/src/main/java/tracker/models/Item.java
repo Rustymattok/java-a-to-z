@@ -1,6 +1,7 @@
-package ru.makarov.tracker.models;
+package tracker.models;
 
 import java.util.Date;
+
 /**
  * Class describe Item  - parameteres and its methods.
  */
