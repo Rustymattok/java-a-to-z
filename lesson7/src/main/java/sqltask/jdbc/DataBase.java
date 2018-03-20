@@ -58,7 +58,7 @@ public class DataBase {
                 ps.executeUpdate();
             }
             //todo необходимо пониание о корректности методики раставления коммитов для базы данных.
-            con.commit();
+//            con.commit();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -75,7 +75,7 @@ public class DataBase {
                 st.executeUpdate(hrappSQL);
             }
             catch (SQLException e) {
-                e.printStackTrace();
+              //  e.printStackTrace();
             }
         }
     }

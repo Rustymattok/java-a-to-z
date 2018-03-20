@@ -5,8 +5,11 @@ package sqltask.jdbc;
  * You should update ways for your pc systems during tests.
  */
 public class FilesWayForTest {
+  //final static String fileXmlWay = "F:\\JAVA\\java-a-to-z\\lesson7\\src\\main\\java\\sqltask\\jdbc\\files\\1.xml";
+  //final static String fileXslWay = "F:\\JAVA\\java-a-to-z\\lesson7\\src\\main\\java\\sqltask\\jdbc\\files\\1.xsl";
+  //final static String fileParserWay = "F:\\JAVA\\java-a-to-z\\lesson7\\src\\main\\java\\sqltask\\jdbc\\files\\2.xml";
 
-  final static String fileXmlWay = "F:\\JAVA\\java-a-to-z\\lesson7\\src\\main\\java\\sqltask\\jdbc\\files\\1.xml";
-  final static String fileXslWay = "F:\\JAVA\\java-a-to-z\\lesson7\\src\\main\\java\\sqltask\\jdbc\\files\\1.xsl";
-  final static String fileParserWay = "F:\\JAVA\\java-a-to-z\\lesson7\\src\\main\\java\\sqltask\\jdbc\\files\\2.xml";
+  final static String fileXmlWay = "/home/rustymattok/MyGit/lesson7/src/main/java/sqltask/jdbc/files/1.xml";
+  final static String fileXslWay = "/home/rustymattok/MyGit/lesson7/src/main/java/sqltask/jdbc/files/1.xsl";
+  final static String fileParserWay = "/home/rustymattok/MyGit/lesson7/src/main/java/sqltask/jdbc/files/2.xml";
 }
