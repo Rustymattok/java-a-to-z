@@ -113,13 +113,4 @@ public class DataBase {
             e.printStackTrace();
         }
     }
-
-    public Connection getCon() {
-        return con;
-    }
-
-
-    public WorkBase getWorkBase() {
-        return workBase;
-    }
 }

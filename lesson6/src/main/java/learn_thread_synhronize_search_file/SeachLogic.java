@@ -1,7 +1,7 @@
 package learn_thread_synhronize_search_file;
 import java.io.*;
 /**
- * Class describe loggic of searching needed file by text.
+ * Class describe loggic of searching needed files by text.
  */
 final  class SeachLogic {
     private String text;
@@ -11,7 +11,7 @@ final  class SeachLogic {
     }
     /**
      * Method for activate searching.
-     * @param fileName - way of file which should be parse.
+     * @param fileName - way of files which should be parse.
      * @return true/false.
      */
     final boolean searchText(String fileName) {

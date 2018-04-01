@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 /**
- * Class for save file.
+ * Class for save files.
  */
 public class FileLog{
     private String fileName;
@@ -27,7 +27,7 @@ public class FileLog{
         }catch (IOException e){
             e.printStackTrace();
         }
-        //todo определить имена файлов
+        //todo пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         this.fileName = fileName;
     }
 

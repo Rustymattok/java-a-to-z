@@ -5,8 +5,8 @@ public class ThreadWord implements Runnable,Calculation{
      * @param text - the text that should be parsed.
      * @param count - numbers of spaces.
      */
-    private String text;
-    private int count = 0;
+    private final String text;
+    private int count;
 
     public ThreadWord(String text) {
         this.text = text;

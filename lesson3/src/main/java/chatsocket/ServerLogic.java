@@ -7,7 +7,7 @@ import java.util.Random;
  */
 public class ServerLogic {
     /**
-     * @param fileServer - way for file Server Bot.
+     * @param fileServer - way for files Server Bot.
      * @param list - list of vriables word wich were taken from Server Bot.
      */
     private String fileServer;
@@ -16,7 +16,7 @@ public class ServerLogic {
 
     /**
      * init Logic.
-     * @param fileServer - - way for file Server Bot.
+     * @param fileServer - - way for files Server Bot.
      */
     public ServerLogic(String fileServer) {
         if (fileServer.equals("")){

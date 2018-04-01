@@ -3,7 +3,7 @@ import org.junit.Test;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 /**
- * TestThread for checking count of spaces
+ * testthread for checking count of spaces
  */
 public class ThreadSpaceTest {
     private String text;

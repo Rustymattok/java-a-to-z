@@ -10,7 +10,7 @@ import java.util.Random;
 public class LogicServer {
     /**
      * @param computerServer - parameter of ComputerServer.
-     * @param file - String parameter way to the folder of logfile.
+     * @param files - String parameter way to the folder of logfile.
      * @param text - String parameter random text for chat.
      */
     private ComputerServer computerServer;
@@ -27,7 +27,7 @@ public class LogicServer {
     }
 
     /**
-     * This method save to log file random text.
+     * This method save to log files random text.
      * @return text which was added to logfile.
      */
     public String enterText() {

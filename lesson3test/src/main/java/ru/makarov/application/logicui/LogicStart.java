@@ -27,7 +27,7 @@ public class LogicStart {
             LogicMask logicMask = new LogicMask(validationKey.logFile(), validationKey.checkMask());
             logicUI = new LogicUI(logicMask);
             logicUI.logic(validationKey.checkDir());
-            if (logicMask.getMyFileVisitor().getFlag() == 0) {
+           if (logicMask.getMyFileVisitor().getFlag() == 0) {
                 showInterface.showFileAbsent();
             }
         } else if (validationKey.checkLogic().equals("r")) {

@@ -36,8 +36,8 @@ public class Server {
 
     /**
      * Method for start Server.
-     * @param serverLog - way to file for Logs.
-     * @param serverBot - way to file for serverBot.
+     * @param serverLog - way to files for Logs.
+     * @param serverBot - way to files for serverBot.
      */
     public void startWork(String serverLog,String serverBot) {
         try {

@@ -26,19 +26,19 @@ public class User {
         return id;
     }
 
-    public double getAmount() {
+    public synchronized double getAmount() {
         return amount;
     }
 
-    public void setName(String name) {
+    public synchronized void setName(String name) {
         this.name = name;
     }
 
-    public void setId(Integer id) {
+    public synchronized void setId(Integer id) {
         this.id = id;
     }
 
-    public void setAmount(Integer amount) {
+    public synchronized void setAmount(Integer amount) {
         this.amount = amount;
     }
 }

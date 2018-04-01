@@ -3,7 +3,7 @@ import org.junit.Test;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 /**
- * This Test for checking Thread of Appication. You can check Application researching your created log.txt file.
+ * This Test for checking Thread of Appication. You can check Application researching your created log.txt files.
  */
 public class ThreadTestProgramm {
     /**

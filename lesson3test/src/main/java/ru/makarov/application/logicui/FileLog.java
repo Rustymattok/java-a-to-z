@@ -9,9 +9,9 @@ import java.io.IOException;
 public class FileLog {
     private String fileName;
     /**
-     * Check file log,if it absents new file will be created.
-     * @param fileName - way for log file.
-     * @param nameApp - name of log file.
+     * Check files log,if it absents new files will be created.
+     * @param fileName - way for log files.
+     * @param nameApp - name of log files.
      */
     public FileLog(String fileName,String nameApp){
         try {
@@ -34,7 +34,7 @@ public class FileLog {
     }
     /**
      * Method for saving result.
-     * @param text - text for saving in log file.
+     * @param text - text for saving in log files.
      */
     public void saveLog(String text){
         try {

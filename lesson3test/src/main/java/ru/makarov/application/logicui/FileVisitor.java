@@ -26,8 +26,8 @@ public class FileVisitor extends SimpleFileVisitor<Path> {
         return FileVisitResult.CONTINUE;
     }
     /**
-     * Method for compare file wich we need and which we have.
-     * @param path - file way.
+     * Method for compare files wich we need and which we have.
+     * @param path - files way.
      */
     public void find(Path path){
         Path name = path.getFileName();
