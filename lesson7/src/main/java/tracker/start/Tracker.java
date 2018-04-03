@@ -5,6 +5,8 @@ package tracker.start;
 import tracker.models.Choose;
 import tracker.models.Item;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.Random;
 
@@ -22,15 +24,32 @@ public class Tracker {
     private int position = 0;
     private static final Random random = new Random();
     private ShowMenu menu = new ShowMenu();
+    private DataBase dataBase;
+
+    public Tracker(DataBase dataBase) {
+        this.dataBase = dataBase;
+        dataBase.connectToDataBase();
+    }
     /**
      * Add items
      *
      * @param item - item wich you need to add to list.
      * @return list of items.
      */
+
     public Item addItem(Item item) {
         item.setID(generateID());
-        this.items[position++] = item;
+        //todo создание таблицы перенести в работу с базой
+        //todo прописать данные и разобраться как в итем записываются данные
+        String taksInsertIntoTable = new StringBuilder().append("INSERT INTO").append(" ").append(dataBase.getWorkBase().getNameTable()).append("VALUES(id,name,description,date)").toString();
+        PreparedStatement ps = null;
+        try {
+            ps = dataBase.getCon().prepareStatement(taksInsertIntoTable);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        //this.items[position++] = item;
         return item;
     }
     /**
