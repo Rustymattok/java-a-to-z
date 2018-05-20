@@ -2,7 +2,7 @@ package tracker.start;
 
 import tracker.models.Choose;
 import tracker.models.Item;
-import trakertests.DataBase;
+
 import java.util.Random;
 /**
  * Logic of tracker.
