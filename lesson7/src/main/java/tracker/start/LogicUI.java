@@ -30,38 +30,43 @@ public class LogicUI {
                 acton();
                 break;
             case EDITITEM:
-                menu.showItems(tracker.getItems());
                 menu.showEdit();
-                if (tracker.getItems()[0] == null) {
+                String idEdit = menu.getScanner();
+                Item item1 = tracker.findByID(idEdit);
+                if(item1.getName() == null){
                     menu.showNoItems();
-                } else {
-                    menu.showTextIdNumber();
-                    String idEdit = menu.getScanner();
-                    Item item1 = tracker.findByID(idEdit);
-                    if (item1.getID() != null) {
-                        tracker.updateItem(idEdit);
-                        input.addItem(item1);
-                    }
-                    menu.showModifyItems(item1.getID());
+                }else {
+                    menu.showCommandForName();
+                    String name = menu.getScanner();
+                    item1.setName(name);
+                    menu.showCommandForDescribe();
+                    String description = menu.getScanner();
+                    item1.setDescription(description);
+                    tracker.updateItem(item1);
                 }
-                menu.showItems(tracker.getItems());
                 acton();
                 break;
             case SHOWITEMS:
-                menu.showItems(tracker.getItems());
+                menu.chooseToShowItem();
+                String idShow = menu.getScanner();
+                Item itemShow = tracker.findByID(idShow);
+                if(itemShow.getName() == null){
+                    menu.showNoItems();
+                }else {
+                    menu.showItem(itemShow);
+                }
                 acton();
                 break;
             case REMOVEITEM:
-                menu.showItems(tracker.getItems());
-                menu.showRemove();
-                if (tracker.getItems()[0] == null) {
+                menu.showRemoveID();
+                String idRemove = menu.getScanner();
+                Item itemRemove = tracker.findByID(idRemove);
+                if(itemRemove.getName() == null){
                     menu.showNoItems();
-                } else {
-                    menu.showTextIdNumber();
-                    String id = menu.getScanner();
-                    tracker.deleteItem(id);
+                }else {
+                    tracker.deleteItem(idRemove);
+                    menu.showRemovedItem();
                 }
-                menu.showItems(tracker.getItems());
                 acton();
                 break;
             case EXIT:

@@ -26,6 +26,13 @@ public class Item{
         this.date =  date;
     }
 
+    public Item(String id, String name, String description, Date date) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.date = date;
+    }
+
     public void setID(String id){
         this.id = id;
     }
@@ -52,6 +59,10 @@ public class Item{
             this.date = null;
         }
         this.date = new Date();
+    }
+
+    public void setCurrentDate(Date date){
+        this.date = date;
     }
 
     public String getID(){

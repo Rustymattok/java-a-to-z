@@ -1,10 +1,7 @@
 package tracker.start;
 
-
 import tracker.models.Item;
-
 import java.util.Scanner;
-
 /**
  * Class for show game.interface .
  */
@@ -33,7 +30,7 @@ public class ShowMenu {
         System.out.println("-------------------------------------------- ");
         System.out.println("-------------------------------------------- ");
         System.out.println("ADDItem    ( - добавить заявку)                  - а");
-        System.out.println("SHOWItems  (- посмотреть текущие заявки)         - b");
+        System.out.println("SHOWItem  (- посмотреть текущие заявки)         - b");
         System.out.println("EDITItem   (- править заявку)                    - c");
         System.out.println("REMOVEItem (- удалить заявку)                    - d");
         System.out.println("EXIT       (- выход, данные не сохраняются)      - e");
@@ -43,7 +40,7 @@ public class ShowMenu {
     /**
      * Method for show text for delete.
      */
-    public void showRemove(){
+    public void showRemoveID(){
         System.out.println("Выбирите ID заявку  для удаления ");
         System.out.println("-------------------------------------------- ");
     }
@@ -86,19 +83,6 @@ public class ShowMenu {
         System.out.println("Заявок не существует  ");
     }
     /**
-     * Method for show text for ID item.
-     */
-    public void showTextIdNumber(){
-        System.out.print("ID заявки: ");
-    }
-    /**
-     * Method for show text for modify item.
-     */
-    public void showModifyItems(String s){
-        System.out.printf("Заявка id - %s  изменена",s);
-        System.out.println();
-    }
-    /**
      * Method for enter text.
      */
     public String getScanner() {
@@ -107,15 +91,23 @@ public class ShowMenu {
     /**
      * Method for show list of items.
      */
-    public void showItems(Item[] items){
-        int position = 0 ;
-        for(Item item : items ){
-            if (items[position] == null){
-                break;
-            }
-            position++;
-            System.out.printf("имя заяви: %s описание: %s id-заявки ноиер %d : = %s дата создания заявки:  %s",
-                    item.getName(), item.getDescription(), position, item.getID(), item.getDate());
-        }
+    public void chooseToShowItem(){
+            System.out.println("Выбирите ID заявки  для просмотра ");
+            System.out.println("-------------------------------------------- ");
+    }
+    /**
+     * Method for show choosed Item.
+     */
+    public void showItem(Item item){
+        System.out.printf("имя заяви: %s описание: %s id-заявки номер %s : дата создания заявки:  %s",
+                   item.getName(), item.getDescription(), item.getID(), item.getDate());
+        System.out.println();
+    }
+    /**
+     * Method for show activities done.
+     */
+    public void showRemovedItem(){
+        System.out.println("Выбранная заявка  удалена ");
+        System.out.println("-------------------------------------------- ");
     }
 }

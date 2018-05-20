@@ -1,27 +1,27 @@
 package tracker.start;
 
-
-
 import tracker.models.Choose;
 import tracker.models.Item;
-
-import java.util.Date;
+import trakertests.DataBase;
 import java.util.Random;
-
 /**
  * Logic of tracker.
  */
-public class Tracker {
+public class Tracker implements AutoCloseable{
     /**
      * @param items - list of items.
      * @param position - index of items.
      * @param random - activate random methods.
      * @param menu - activate for show methods.
      */
-    private Item[] items = new Item[10];
-    private int position = 0;
+    private DataBase dataBase;
     private static final Random random = new Random();
     private ShowMenu menu = new ShowMenu();
+    private Item[] items;
+
+    public Tracker(DataBase dataBase) {
+        this.dataBase = dataBase;
+    }
     /**
      * Add items
      *
@@ -30,7 +30,7 @@ public class Tracker {
      */
     public Item addItem(Item item) {
         item.setID(generateID());
-        this.items[position++] = item;
+        dataBase.addItem(item);
         return item;
     }
     /**
@@ -41,95 +41,37 @@ public class Tracker {
      */
     public Item findByID(String id) {
         Item result = null;
-        for (Item item : items) {
-            if (item != null && item.getID().equals(id)) {
-                result = item;
-            }
-        }
-        return result;
-    }
-    /**
-     * Find item by description.
-     *
-     * @param description - parameter for searchind.
-     * @return item by description.
-     */
-    public Item findByDec(String description) {
-        Item result = null;
-        for (Item item : items) {
-            if (item != null && item.getDescription().equals(description)) {
-                result = item;
-            }
-        }
-        return result;
-    }
-    /**
-     * Find item by Name.
-     *
-     * @param name - parameter for searching.
-     * @return item by name.
-     */
-    public Item findByName(String name) {
-        Item result = null;
-        for (Item item : items) {
-            if (item != null && item.getName().equals(name)) {
-                result = item;
-            }
-        }
-        return result;
-    }
-    /**
-     * Find item by Date.
-     *
-     * @param date - parameter for searching.
-     * @return item by Date.
-     */
-    public Item findByDate(Date date) {
-        Item result = null;
-        for (Item item : items) {
-            if (item != null && item.getDate().equals(date)) {
-                result = item;
-            }
-        }
+        result = dataBase.searchById(id);
         return result;
     }
     /**
      * Delete item by index.
-     *
      * @param id - parameter for index.
      * @return list of items after deleting.
      */
-    public Item[] deleteItem(String id) {
-        Item item = findByID(id);
-        for (int i = 0; i < items.length; i++) {
-            if (items[i].equals(item)) {
-                items[i] = null;
-                sortItems(items);
-                break;
-            }
-        }
-        return items;
-    }
+    public void deleteItem(String id) {
+        dataBase.deleteItem(id);    }
     /**
-     * Update item by index.
-     *
-     * @param id - index for update.
+     * Update item.
      * @return updated item.
      */
-    public Item[] updateItem(String id) {
-        Item item = findByID(id);
-        for (int i = 0; i < items.length; i++) {
-            if (items[i].equals(item)) {
-                items[i].setName("");
-                items[i].setDescription("");
-                break;
+    public void updateItem(Item item) {
+        dataBase.editItem(item);
+    }
+    /**
+     *
+     * @return id - generated data.
+     */
+    private String generateID() {
+        boolean flag  = false;
+        String generatedId="";
+        while (flag == false) {
+            generatedId = (System.currentTimeMillis() / 1000000000) / 100 + String.valueOf(random.nextInt(100));
+            if (findByID(generatedId).getName() == null) {
+                flag = true;
             }
         }
-        return items;
-    }
-
-    private String generateID() {
-        return (System.currentTimeMillis() / 1000000000) / 100 + String.valueOf(random.nextInt(100));
+        return generatedId;
     }
     /**
      * Sort list of items.
@@ -191,7 +133,7 @@ public class Tracker {
         return choose;
     }
 
-    public Item[] getItems() {
-        return items;
+    public void close() throws Exception {
+        dataBase.closeData();
     }
 }
