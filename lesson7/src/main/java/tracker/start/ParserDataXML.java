@@ -24,19 +24,22 @@ public class ParserDataXML implements AutoCloseable {
             while ((line = bufferedReader.readLine()) != null) {
                 if (line.startsWith("<entry url=")) {
                     url = line.replaceAll("<entry url=","");
-                    url = url.substring(0, url.length() - 2);
+                    url = url.substring(1, url.length() - 3);
                 }
                 if ((line.startsWith("<entry namedata="))) {
                     nameData = line.replaceAll("<entry namedata=", "");
-                    nameData = nameData.substring(0, nameData.length() - 2);
+                    nameData = nameData.substring(1, nameData.length() - 3);
+                   // System.out.println(nameData);
                 }
                 if ((line.startsWith("<entry user="))) {
-                    user = line.replaceAll("<entry user=", "");
-                    user = user.substring(0, user.length() - 2);
+                    user = line.replaceAll("<entry user=","");
+                    user = user.substring(1, user.length() - 3);
+                    //System.out.println(user);
                 }
                 if ((line.startsWith("<entry password="))) {
                     password = line.replaceAll("<entry password=","");
-                    password = password.substring(0, password.length() - 2);
+                    password = password.substring(1, password.length() - 3);
+                  //  System.out.println(password);
                 }
             }
     }

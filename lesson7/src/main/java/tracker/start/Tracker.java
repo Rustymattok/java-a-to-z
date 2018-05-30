@@ -73,65 +73,6 @@ public class Tracker implements AutoCloseable{
         }
         return generatedId;
     }
-    /**
-     * Sort list of items.
-     *
-     * @param items - list for sorting.
-     */
-    public void sortItems(Item[] items) {
-        Item b;
-        for (int i = 0; i < items.length - 1; i++) {
-            if (items[i] == null && items[i + 1] != null) {
-                b = items[i + 1];
-                items[i + 1] = items[i];
-                items[i] = b;
-            }
-        }
-    }
-    /**
-     * Choose type of active in menu.
-     *
-     * @return type of active.
-     */
-    public Choose getChoose() {
-        boolean flag;
-        Choose choose = null;
-        do {
-            menu.showChoose();
-            String result = menu.getScanner();
-            if (result != null && !result.isEmpty()) {
-                switch (result.charAt(0)) {
-                    case 'a':
-                        choose = Choose.ADDITEM;
-                        flag = false;
-                        break;
-                    case 'b':
-                        choose = Choose.SHOWITEMS;
-                        flag = false;
-                        break;
-                    case 'c':
-                        choose = Choose.EDITITEM;
-                        flag = false;
-                        break;
-                    case 'd':
-                        choose = Choose.REMOVEITEM;
-                        flag = false;
-                        break;
-                    case 'e':
-                        choose = Choose.EXIT;
-                        flag = false;
-                        break;
-                    default:
-                        menu.showErrorOfEnter();
-                        flag = true;
-                }
-            } else {
-                menu.showErrorOfEnter();
-                flag = true;
-            }
-        } while (flag);
-        return choose;
-    }
 
     public void close() throws Exception {
         dataBase.closeData();

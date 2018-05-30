@@ -6,63 +6,57 @@ import java.util.Date;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.logging.Logger;
+
+
 /**
  * Class allow to connect to dataBase. and make some injections and operations.
  */
 public class DataBase {
     private Connection con;
     private WorkBase workBase;
+    private String fullWayToData;
+    private static Logger LOGGER = Logger.getLogger("InfoLogging");
 
     public DataBase(WorkBase workBase) {
         this.workBase = workBase;
+        this.fullWayToData = new StringBuilder().append(workBase.getUrl()).append("/").append(workBase.getNameData()).toString();
+        System.out.println(fullWayToData);
     }
     /**
      * Method for connection to dataBase.
      */
     public void connectToDataBase(){
-        String fullWayToData = new StringBuilder().append(workBase.getUrl()).append("/").append(workBase.getNameData()).toString();
         try {
             con = DriverManager.getConnection(fullWayToData, workBase.getUser(), workBase.getPassword());
             con.setAutoCommit(false);
             System.out.println("server found");
         } catch (SQLException e) {
-            System.out.println("created dataBase");
+            LOGGER.info("connect to DATA :");
             creatNewDataBase();
-        }
-    }
-    /**
-     * Method for read dataBase.
-     */
-    public void readTest(){
-        try {
-            Statement st = con.createStatement();
-            String taskSQL = new StringBuilder().append("SELECT * FROM").append(" ").append(workBase.getNameTable()).toString();
-            ResultSet rs = st.executeQuery(taskSQL);
-            while (rs.next())
-            {
-                System.out.println(rs.getString(1));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
     /**
     Method for tests Describe syntax how to add elements
      */
     public void addItem(Item item){
-        try{
-            Statement st = con.createStatement();
             String taksCreateTable = new StringBuilder().append("CREATE TABLE IF NOT EXISTS").append(" ")
                     .append(workBase.getNameTable()).append("(id text,name text,description text,data date);").toString();
-            st.execute(taksCreateTable);
-            String taskInsertIntoTable = new StringBuilder().append("INSERT INTO")
-                   .append(" ")
-                   .append(workBase.getNameTable())
-                   .append(" (id,name,description,data) VALUES ('"+item.getID()+"','"+item.getName()+"','"+item.getDescription()+"','"+item.getDate()+"');").toString();
-            st.execute(taskInsertIntoTable);
-        }catch (SQLException e) {
-            e.printStackTrace();
-        }
+             String taskInsertIntoTable = new StringBuilder().append("INSERT INTO ").append(workBase.getNameTable())
+                  .append(" VALUES (?,?,?,?)").toString();
+            try {
+                PreparedStatement st = con.prepareStatement(taksCreateTable);
+                st.execute();
+                st = con.prepareStatement(taskInsertIntoTable);
+                st.setString(1,item.getID());
+                st.setString(2,item.getName());
+                st.setString(3,item.getDescription());
+                st.setObject(4,java.sql.Date.valueOf(java.time.LocalDate.now()));
+                st.executeUpdate();
+            } catch (SQLException e) {
+                LOGGER.info("add Item: :");
+                e.printStackTrace();
+            }
     }
     /**
      * Method for create new DataBase if it's absent.
@@ -70,12 +64,14 @@ public class DataBase {
     public void creatNewDataBase(){
         if(con == null) {
             try {
-                con = DriverManager.getConnection("jdbc:postgresql://localhost:5432", workBase.getUser(), workBase.getPassword());
-                Statement st =  con.createStatement();
                 String hrappSQL = new StringBuilder().append("CREATE DATABASE").append(" ").append(workBase.getNameTable()).toString();
-                st.executeUpdate(hrappSQL);
+                con = DriverManager.getConnection(fullWayToData, workBase.getUser(), workBase.getPassword());
+                PreparedStatement st = con.prepareStatement(hrappSQL);
+                st.execute();
             }
             catch (SQLException e) {
+                LOGGER.info("create new  DATA :");
+                e.printStackTrace();
             }
         }
     }
@@ -92,6 +88,7 @@ public class DataBase {
                 st.close();
             }
         } catch (SQLException e) {
+            LOGGER.info("close DATA :");
             e.printStackTrace();
         }
     }
@@ -104,8 +101,9 @@ public class DataBase {
         Item result = new Item();
         String selectTableSQL = "SELECT id,name,description,data FROM itemtrack WHERE id = '"+id+"'";
         try{
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery(selectTableSQL);
+            con = DriverManager.getConnection(fullWayToData, workBase.getUser(), workBase.getPassword());
+            PreparedStatement st = con.prepareStatement(selectTableSQL);
+            ResultSet rs = st.executeQuery();
             if (rs != null){
                 while (rs.next()) {
                     result.setID(rs.getString("id"));
@@ -116,6 +114,7 @@ public class DataBase {
                 }
             }
         }catch (SQLException e) {
+            LOGGER.info("search by id in DATA :");
             e.printStackTrace();
         }
         return result;
@@ -128,9 +127,10 @@ public class DataBase {
         item.setDate();
         String selectTableSQL = "UPDATE itemtrack SET name='"+item.getName()+"',description='"+item.getDescription()+"',data = '"+item.getDate()+"' WHERE id = '"+item.getID()+"'";
         try{
-            Statement st = con.createStatement();
-            st.executeUpdate(selectTableSQL);
+            PreparedStatement st = con.prepareStatement(selectTableSQL);
+            st.executeUpdate();
         }catch (SQLException e) {
+            LOGGER.info("edit Item in DATA :");
             e.printStackTrace();
         }
     }
@@ -141,9 +141,10 @@ public class DataBase {
     public void deleteItem(String id){
         String selectTableSQL = "DELETE FROM itemtrack WHERE id = '"+id+"';";
         try{
-            Statement st = con.createStatement();
-            st.executeUpdate(selectTableSQL);
+            PreparedStatement st = con.prepareStatement(selectTableSQL);
+            st.executeUpdate();
         }catch (SQLException e) {
+            LOGGER.info("delete Item in DATA :");
             e.printStackTrace();
         }
     }
@@ -158,6 +159,7 @@ public class DataBase {
         try {
             date = formatter.parse(dateString);
         } catch (ParseException e) {
+            LOGGER.info("covert Date :");
             e.printStackTrace();
         }
         return date;
