@@ -16,6 +16,9 @@
         <module>lesson3test</module>
         <module>lesson4</module>
         <module>lesson5</module>
+        <module>lesson6</module>
+        <module>lesson7</module>
+
     </modules>
     <dependencies>
         <dependency>

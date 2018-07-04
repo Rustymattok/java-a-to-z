@@ -64,7 +64,7 @@ public class MyLinkedList <T> implements ContainerArray<T> {
         size++;
     }
     /**
-     * This method allow to orgonize moving lists, during removing.
+     * This method allow to orgonize movi  ng lists, during removing.
      */
     public T linkRemove(MyNode<T> node){
         final T element = node.object;

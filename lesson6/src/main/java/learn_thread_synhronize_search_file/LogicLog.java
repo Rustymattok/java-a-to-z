@@ -1,6 +1,6 @@
 package learn_thread_synhronize_search_file;
 /**
- * This class describe of logic for looking needed file.
+ * This class describe of logic for looking needed files.
  */
 final class LogicLog {
 
@@ -14,7 +14,7 @@ final class LogicLog {
 
     /**
      * This method take list of files, and parsing for text.
-     * If during parsing found key word , this file will add to log list.
+     * If during parsing found key word , this files will add to log list.
      */
     final void actionSearch(){
         SeachLogic seachlogic = new SeachLogic(text);

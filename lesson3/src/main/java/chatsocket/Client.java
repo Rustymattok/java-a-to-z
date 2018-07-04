@@ -10,7 +10,7 @@ public class Client {
     /**
      * @param socket - socket for connecting to server.
      * @param name - init of name user.
-     * @param resureceFile - file's way for take insert adress in local mashine."127.0.0.1"
+     * @param resureceFile - files's way for take insert adress in local mashine."127.0.0.1"
      */
     private Socket socket;
     private String name;

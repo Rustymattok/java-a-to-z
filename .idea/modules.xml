@@ -10,6 +10,9 @@
       <module fileurl="file://$PROJECT_DIR$/lesson3test/lesson3test.iml" filepath="$PROJECT_DIR$/lesson3test/lesson3test.iml" />
       <module fileurl="file://$PROJECT_DIR$/lesson4/lesson4.iml" filepath="$PROJECT_DIR$/lesson4/lesson4.iml" />
       <module fileurl="file://$PROJECT_DIR$/lesson5/lesson5.iml" filepath="$PROJECT_DIR$/lesson5/lesson5.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lesson6/lesson6.iml" filepath="$PROJECT_DIR$/lesson6/lesson6.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lesson7/lesson7.iml" filepath="$PROJECT_DIR$/lesson7/lesson7.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lesson7/lesson7-1.iml" filepath="$PROJECT_DIR$/lesson7/lesson7-1.iml" />
       <module fileurl="file://$PROJECT_DIR$/lesson2/src/main/java/task2/tracker.iml" filepath="$PROJECT_DIR$/lesson2/src/main/java/task2/tracker.iml" />
     </modules>
   </component>

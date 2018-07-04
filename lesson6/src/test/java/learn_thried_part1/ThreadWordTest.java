@@ -2,7 +2,7 @@ package learn_thried_part1;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 /**
- * TestThread for checking count of spaces
+ * testthread for checking count of spaces
  */
 public class ThreadWordTest {
     private String text;

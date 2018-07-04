@@ -5,7 +5,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 /**
- * This class for Test class of UserStorage
+ * This class for testthread class of UserStorage
  */
 public class UserStorageTest {
 

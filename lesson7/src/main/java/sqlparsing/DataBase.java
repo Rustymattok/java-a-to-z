@@ -1,115 +1,53 @@
-package tracker.start;
+package sqlparsing;
 
 import java.sql.*;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.logging.Logger;
+import java.util.Date;
 /**
  * Class allow to connect to dataBase. and make some injections and operations.
  */
-public class DataBase {
+public class DataBase implements DataStrategy {
     private Connection con;
     private WorkBase workBase;
+    private String fullWayToData;
+    private static Logger LOGGER = Logger.getLogger("InfoLogging");
 
     public DataBase(WorkBase workBase) {
         this.workBase = workBase;
+        this.fullWayToData = new StringBuilder().append(workBase.getUrl()).append("/").append(workBase.getNameData()).toString();
+        connectToDataBase();
     }
     /**
      * Method for connection to dataBase.
      */
     public void connectToDataBase(){
-        String fullWayToData = new StringBuilder().append(workBase.getUrl()).append("/").append(workBase.getNameData()).toString();
         try {
             con = DriverManager.getConnection(fullWayToData, workBase.getUser(), workBase.getPassword());
-            con.setAutoCommit(false);
+            LOGGER.info("server found :");
         } catch (SQLException e) {
+            LOGGER.info("connect to DATA :");
             creatNewDataBase();
-            System.out.println("created dataBase");
-
         }
     }
     /**
-     * Method for read dataBase.
-     */
-    public void readTest(){
-        try {
-            Statement st = con.createStatement();
-            String taskSQL = new StringBuilder().append("SELECT * FROM").append(" ").append(workBase.getNameTable()).toString();
-            ResultSet rs = st.executeQuery(taskSQL);
-            while (rs.next())
-            {
-                System.out.println(rs.getString(1));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    /**
-     * Method for init table depends of N - numbers.
-     */
-    public void initTable(){
-        try {
-            Statement st = con.createStatement();
-            String taksCreateTable = new StringBuilder().append("CREATE TABLE IF NOT EXISTS").append(" ").append(workBase.getNameTable()).append(" (n INTEGER)").toString();
-            st.execute(taksCreateTable);
-            String taksDeleteTable = new StringBuilder().append("DELETE FROM").append(" ").append(workBase.getNameTable()).toString();
-            st.execute(taksDeleteTable);
-//            for (int i = 0; i < workBase.getNumbersAdd(); i++) {
-//                String taksInsertIntoTable = new StringBuilder().append("INSERT INTO").append(" ").append(workBase.getNameTable()).append("(n) VALUES (?);").toString();
-//                PreparedStatement ps = con.prepareStatement(taksInsertIntoTable);
-//                ps.setInt(1, i)
-//                ps.executeUpdate();
-//            }
-            //todo необходимо пониание о корректности методики раставления коммитов для базы данных.
-//            con.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    /**
-     * Method for create new DataBase if it absent.
+     * Method for create new DataBase if it's absent.
      */
     public void creatNewDataBase(){
         if(con == null) {
             try {
-                con = DriverManager.getConnection("jdbc:postgresql://localhost:5432", workBase.getUser(), workBase.getPassword());
-                Statement st =  con.createStatement();
-                String hrappSQL = new StringBuilder().append("CREATE DATABASE").append(" ").append(workBase.getNameTable()).toString();
-                st.executeUpdate(hrappSQL);
+                String hrappSQL = new StringBuilder().append("CREATE DATABASE").append(" ").append(workBase.getNameTable()).append(";").toString();
+                con = DriverManager.getConnection(fullWayToData, workBase.getUser(), workBase.getPassword());
+                PreparedStatement st = con.prepareStatement(hrappSQL);
+                st.execute();
             }
             catch (SQLException e) {
-              //  e.printStackTrace();
+                LOGGER.info("create new  DATA :");
+                e.printStackTrace();
             }
         }
     }
-    public void creatNewTable() {
-        System.out.println("created table");
-            try {
-                con = DriverManager.getConnection("jdbc:postgresql://localhost:5432", workBase.getUser(), workBase.getPassword());
-                Statement st = con.createStatement();
-                String taksInsertIntoTable = new StringBuilder().append("CREATE TABLE tasks (id integer,name text,description  text, date date);").toString();
-                st.executeUpdate(taksInsertIntoTable);
-            } catch (SQLException e) {
-                //  e.printStackTrace();
-            }
-
-    }
-    /**
-     * Method for import dataBase to XML format.
-     * @param list - crteated nodes from data.
-     */
-//    public void importToXML(List<Entry> list){
-//        try {
-//            Statement st = con.createStatement();
-//            String taskSQL = new StringBuilder().append("SELECT * FROM").append(" ").append(workBase.getNameTable()).toString();
-//            ResultSet rs = st.executeQuery(taskSQL);
-////            while (rs.next())
-////            {
-////                //list.add(new Entry(new StringBuilder().append("mean of pole").append(" ").append(rs.getString(1)).toString()));
-////                list.add(new Entry(rs.getString(1).toString()));
-////        }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
     /**
      * Method for close all operations.
      */
@@ -123,16 +61,74 @@ public class DataBase {
                 st.close();
             }
         } catch (SQLException e) {
+            LOGGER.info("close DATA :");
             e.printStackTrace();
         }
     }
-
-    public Connection getCon() {
-        return con;
+    /**
+     * Method to choose max date.
+     * @return String-  found by postgresql.
+     */
+    @Override
+    public  String selectMax(){
+        String date="";
+        String selectTableSQL = "SELECT max(date) FROM mytask";
+        try{
+            con = DriverManager.getConnection(fullWayToData, workBase.getUser(), workBase.getPassword());
+            DatabaseMetaData dbm = con.getMetaData();
+            PreparedStatement st = con.prepareStatement(selectTableSQL);
+            ResultSet rs = dbm.getTables(null,null,"mytask",null);
+            if(rs.next()) {
+                rs = st.executeQuery();
+                while (rs.next()) {
+                    date = rs.getString(1);
+                }
+            }else{
+                date = "0000-00-00 00:00:00";
+            }
+        }catch (SQLException e) {
+            LOGGER.info("not work of method selectMax");
+            e.printStackTrace();
+        }
+        return date;
     }
-
-
-    public WorkBase getWorkBase() {
-        return workBase;
+    /**
+     * Add to data base new item.
+     * @param item- element to add.
+     */
+    @Override
+    public void addTodata(Item item) {
+        String taksCreateTable = new StringBuilder().append("CREATE TABLE IF NOT EXISTS").append(" ")
+                .append(workBase.getNameTable()).append("(id text,name text,description text,date timestamp);").toString();
+        String taskInsertIntoTable = new StringBuilder().append("INSERT INTO ").append(workBase.getNameTable())
+                .append(" VALUES (?,?,?,?)").toString();
+        try {
+            PreparedStatement st = con.prepareStatement(taksCreateTable);
+            st.executeUpdate();
+            st = con.prepareStatement(taskInsertIntoTable);
+            st.setString(1,item.getID());
+            st.setString(2,item.getName());
+            st.setString(3,item.getDescription());
+            st.setObject(4,new java.sql.Timestamp(item.getDate().getTime()));
+            st.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.info("method: addToData has mistake");
+            e.printStackTrace();
+        }
+    }
+    /**
+     * @param date - String for convert date in string to util.Date.
+     * @return util.Date
+     */
+    @Override
+    public Date convertToData(String date){
+        Date result = null;
+        SimpleDateFormat simpleDateFormatIn = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            result = simpleDateFormatIn.parse(date);
+        } catch (ParseException e) {
+            LOGGER.info("not correct during convertation String to Date :");
+        }
+        return result;
     }
 }

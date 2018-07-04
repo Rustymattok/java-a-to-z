@@ -4,7 +4,7 @@ package chat;
  */
 public class ClientServer {
     /**
-     * @param file - String parameter way for file.
+     * @param files - String parameter way for files.
      */
     private String file;
 

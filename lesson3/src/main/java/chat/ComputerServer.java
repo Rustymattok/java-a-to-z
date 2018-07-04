@@ -11,8 +11,8 @@ import java.io.IOException;
 public class ComputerServer {
     /**
      * @param server - String parametre way for server's doc.
-     * @param text - text in the doc server file.
-     * @param fileReader - thread for reading file.
+     * @param text - text in the doc server files.
+     * @param fileReader - thread for reading files.
      * @param chooseText - massive for keeping parametrs of text in buffer.
      */
     private String serverFile;
@@ -26,7 +26,7 @@ public class ComputerServer {
         init();
     }
     /**
-     * This method use for init in buffer from file.
+     * This method use for init in buffer from files.
      */
     public void init(){
         try {
@@ -48,7 +48,7 @@ public class ComputerServer {
         }
     }
     /**
-     * This method for reciveing counts of lines in doc file for server.
+     * This method for reciveing counts of lines in doc files for server.
      * @return count - size of massive String.
      */
     public int getSize() {

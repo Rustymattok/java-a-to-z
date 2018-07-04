@@ -5,7 +5,7 @@ import java.io.FileReader;
 import java.util.*;
 
 /**
- * This class describe logic of parsing xml file.
+ * This class describe logic of parsing xml files.
  */
 public class LogicParser {
 
@@ -13,7 +13,7 @@ public class LogicParser {
     private HashMap<Integer,Order> listSorted = new HashMap<Integer, Order>();
     private Order order;
     /**
-     * Method of parsing common file.
+     * Method of parsing common files.
      */
     void bufferFile(){
         try {

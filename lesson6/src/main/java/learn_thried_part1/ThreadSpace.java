@@ -7,8 +7,8 @@ public class ThreadSpace implements Runnable,Calculation{
      * @param text - the text that should be parsed.
      * @param count - numbers of spaces.
      */
-    private String text;
-    private int count = 0;
+    private final String text;
+    private  int count ;
 
     public ThreadSpace(String text) {
         this.text = text;
