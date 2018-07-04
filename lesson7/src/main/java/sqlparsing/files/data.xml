@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <entries>
-<entry url="jdbc:postgresql://localhost:5432"/>
-<entry namedata="nametest2"/>
-<entry user="postgres"/>
-<entry password="admin"/>
+    <entry url="jdbc:postgresql://localhost:5432"/>
+    <entry namedata="nametest2"/>
+    <entry user="postgres"/>
+    <entry password="admin"/>
+    <entry lastDate="0000-00-00 00:00:00"/>
 </entries>

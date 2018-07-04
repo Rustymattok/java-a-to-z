@@ -1,15 +1,16 @@
-package sqltask.jdbc;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-
+package sqlparsing;
+import java.io.*;
+import java.util.ArrayList;
+/**
+ * This class include methods for parsing propereties of application.
+ */
 public class ParserDataXML implements AutoCloseable {
     private String url;
     private String nameData;
     private String user;
     private String password;
     private String parserFileWay;
+    private String lastDate;
 
     public ParserDataXML(String parserFileWay) {
         this.parserFileWay = parserFileWay;
@@ -25,24 +26,60 @@ public class ParserDataXML implements AutoCloseable {
             while ((line = bufferedReader.readLine()) != null) {
                 if (line.startsWith("<entry url=")) {
                     url = line.replaceAll("<entry url=", "");
-                    url = url.substring(0, url.length() - 2);
-                    System.out.println(url);
+                    url = url.substring(1, url.length() - 3);
                 }
                 if ((line.startsWith("<entry namedata="))) {
                     nameData = line.replaceAll("<entry namedata=", "");
-                    nameData = nameData.substring(0, nameData.length() - 2);
-                    System.out.println(nameData);
+                    nameData = nameData.substring(1, nameData.length() - 3);
                 }
                 if ((line.startsWith("<entry user="))) {
                     user = line.replaceAll("<entry user=", "");
-                    user = user.substring(0, user.length() - 2);
-                    System.out.println(user);
+                    user = user.substring(1, user.length() - 3);
                 }
                 if ((line.startsWith("<entry password="))) {
                     password = line.replaceAll("<entry password=", "");
-                    password = password.substring(0, password.length() - 2);
-                    System.out.println(password);
+                    password = password.substring(1, password.length() - 3);
                 }
+                if((line.startsWith("<entry lastDate="))){
+                    lastDate = line.replaceAll("<entry lastDate=","");
+                    lastDate = lastDate.substring(1,lastDate.length()-3);
+                }
+            }
+        }
+    }
+    /**
+     * Method for update last date in propereties.
+     * @param date - string value of date which we should to update of our list propereties.
+     */
+    public void addToDataLastDate(String date) {
+        ArrayList<String> list = new ArrayList<>();
+        File file = new File(parserFileWay);
+        FileWriter fr = null;
+        BufferedWriter br = null;
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(parserFileWay));
+            String line;
+            while ((line = bufferedReader.readLine()) != null){
+                if((line.startsWith("<entry lastDate="))){
+                    line = "<entry lastDate=" + "\""+date+"\"/>";
+                }
+                list.add(line);
+            }
+            fr = new FileWriter(file);
+            br = new BufferedWriter(fr);
+            fr.write("");
+            for (int i = 0; i < list.size() ; i++) {
+                br.write(list.get(i));
+                br.newLine();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            try {
+                br.close();
+                fr.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -61,6 +98,14 @@ public class ParserDataXML implements AutoCloseable {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getLastDate() {
+        return lastDate;
+    }
+
+    public void setLastDate(String lastDate) {
+        this.lastDate = lastDate;
     }
 
     public void close() throws Exception {

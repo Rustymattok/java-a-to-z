@@ -1,4 +1,4 @@
-package tracker.start;
+package sqlparsing;
 /**
  * Class for describe parameters of work database.
  */
@@ -9,15 +9,13 @@ public class WorkBase {
     private  String user;
     private  String password;
     private  String nameTable;
-    private int numbersAdd;
 
-    public WorkBase(String url, String nameData, String user, String password, int numbersAdd ) {
+    public WorkBase(String url, String nameData, String user, String password) {
         this.url = url;
         this.nameData = nameData;
         this.user = user;
         this.password = password;
-        this.numbersAdd = numbersAdd;
-        nameTable = "mytask";
+        this.nameTable = "mytask";
     }
 
     public String getUrl() {
@@ -60,11 +58,4 @@ public class WorkBase {
         this.nameTable = nameTable;
     }
 
-    public int getNumbersAdd() {
-        return numbersAdd;
-    }
-
-    public void setNumbersAdd(int numbersAdd) {
-        this.numbersAdd = numbersAdd;
-    }
 }
