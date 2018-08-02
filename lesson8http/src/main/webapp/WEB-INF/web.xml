@@ -1,0 +1,11 @@
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" version="2.4">
+  <servlet>
+    <servlet-name>UserServlet</servlet-name>
+    <servlet-class>servlets.UserServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserServlet</servlet-name>
+    <url-pattern>/servlet</url-pattern>
+  </servlet-mapping>
+</web-app>
