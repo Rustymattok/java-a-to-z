@@ -6,37 +6,32 @@ import persistent.Store;
  * It uses singletone pattern for safety threadpul.
  */
 public class ValidateService {
-    private final Store logic = MemoryStore.getInstance();
+    private final Store logic;
     private  static ValidateService instance;
+    private  int ID = 0 ;
 
-    private ValidateService(){
-
+    private ValidateService(Store logic){
+        this.logic = logic;
     }
-
-    public static ValidateService getInstance(){
+    //todo связать с любой базой данных -  корректно ?.
+    public static ValidateService getInstance(Store logic){
         if(instance ==null){
-            instance = new ValidateService();
+            instance = new ValidateService(logic);
         }
         return instance;
     }
 
-    public void add(User user){
-        logic.add(user);
+    public Store getLogic() {
+        return logic;
     }
-    public void update(String id){
-        logic.update(id);
+
+    public  int getID() {
+        return ID;
     }
-    public void delete(String id){
-        logic.delete(id);
+
+    public void setID(int ID) {
+        this.ID = ID;
     }
-    boolean findAll(User user){
-        boolean flag = false;
-        if(logic.findAll(user)){
-            flag = true;
-        }
-        return flag;
-    }
-    public User findById(String id){
-        return logic.findById(id);
-    }
+
+
 }

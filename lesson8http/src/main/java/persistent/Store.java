@@ -6,8 +6,8 @@ import logic.User;
 public interface Store {
 
     void add(User user);
-    void update(String id);
+    void update(String id, String name, String login, String email);
     void delete(String id);
-    boolean findAll(User user);
+    int size();
     User findById(String id);
 }
