@@ -1,8 +1,11 @@
 <%@ page import="logic.ValidateService" %>
-<%@ page import="servlets.UserServlet" %>
 <%@ page import="logic.User" %>
+<%@ page import="persistent.DbStore" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%! private final static ValidateService work = UserServlet.getWork();%>
+<%!
+    //private final static ValidateService work = ValidateService.getInstance(MemoryStore.getInstance());
+    private final static ValidateService work = ValidateService.getInstance(DbStore.getInstance());
+%>
 <html>
 <head>
     <title>Title</title>
