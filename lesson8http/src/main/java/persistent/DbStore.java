@@ -1,7 +1,9 @@
 package persistent;
 
+import logic.IdGenerator;
 import logic.User;
 import org.apache.commons.dbcp.BasicDataSource;
+
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,8 +12,9 @@ import java.util.List;
 
 public class DbStore implements Store {
     private static final BasicDataSource SOURCE = new BasicDataSource();
-    private final List<User> list= Collections.synchronizedList(new ArrayList());
+    private List<User> list = Collections.synchronizedList(new ArrayList());
     private static DbStore INSTANCE = new DbStore();
+    private IdGenerator idGenerator = IdGenerator.getInstance();
     static int ID = 0;
 
     public DbStore() {
@@ -24,19 +27,39 @@ public class DbStore implements Store {
         SOURCE.setMinIdle(5);
         SOURCE.setMaxIdle(10);
         SOURCE.setMaxOpenPreparedStatements(100);
+        parser();
+    }
+
+    public void parser() {
+        String task = new StringBuilder().append("select * from tablejsp;").toString();
+        try {
+            Connection connection = SOURCE.getConnection();
+            Statement st = connection.createStatement();
+            ResultSet res = st.executeQuery(task);
+            if (list.size() > 0) {
+                list.clear();
+            }
+            while (res.next()) {
+                list.add(new User(res.getString(1), res.getString(2), res.getString(3), res.getString(4)));
+            }
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public static DbStore getInstance() {
         return INSTANCE;
     }
+//todo НАдо ращобраться с индексом -  все беды от него только.
     @Override
-    public void add(User user){
-       String taskInsertIntoTable = new StringBuilder().append("INSERT INTO ").append("tableJSP")
+    public void add(User user) {
+        String taskInsertIntoTable = new StringBuilder().append("INSERT INTO ").append("tableJSP")
                 .append(" VALUES (?,?,?,?)").toString();
-       String taksCreateTable = new StringBuilder()
+        String taksCreateTable = new StringBuilder()
                 .append("CREATE TABLE IF NOT EXISTS").append(" ")
                 .append("tableJSP").append("(id text,name text,login text,email text);").toString();
-        String countId = new StringBuilder().append("SELECT count(*) FROM tablejsp;").toString();
+      String countId = new StringBuilder().append("SELECT count(*) FROM tablejsp;").toString();
         try {
             Connection connection = SOURCE.getConnection();
             /*
@@ -50,19 +73,23 @@ public class DbStore implements Store {
             String resultID = null;
             Statement st1 = connection.createStatement();
             ResultSet res = st1.executeQuery(countId);
-            while (res.next()){
+            while (res.next()) {
                 resultID = res.getString(1);
             }
-            user.setId(String.valueOf(Integer.valueOf(resultID)+1));
+        //    user.setId(String.valueOf(Integer.valueOf(resultID) + 1));
             /*
             Statment to add user to Data.
              */
+            idGenerator.setLastId(Long.valueOf(resultID));
+            user.setId(String.valueOf(idGenerator.getNextId()));
             PreparedStatement sta = connection.prepareStatement(taskInsertIntoTable);
-            sta.setString(1,user.getId());
-            sta.setString(2,user.getName());
-            sta.setString(3,user.getLogin());
-            sta.setObject(4,user.getEmail());
+            sta.setString(1, user.getId());
+            sta.setString(2, user.getName());
+            sta.setString(3, user.getLogin());
+            sta.setObject(4, user.getEmail());
             sta.executeUpdate();
+            connection.close();
+            parser();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -75,15 +102,25 @@ public class DbStore implements Store {
         /*
         UPDATE tablejsp SET name = 'vova',login = 'vova',email = 'vova' WHERE id = '6';
          */
+        String task = new StringBuilder().append(" UPDATE tablejsp SET name = '").append(name).append("',login = '").
+                append(login).append("',email = '").append(email).append("' WHERE id = '").append(id).append("';").toString();
+       doTask(task);
     }
 
     @Override
     public void delete(String id) {
         String task = new StringBuilder().append("DELETE FROM tablejsp WHERE id = '").append(id).append("';").toString();
+        doTask(task);
+    }
+
+    public void doTask(String task){
         try {
+            System.out.println(task);
             Connection connection = SOURCE.getConnection();
             Statement st = connection.createStatement();
             st.executeUpdate(task);
+            connection.close();
+            parser();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -91,39 +128,13 @@ public class DbStore implements Store {
 
     @Override
     public int size() {
-        String task = new StringBuilder().append("select * from tablejsp;").toString();
-        try {
-            Connection connection = SOURCE.getConnection();
-            Statement st = connection.createStatement();
-            ResultSet res = st.executeQuery(task);
-            while (res.next()){
-                list.add(new User(res.getString(1),res.getString(2),res.getString(3),res.getString(4)));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         return list.size();
     }
-//todo спросить Петра про такой способ реализации.
+
+    //todo спросить Петра про такой способ реализации.
     @Override
     public User findById(String id) {
-        String task = new StringBuilder().append("select * from tablejsp;").toString();
-        System.out.println("ahtuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuung");
-        try {
-            Connection connection = SOURCE.getConnection();
-            Statement st = connection.createStatement();
-            ResultSet res = st.executeQuery(task);
-            while (res.next()){
-                list.add(new User(res.getString(1),res.getString(2),res.getString(3),res.getString(4)));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return list.get(Integer.valueOf(id)-1);
-    }
-
-    @Override
-    public List<User> getList() {
-        return list;
+        return list.get(Integer.valueOf(id));
     }
 }
+

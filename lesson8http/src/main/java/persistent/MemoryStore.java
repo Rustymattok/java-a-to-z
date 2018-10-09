@@ -44,6 +44,11 @@ public class MemoryStore implements Store {
         return list.get(Integer.parseInt(id));
     }
 
+//    @Override
+//    public List<User> getList() {
+//        return null;
+//    }
+
     @Override
     public int size() {
         return list.size();

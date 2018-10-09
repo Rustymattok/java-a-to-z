@@ -1,6 +1,7 @@
 <%@ page import="logic.ValidateService" %>
 <%@ page import="servlets.UserServlet" %>
 <%@ page import="persistent.DbStore" %>
+<%@ page import="persistent.MemoryStore" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%!
     //private final static ValidateService work = ValidateService.getInstance(MemoryStore.getInstance());
@@ -10,6 +11,11 @@
 <head>
     <title>Title</title>
 </head>
+<% if(request.getParameter("sub1") != null){
+    work.setID(Integer.valueOf(request.getParameter("ID1"))-1);
+    System.out.println(work.getID());
+}
+%>
 <body>
 <FORM method="POST">
    <p><%=work.getLogic().findById(String.valueOf(work.getID())).getName()%>:  <input type="text" name="user"></p>

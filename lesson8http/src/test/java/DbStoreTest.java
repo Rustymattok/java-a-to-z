@@ -14,6 +14,13 @@ public class DbStoreTest {
     public void add() {
         work.getLogic().add(new User("fff","sss","kkk"));
     }
+    /*
+     <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.1-901-1.jdbc4</version>
+        </dependency>
+     */
 
     @Test
     public void findById(){

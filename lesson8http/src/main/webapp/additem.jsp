@@ -1,6 +1,7 @@
 <%@ page import="logic.ValidateService" %>
 <%@ page import="logic.User" %>
 <%@ page import="persistent.DbStore" %>
+<%@ page import="persistent.MemoryStore" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%!
     //private final static ValidateService work = ValidateService.getInstance(MemoryStore.getInstance());
