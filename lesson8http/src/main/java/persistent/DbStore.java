@@ -59,7 +59,7 @@ public class DbStore implements Store {
         String taksCreateTable = new StringBuilder()
                 .append("CREATE TABLE IF NOT EXISTS").append(" ")
                 .append("tableJSP").append("(id text,name text,login text,email text);").toString();
-      String countId = new StringBuilder().append("SELECT count(*) FROM tablejsp;").toString();
+        String countId = new StringBuilder().append("SELECT id FROM tablejsp;").toString();
         try {
             Connection connection = SOURCE.getConnection();
             /*
@@ -73,14 +73,14 @@ public class DbStore implements Store {
             String resultID = null;
             Statement st1 = connection.createStatement();
             ResultSet res = st1.executeQuery(countId);
+            int num = 0;
             while (res.next()) {
                 resultID = res.getString(1);
+                if(Integer.valueOf(resultID) > num){
+                    num = Integer.valueOf(resultID);
+                }
             }
-        //    user.setId(String.valueOf(Integer.valueOf(resultID) + 1));
-            /*
-            Statment to add user to Data.
-             */
-            idGenerator.setLastId(Long.valueOf(resultID));
+            idGenerator.setLastId(Long.valueOf(num));
             user.setId(String.valueOf(idGenerator.getNextId()));
             PreparedStatement sta = connection.prepareStatement(taskInsertIntoTable);
             sta.setString(1, user.getId());
@@ -99,9 +99,6 @@ public class DbStore implements Store {
     @Override
     public void update(String id, String name, String login, String email) {
         //todo обновить согласно запросу.
-        /*
-        UPDATE tablejsp SET name = 'vova',login = 'vova',email = 'vova' WHERE id = '6';
-         */
         String task = new StringBuilder().append(" UPDATE tablejsp SET name = '").append(name).append("',login = '").
                 append(login).append("',email = '").append(email).append("' WHERE id = '").append(id).append("';").toString();
        doTask(task);
@@ -115,7 +112,6 @@ public class DbStore implements Store {
 
     public void doTask(String task){
         try {
-            System.out.println(task);
             Connection connection = SOURCE.getConnection();
             Statement st = connection.createStatement();
             st.executeUpdate(task);

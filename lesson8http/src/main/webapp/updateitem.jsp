@@ -13,7 +13,6 @@
 </head>
 <% if(request.getParameter("sub1") != null){
     work.setID(Integer.valueOf(request.getParameter("ID1"))-1);
-    System.out.println(work.getID());
 }
 %>
 <body>
