@@ -25,7 +25,7 @@ public class DbStoreTest {
     @Test
     public void findById(){
         DbStore dbStore =  DbStore.getInstance();
-        System.out.println(dbStore.findById("8").getId());
+        System.out.println(dbStore.findById("6").getName());
     }
 
     @Test

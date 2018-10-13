@@ -14,5 +14,4 @@ public interface Store {
     void delete(String id);
     int size();
     User findById(String id);
-    //List<User> getList();
 }

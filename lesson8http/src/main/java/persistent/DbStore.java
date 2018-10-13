@@ -3,8 +3,6 @@ package persistent;
 import logic.IdGenerator;
 import logic.User;
 import org.apache.commons.dbcp.BasicDataSource;
-
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,7 +13,6 @@ public class DbStore implements Store {
     private List<User> list = Collections.synchronizedList(new ArrayList());
     private static DbStore INSTANCE = new DbStore();
     private IdGenerator idGenerator = IdGenerator.getInstance();
-    static int ID = 0;
 
     public DbStore() {
         String url = "jdbc:postgresql://localhost:5432";
@@ -115,7 +112,7 @@ public class DbStore implements Store {
             Connection connection = SOURCE.getConnection();
             Statement st = connection.createStatement();
             st.executeUpdate(task);
-            connection.close();
+           // connection.close();
             parser();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -124,6 +121,7 @@ public class DbStore implements Store {
 
     @Override
     public int size() {
+        parser();
         return list.size();
     }
 

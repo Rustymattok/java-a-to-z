@@ -1,11 +1,9 @@
 <%@ page import="logic.ValidateService" %>
 <%@ page import="persistent.MemoryStore" %>
-<%@ page import="persistent.DbStore" %><%--
-  Created by IntelliJ IDEA.
-  User: Rustymattok
-  Date: 09.10.2018
-  Time: 0:33
-  To change this template use File | Settings | File Templates.
+<%@ page import="persistent.DbStore" %>
+<%--
+  This is the page to work with DataBase.
+  It's main page . And during evry update parser in logic update all page.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%!
@@ -17,9 +15,10 @@
 <head>
     <title>Добро пожаловать, JSP!</title>
 </head>
-<% if(request.getParameter("sub")!= null){
+<% if(request.getParameter("sub")!= null) {
     work.getLogic().delete(request.getParameter("ID"));
-} %>
+}
+%>
 <body>
 <table>
     <colgroup>
@@ -42,7 +41,7 @@
         <td>
             <form method = "POST"  action="updateitem.jsp">
                 <input type="submit" name="sub1" value="update" id="submitB"/>
-                <input type="hidden" name="ID1" value=<%=work.getLogic().findById(String.valueOf(i)).getId()%>>
+                <input type="hidden" name="ID1" value=<%=i%>>
             </form>
         </td>
         <td>

@@ -11,7 +11,6 @@ public class MemoryStore implements Store {
     private static MemoryStore instance;
 
     private MemoryStore(){
-
     }
 
     public static MemoryStore getInstance(){
@@ -43,11 +42,6 @@ public class MemoryStore implements Store {
     public User findById(String id) {
         return list.get(Integer.parseInt(id));
     }
-
-//    @Override
-//    public List<User> getList() {
-//        return null;
-//    }
 
     @Override
     public int size() {

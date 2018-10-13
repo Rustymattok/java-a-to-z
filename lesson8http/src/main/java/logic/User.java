@@ -1,7 +1,4 @@
 package logic;
-
-import java.rmi.server.UID;
-
 /**
  * Class describe Item.
  */
@@ -10,6 +7,9 @@ public class User {
     private String name;
     private String login;
     private String email;
+
+    public User() {
+    }
 
     public User(String id, String name, String login, String email) {
         this.id = id;
