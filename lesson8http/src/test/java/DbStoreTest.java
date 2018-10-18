@@ -3,10 +3,6 @@ import logic.ValidateService;
 import org.junit.Test;
 import persistent.DbStore;
 
-import java.sql.SQLException;
-
-import static org.junit.Assert.*;
-
 public class DbStoreTest {
     private final static ValidateService work = ValidateService.getInstance(DbStore.getInstance());
 
@@ -14,18 +10,11 @@ public class DbStoreTest {
     public void add() {
         work.getLogic().add(new User("fff","sss","kkk"));
     }
-    /*
-     <dependency>
-            <groupId>postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>9.1-901-1.jdbc4</version>
-        </dependency>
-     */
 
     @Test
     public void findById(){
         DbStore dbStore =  DbStore.getInstance();
-        System.out.println(dbStore.findById("6").getName());
+        System.out.println(dbStore.findById("5").getName());
     }
 
     @Test
@@ -36,6 +25,8 @@ public class DbStoreTest {
 
     @Test
     public void sizeTest(){
-        System.out.println(work.getLogic().size());
+       // System.out.println(work.getLogic().size());
+        DbStore dbStore =  DbStore.getInstance();
+        System.out.println(dbStore.IndicateID(1));
     }
 }

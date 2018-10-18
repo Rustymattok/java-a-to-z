@@ -1,9 +1,6 @@
 package persistent;
 import logic.User;
 
-import java.sql.SQLException;
-import java.util.List;
-
 /**
  * Interface for work with Data.
  */

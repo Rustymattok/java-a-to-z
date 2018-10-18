@@ -16,12 +16,12 @@ public class IdGenerator {
      * Recieve new id. This is increment.
      * @return id.
      */
-    public long getNextId() {
+    public synchronized long  getNextId() {
         lastId = lastId + 1;
         return lastId;
     }
 
-    public void setLastId(long lastId) {
+    public synchronized void setLastId(long lastId) {
         this.lastId = lastId;
     }
 }

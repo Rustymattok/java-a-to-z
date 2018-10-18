@@ -1,5 +1,4 @@
 <%@ page import="logic.ValidateService" %>
-<%@ page import="persistent.MemoryStore" %>
 <%@ page import="persistent.DbStore" %>
 <%--
   This is the page to work with DataBase.
@@ -9,7 +8,6 @@
 <%!
     private final static ValidateService work = ValidateService.getInstance(DbStore.getInstance());
     private  int i;
-    // private final static ValidateService work = ValidateService.getInstance(DbStore.getInstance());
 %>
 <html>
 <head>
@@ -32,22 +30,25 @@
         <th>MAIL</th>
     </tr>
 
-    <%for( i = 0; i < work.getLogic().size(); i++) {%>
+    <%DbStore dbStore = new DbStore();
+        for( i = 0; i < work.getLogic().size(); i++) {
+        String id = dbStore.IndicateID(i);
+    %>
     <tr>
-        <td><%= work.getLogic().findById(String.valueOf(i)).getId()%> </td>
-        <td><%= work.getLogic().findById(String.valueOf(i)).getName()%></td>
-        <td><%= work.getLogic().findById(String.valueOf(i)).getLogin()%></td>
-        <td><%= work.getLogic().findById(String.valueOf(i)).getEmail()%> </td>
+        <td><%= work.getLogic().findById(id).getId()%> </td>
+        <td><%= work.getLogic().findById(id).getName()%></td>
+        <td><%= work.getLogic().findById(id).getLogin()%></td>
+        <td><%= work.getLogic().findById(id).getEmail()%> </td>
         <td>
             <form method = "POST"  action="updateitem.jsp">
                 <input type="submit" name="sub1" value="update" id="submitB"/>
-                <input type="hidden" name="ID1" value=<%=i%>>
+                <input type="hidden" name="ID1" value=<%=id%>>
             </form>
         </td>
         <td>
             <form method="POST" action="index.jsp" style="float:left;" >
                 <input type="submit" name="sub" value="delete" id="submitB1"/>
-                <input type="hidden" name="ID" value=<%=work.getLogic().findById(String.valueOf(i)).getId()%>>
+                <input type="hidden" name="ID" value=<%=work.getLogic().findById(id).getId()%>>
             </form>
         </td>
     </tr>

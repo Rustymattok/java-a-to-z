@@ -1,5 +1,4 @@
 package logic;
-import persistent.MemoryStore;
 import persistent.Store;
 /**
  * This class describe logic of Type Memory.
@@ -13,7 +12,7 @@ public class ValidateService {
     private ValidateService(Store logic){
         this.logic = logic;
     }
-    //todo связать с любой базой данных -  корректно ?.
+
     public static ValidateService getInstance(Store logic){
         if(instance ==null){
             instance = new ValidateService(logic);
