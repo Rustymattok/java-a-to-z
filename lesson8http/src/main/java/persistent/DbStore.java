@@ -1,17 +1,14 @@
 package persistent;
 
-import logic.IdGenerator;
 import logic.User;
 import org.apache.commons.dbcp.BasicDataSource;
+
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class DbStore implements Store {
+
     private static final BasicDataSource SOURCE = new BasicDataSource();
     private static DbStore INSTANCE = new DbStore();
-    private IdGenerator idGenerator = IdGenerator.getInstance();
 
     public DbStore() {
         String url = "jdbc:postgresql://localhost:5432";
@@ -36,34 +33,26 @@ public class DbStore implements Store {
     public void add(User user) {
         String taskInsertIntoTable = new StringBuilder().append("INSERT INTO ").append("tableJSP")
                 .append(" VALUES (?,?,?,?)").toString();
-        String taksCreateTable = new StringBuilder()
+
+        String create_seq = "CREATE SEQUENCE IF NOT EXISTS id_seq_a INCREMENT BY 1 NO MAXVALUE NO MINVALUE CACHE 1;";
+
+        String taksCreateTable = new StringBuilder().append(create_seq)
                 .append("CREATE TABLE IF NOT EXISTS").append(" ")
-                .append("tableJSP").append("(id text,name text,login text,email text);").toString();
-        String countId = new StringBuilder().append("SELECT id FROM tablejsp;").toString();
+                .append("tableJSP").append("(id integer DEFAULT nextval ('id_seq_a') NOT NULL, name text,login text,email text);").toString();
+
         try {
             Connection connection = SOURCE.getConnection();
             /*
             Operation to creation the table if not exists.
              */
             Statement st = connection.prepareStatement(taksCreateTable);
-            ((PreparedStatement) st).executeUpdate();
+           ((PreparedStatement) st).executeUpdate();
             /*
             Operation to calculate id for user. Id =  common size of table + 1.
              */
-            String resultID = null;
-            Statement st1 = connection.createStatement();
-            ResultSet res = st1.executeQuery(countId);
-            int num = 0;
-            while (res.next()) {
-                resultID = res.getString(1);
-                if(Integer.valueOf(resultID) > num){
-                    num = Integer.valueOf(resultID);
-                }
-            }
-            idGenerator.setLastId(Long.valueOf(num));
-            user.setId(String.valueOf(idGenerator.getNextId()));
+
             PreparedStatement sta = connection.prepareStatement(taskInsertIntoTable);
-            sta.setString(1, user.getId());
+            sta.setInt(1, position());
             sta.setString(2, user.getName());
             sta.setString(3, user.getLogin());
             sta.setObject(4, user.getEmail());
@@ -72,6 +61,23 @@ public class DbStore implements Store {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public Integer position(){
+       Integer position =  null;
+        try {
+            Connection connection = SOURCE.getConnection();
+            String  result = "SELECT nextval('id_seq_a'::regclass); ";
+            Statement st = connection.createStatement();
+            ResultSet res = st.executeQuery(result);
+            while (res.next()){
+                position = Integer.valueOf(res.getString(1));
+            }
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return position;
     }
     /**
      * This method update element of data by ID.
@@ -84,7 +90,7 @@ public class DbStore implements Store {
     public void update(String id, String name, String login, String email) {
         String task = new StringBuilder().append(" UPDATE tablejsp SET name = '").append(name).append("',login = '").
                 append(login).append("',email = '").append(email).append("' WHERE id = '").append(id).append("';").toString();
-       doTask(task);
+        doTask(task);
     }
     /**
      *This method delete element from data by ID.
@@ -122,7 +128,7 @@ public class DbStore implements Store {
             Statement st = connection.createStatement();
             ResultSet res = st.executeQuery(task);
             while (res.next()){
-              i = Integer.valueOf(res.getString(1));
+                i = Integer.valueOf(res.getString(1));
             }
             connection.close();
         } catch (SQLException e) {
@@ -178,4 +184,3 @@ public class DbStore implements Store {
         return id;
     }
 }
-

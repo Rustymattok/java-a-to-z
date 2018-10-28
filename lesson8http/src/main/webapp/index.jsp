@@ -30,9 +30,10 @@
         <th>MAIL</th>
     </tr>
 
-    <%DbStore dbStore = new DbStore();
+    <%
+        DbStore dbStoreNew = new DbStore();
         for( i = 0; i < work.getLogic().size(); i++) {
-        String id = dbStore.IndicateID(i);
+        String id = dbStoreNew.IndicateID(i);
     %>
     <tr>
         <td><%= work.getLogic().findById(id).getId()%> </td>
