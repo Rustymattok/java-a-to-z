@@ -5,8 +5,9 @@
   It's main page . And during evry update parser in logic update all page.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%!
-    private final static ValidateService work = ValidateService.getInstance(DbStoreNew.getInstance());
+    private final static ValidateService work = ValidateService.getInstance(DbStore.getInstance());
     private  int i;
 %>
 <html>
@@ -30,7 +31,7 @@
         <th>MAIL</th>
     </tr>
 
-    <%DbStoreNew dbStore = new DbStoreNew();
+    <%DbStore dbStore = new DbStore();
         for( i = 0; i < work.getLogic().size(); i++) {
         String id = dbStore.IndicateID(i);
     %>

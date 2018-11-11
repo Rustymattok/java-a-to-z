@@ -140,6 +140,7 @@ public class DbStore implements Store {
      */
     @Override
     public User findById(String id) {
+        id = IndicateID(Integer.valueOf(id));
         String task = new StringBuilder().append("select * from tablejsp where id = '").append(id).append("';").toString();
         User user = null;
         try {
