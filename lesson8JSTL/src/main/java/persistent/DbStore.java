@@ -3,10 +3,8 @@ import logic.User;
 import org.apache.commons.dbcp.BasicDataSource;
 import java.sql.*;
 public class DbStore implements Store {
-
     private static final BasicDataSource SOURCE = new BasicDataSource();
     private static DbStore INSTANCE = new DbStore();
-
     public DbStore() {
         String url = "jdbc:postgresql://localhost:5432";
         String userName = "postgres";
@@ -26,7 +24,7 @@ public class DbStore implements Store {
      * This Method add to database additional item.
      * @param user - added element to data.
      */
-    @Override
+
     public void add(User user) {
         String taskInsertIntoTable = new StringBuilder().append("INSERT INTO ").append("tableJSP")
                 .append(" VALUES (?,?,?,?)").toString();
@@ -83,7 +81,6 @@ public class DbStore implements Store {
      * @param login - login user.
      * @param email - email user.
      */
-    @Override
     public void update(String id, String name, String login, String email) {
         String task = new StringBuilder().append(" UPDATE tablejsp SET name = '").append(name).append("',login = '").
                 append(login).append("',email = '").append(email).append("' WHERE id = '").append(id).append("';").toString();
@@ -93,7 +90,6 @@ public class DbStore implements Store {
      *This method delete element from data by ID.
      * @param id - of use which we want to delete.
      */
-    @Override
     public void delete(String id) {
         String task = new StringBuilder().append("DELETE FROM tablejsp WHERE id = '").append(id).append("';").toString();
         doTask(task);
@@ -116,7 +112,6 @@ public class DbStore implements Store {
      * This method calculate common size of data .
      * @return - size of data.
      */
-    @Override
     public int size() {
         Integer i = null;
         String task = new StringBuilder().append("select count(*) from tablejsp;").toString();
@@ -138,7 +133,6 @@ public class DbStore implements Store {
      * @param id -  element which we want to find in data.
      * @return - user.
      */
-    @Override
     public User findById(String id) {
         id = IndicateID(Integer.valueOf(id));
         String task = new StringBuilder().append("select * from tablejsp where id = '").append(id).append("';").toString();

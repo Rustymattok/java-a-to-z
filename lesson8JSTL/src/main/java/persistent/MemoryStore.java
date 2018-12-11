@@ -20,30 +20,28 @@ public class MemoryStore implements Store {
         return instance;
     }
 
-    @Override
+
     public void add(User user) {
             list.add(user);
             user.setId(String.valueOf(list.size()));
     }
     //todo добавить проверку поиском в будущем
-    @Override
+
     public void update(String id, String name, String login, String email) {
         list.get(Integer.parseInt(id)).setName(name);
         list.get(Integer.parseInt(id)).setLogin(login);
         list.get(Integer.parseInt(id)).setEmail(email);
     }
 
-    @Override
     public void delete(String id) {
             list.remove(Integer.parseInt(id));
     }
 
-    @Override
+
     public User findById(String id) {
         return list.get(Integer.parseInt(id));
     }
 
-    @Override
     public int size() {
         return list.size();
     }
