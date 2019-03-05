@@ -19,6 +19,4 @@ public class Test {
     public void setSize(String size) {
         this.size = size;
     }
-
-
 }

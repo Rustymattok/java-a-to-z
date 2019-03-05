@@ -20,7 +20,6 @@ public class MemoryStore implements Store {
         return instance;
     }
 
-
     public void add(User user) {
             list.add(user);
             user.setId(String.valueOf(list.size()));

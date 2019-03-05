@@ -6,9 +6,18 @@ public class User {
     private String id;
     private String name;
     private String login;
+    private String password;
     private String email;
 
     public User() {
+    }
+
+    public User(String id, String name, String login, String password, String email) {
+        this.id = id;
+        this.name = name;
+        this.login = login;
+        this.password = password;
+        this.email = email;
     }
 
     public User(String id, String name, String login, String email) {
@@ -56,4 +65,7 @@ public class User {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
 }

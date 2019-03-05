@@ -1,8 +1,10 @@
 <%@ page import="servlets.UserServlet" %>
+<%@ page import="servlets.UserControler" %>
 <%--
   This is the page to work with DataBase.
   It's main page . And during evry update parser in logic update all page.
 --%>
+<%@ page import="javax.servlet.http.HttpServletRequest" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -47,6 +49,9 @@
 </c:forEach>
 </table>
 <form method = "POST" action="/" style="float:left;">
-    <input type="submit" name="subAdd" value="Add" id="submitB2"></form>
+    <input type="submit" name="subAdd" value="Add" id="submitB2"style="float: left;"></form>
 </body>
+<FORM method="POST" action="/">
+    <input type="submit" name = "logout" value="LOGOUT" style="float: left;">
+</FORM>
 </html>

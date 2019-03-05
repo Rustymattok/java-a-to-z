@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -17,12 +18,10 @@ public class UserServlet extends HttpServlet {
      * @param work - describe logic and database.
      */
     public final static ValidateService work = ValidateService.getInstance(DbStore.getInstance());
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        req.setAttribute("size",work.getLogic().size()-1);
-        req.getRequestDispatcher("/WEB-INF/viewa/TestJstl.jsp").forward(req,resp);
+                req.setAttribute("size",work.getLogic().size()-1);
+                req.getRequestDispatcher("/WEB-INF/viewa/TestJstl.jsp").forward(req,resp);
     }
 
     @Override
@@ -42,6 +41,7 @@ public class UserServlet extends HttpServlet {
             work.setID(Integer.valueOf(req.getParameter("ID1")));
             req.setAttribute("size",work.getID());
             req.getRequestDispatcher("/WEB-INF/viewa/updateitem.jsp").forward(req,  resp);
+            return;
         }
         /*
          * This condition - if on update page smb switch on 'Update' buttom. We link to the main page(before it calculate new parameters).
@@ -55,6 +55,7 @@ public class UserServlet extends HttpServlet {
          */
         if (req.getParameter("subAdd") != null){
             req.getRequestDispatcher("/WEB-INF/viewa/additem.jsp").forward(req,resp);
+            return;
         }
         /*
          * This condition - if on Add page smb switch on 'Add' buttom. We link to the main page(before it calculate new parameters).
@@ -65,7 +66,19 @@ public class UserServlet extends HttpServlet {
             }
             doGet(req,resp);
         }
+        /*
+         * This condition - if on push buttom logout. We go to login page and clean all session).
+         */
+        if (req.getParameter("logout") != null){
+            req.getSession().invalidate();
+            req.getRequestDispatcher("/WEB-INF/viewa/login.jsp").forward(req,resp);
+            return;
+        }
+        doGet(req,resp);
     }
 
+    public static ValidateService getWork() {
+        return work;
+    }
 }
 

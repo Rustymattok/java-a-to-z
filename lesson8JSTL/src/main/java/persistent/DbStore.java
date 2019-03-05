@@ -24,7 +24,6 @@ public class DbStore implements Store {
      * This Method add to database additional item.
      * @param user - added element to data.
      */
-
     public void add(User user) {
         String taskInsertIntoTable = new StringBuilder().append("INSERT INTO ").append("tableJSP")
                 .append(" VALUES (?,?,?,?)").toString();
