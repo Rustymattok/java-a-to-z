@@ -8,7 +8,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 //todo Сделать привязка к таблице Postgresql пользователей.
 //todo Распредилить роли
 public class UserStorage {
-
     private static final UserStorage instance = new UserStorage();
     private List<UserLogin> users = new CopyOnWriteArrayList<UserLogin>();
 

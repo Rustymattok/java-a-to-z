@@ -17,6 +17,22 @@ public class UserServlet extends HttpServlet {
     /**
      * @param work - describe logic and database.
      */
+    // Первая итерация
+    //todo добавить роль в таблицу данных
+    //todo При создании таблицы формировтаь по умолчанию админа - root root root
+    //todo В админке в add jsp добавить возможность отображения пароля
+
+    // Вторая итерация
+    //todo Заменить UserLogin на User
+    //todo В логинке парсить всю таблицы и записывать в Hash всех пользователей
+    //todo Изучить возможность осуществлять поиск пользователя на прямую в таблице данных
+
+    // Третья итерация
+    //todo Отображение данных в зависимости от ролей
+    //todo Проработать роль админа
+    //todo Проработать роль модератора
+    //todo Проработать роль пользователя
+
     public final static ValidateService work = ValidateService.getInstance(DbStore.getInstance());
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

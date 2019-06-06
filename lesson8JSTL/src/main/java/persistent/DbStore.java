@@ -15,32 +15,67 @@ public class DbStore implements Store {
         SOURCE.setMinIdle(5);
         SOURCE.setMaxIdle(10);
         SOURCE.setMaxOpenPreparedStatements(100);
+        initTable();
     }
 
     public static DbStore getInstance() {
-        return INSTANCE;
+       return INSTANCE;
     }
     /**
-     * This Method add to database additional item.
-     * @param user - added element to data.
+     * This method init database with tables and Administrator.
      */
-    public void add(User user) {
-        String taskInsertIntoTable = new StringBuilder().append("INSERT INTO ").append("tableJSP")
-                .append(" VALUES (?,?,?,?)").toString();
-
+    public void initTable(){
         String create_seq = "CREATE SEQUENCE IF NOT EXISTS id_seq_a INCREMENT BY 1 NO MAXVALUE NO MINVALUE CACHE 1;";
-
         String taksCreateTable = new StringBuilder().append(create_seq)
                 .append("CREATE TABLE IF NOT EXISTS").append(" ")
                 .append("tableJSP").append("(id integer DEFAULT nextval ('id_seq_a') NOT NULL, name text,login text,email text);").toString();
-
+        String createUser = new StringBuilder().append("INSERT INTO tableJSP VALUES (").append(position()).append(",'root','root','root')").toString();
+        String task = new StringBuilder().append("SELECT * from tablejsp WHERE login = 'root';").toString();
         try {
             Connection connection = SOURCE.getConnection();
             /*
             Operation to creation the table if not exists.
              */
             Statement st = connection.prepareStatement(taksCreateTable);
-           ((PreparedStatement) st).executeUpdate();
+            ((PreparedStatement) st).executeUpdate();
+            st.close();
+            /*
+            Operation to administrator if he absent
+             */
+            Statement sta = connection.createStatement();
+            ResultSet res = sta.executeQuery(task);
+            if(res.next() == false) {
+                Statement stUser = connection.prepareStatement(createUser);
+                ((PreparedStatement) stUser).executeUpdate();
+            }
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    /**
+     * This Method add to database additional item.
+     * @param user - added element to data.
+     */
+    public void add(User user) {
+        String taskInsertIntoTable = new StringBuilder().append("INSERT INTO ").append("tablejsp")
+                .append(" VALUES (?,?,?,?)").toString();
+
+//        String create_seq = "CREATE SEQUENCE IF NOT EXISTS id_seq_a INCREMENT BY 1 NO MAXVALUE NO MINVALUE CACHE 1;";
+//
+//        String taksCreateTable = new StringBuilder().append(create_seq)
+//                .append("CREATE TABLE IF NOT EXISTS").append(" ")
+//                .append("tableJSP").append("(id integer DEFAULT nextval ('id_seq_a') NOT NULL, name text,login text,email text);").toString();
+//                //todo проверить крайнюю точку обновления
+//               // .append("INSERT INTO tableJSP VALUES (").append(position()).append(",'root','root','root')").toString();
+
+        try {
+            Connection connection = SOURCE.getConnection();
+            /*
+            Operation to creation the table if not exists.
+             */
+//            Statement st = connection.prepareStatement(taksCreateTable);
+//           ((PreparedStatement) st).executeUpdate();
             /*
             Operation to calculate id for user. Id =  common size of table + 1.
              */
