@@ -35,6 +35,6 @@ public class DbStoreTest {
     @Test
     public void sizeTest(){
         DbStore dbStore =  DbStore.getInstance();
-        System.out.println(dbStore.IndicateID(1));
+       // System.out.println(dbStore.IndicateID(1));
     }
 }

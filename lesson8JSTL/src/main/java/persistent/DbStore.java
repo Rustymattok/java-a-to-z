@@ -1,7 +1,12 @@
 package persistent;
+import logic.ClientType;
 import logic.User;
 import org.apache.commons.dbcp.BasicDataSource;
 import java.sql.*;
+/**
+ * This class hase responsible for work with postgresSQL.
+ * PostgresSQL 9.5
+ */
 public class DbStore implements Store {
     private static final BasicDataSource SOURCE = new BasicDataSource();
     private static DbStore INSTANCE = new DbStore();
@@ -17,7 +22,6 @@ public class DbStore implements Store {
         SOURCE.setMaxOpenPreparedStatements(100);
         initTable();
     }
-
     public static DbStore getInstance() {
        return INSTANCE;
     }
@@ -28,8 +32,9 @@ public class DbStore implements Store {
         String create_seq = "CREATE SEQUENCE IF NOT EXISTS id_seq_a INCREMENT BY 1 NO MAXVALUE NO MINVALUE CACHE 1;";
         String taksCreateTable = new StringBuilder().append(create_seq)
                 .append("CREATE TABLE IF NOT EXISTS").append(" ")
-                .append("tableJSP").append("(id integer DEFAULT nextval ('id_seq_a') NOT NULL, name text,login text,email text);").toString();
-        String createUser = new StringBuilder().append("INSERT INTO tableJSP VALUES (").append(position()).append(",'root','root','root')").toString();
+                .append("tableJSP").append("(id integer DEFAULT nextval ('id_seq_a') NOT NULL, name text,login text,email text,role text);").toString();
+        String createUser = new StringBuilder().append("INSERT INTO tableJSP VALUES (").append(position()).append(",'root','root','root','").
+                append(String.valueOf(ClientType.ADMINISTRATOR)).append("')").toString();
         String task = new StringBuilder().append("SELECT * from tablejsp WHERE login = 'root';").toString();
         try {
             Connection connection = SOURCE.getConnection();
@@ -59,32 +64,19 @@ public class DbStore implements Store {
      */
     public void add(User user) {
         String taskInsertIntoTable = new StringBuilder().append("INSERT INTO ").append("tablejsp")
-                .append(" VALUES (?,?,?,?)").toString();
-
-//        String create_seq = "CREATE SEQUENCE IF NOT EXISTS id_seq_a INCREMENT BY 1 NO MAXVALUE NO MINVALUE CACHE 1;";
-//
-//        String taksCreateTable = new StringBuilder().append(create_seq)
-//                .append("CREATE TABLE IF NOT EXISTS").append(" ")
-//                .append("tableJSP").append("(id integer DEFAULT nextval ('id_seq_a') NOT NULL, name text,login text,email text);").toString();
-//                //todo проверить крайнюю точку обновления
-//               // .append("INSERT INTO tableJSP VALUES (").append(position()).append(",'root','root','root')").toString();
-
+                .append(" VALUES (?,?,?,?,?)").toString();
+        /*
+          add auto role. By default it is user.
+         */
+        user.setRole(String.valueOf(ClientType.USER));
         try {
             Connection connection = SOURCE.getConnection();
-            /*
-            Operation to creation the table if not exists.
-             */
-//            Statement st = connection.prepareStatement(taksCreateTable);
-//           ((PreparedStatement) st).executeUpdate();
-            /*
-            Operation to calculate id for user. Id =  common size of table + 1.
-             */
-
             PreparedStatement sta = connection.prepareStatement(taskInsertIntoTable);
             sta.setInt(1, position());
             sta.setString(2, user.getName());
             sta.setString(3, user.getLogin());
             sta.setObject(4, user.getEmail());
+            sta.setObject(5,user.getRole());
             sta.executeUpdate();
             connection.close();
         } catch (SQLException e) {
@@ -176,13 +168,73 @@ public class DbStore implements Store {
             Statement st = connection.createStatement();
             ResultSet res = st.executeQuery(task);
             while (res.next()){
-                user = new User(res.getString(1), res.getString(2), res.getString(3), res.getString(4));
+                user = new User(res.getString(1), res.getString(2), res.getString(3), res.getString(4),res.getString(5));
             }
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return user;
+    }
+    /**
+     * THis method select user from the database by login and name.
+     * @param login- parameter in data sql login.
+     * @param password- parameter in data sql name.
+     * @return user from data sql.
+     */
+    public User findById(String login,String password) {
+        String task = new StringBuilder().append("select * from tablejsp where login = '").append(login).
+                append("' and name ='").append(password).append("'").toString();
+        User user = null;
+        try {
+            Connection connection = SOURCE.getConnection();
+            Statement st = connection.createStatement();
+            ResultSet res = st.executeQuery(task);
+            while (res.next()){
+                user = new User(res.getString(1), res.getString(2), res.getString(3), res.getString(4),res.getString(5));
+            }
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+    /**
+     * Find in data login with password.
+     * @param login - login parameter from sql.
+     * @param password - name parameter from sql.
+     * @return true/false .
+     */
+    public boolean isCredentional(String login,String password){
+        boolean flag = false;
+        User user = null;
+        String task = new StringBuilder().append("select * from tablejsp where login = '").append(login).
+                append("' and name ='").append(password).append("'").toString();
+        try {
+            Connection connection = SOURCE.getConnection();
+            Statement st = connection.createStatement();
+            ResultSet res = st.executeQuery(task);
+            while (res.next()){
+                user = new User(res.getString(1), res.getString(2), res.getString(3), res.getString(4),res.getString(5));
+                if(user.getLogin().equals(login) && user.getName().equals(password)){
+                    flag = true;
+                }
+            }
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return flag;
+    }
+    /**
+     * This method select user from the database by id and update role.
+     * @param id -  element which we want to find in data.
+     * @param role- element which we should update.
+     */
+    public void updateRole(String id,String role) {
+        String task = new StringBuilder().append(" UPDATE tablejsp SET role = '").append(role).
+                append("' WHERE id = '").append(id).append("';").toString();
+        doTask(task);
     }
     /**
      * This method make common parsing and indicate all id .

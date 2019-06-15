@@ -23,12 +23,4 @@
     <servlet-name>Login</servlet-name>
     <url-pattern>/login</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <servlet-name>Private</servlet-name>
-    <servlet-class>servlets.PrivateController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>Private</servlet-name>
-    <url-pattern>/private</url-pattern>
-  </servlet-mapping>
         </web-app>

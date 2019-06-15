@@ -1,5 +1,9 @@
 package logic;
 
 public enum ClientType {
-    GUEST, USER, ADMINISTRATOR
+    GUEST("guest"), USER("user"), ADMINISTRATOR("administrator");
+
+    ClientType(String role){
+    }
+
 }

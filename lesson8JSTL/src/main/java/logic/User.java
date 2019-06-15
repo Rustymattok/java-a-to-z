@@ -1,4 +1,7 @@
 package logic;
+
+import java.util.ArrayList;
+import java.util.List;
 /**
  * Class describe Item.
  */
@@ -8,29 +11,30 @@ public class User {
     private String login;
     private String role;
     private String email;
+    private   ArrayList<String> roles = new ArrayList<String>();
 
     public User() {
-    }
-
-    public User(String id, String name, String login, String password, String email) {
-        this.id = id;
-        this.name = name;
-        this.login = login;
-        this.role = password;
-        this.email = email;
-    }
-
-    public User(String id, String name, String login, String email) {
-        this.id = id;
-        this.name = name;
-        this.login = login;
-        this.email = email;
     }
 
     public User(String name, String login, String email) {
         this.name = name;
         this.login = login;
         this.email = email;
+    }
+
+    public User(String id, String name, String login, String email, String role) {
+        this.id = id;
+        this.name = name;
+        this.login = login;
+        this.email = email;
+        this.role = role;
+    }
+
+    public User(String name, String login, String email,String role) {
+        this.name = name;
+        this.login = login;
+        this.email = email;
+        this.role = role;
     }
 
     public String getId() {
@@ -67,5 +71,16 @@ public class User {
 
     public String getRole() {
         return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public ArrayList<String> getRoles() {
+        roles.add(String.valueOf(ClientType.ADMINISTRATOR));
+        roles.add(String.valueOf(ClientType.USER));
+        roles.add(String.valueOf(ClientType.GUEST));
+        return roles;
     }
 }

@@ -6,10 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
-
 /**
  * Main Servlet for work.
  */
@@ -17,23 +14,8 @@ public class UserServlet extends HttpServlet {
     /**
      * @param work - describe logic and database.
      */
-    // Первая итерация
-    //todo добавить роль в таблицу данных
-    //todo При создании таблицы формировтаь по умолчанию админа - root root root
-    //todo В админке в add jsp добавить возможность отображения пароля
-
-    // Вторая итерация
-    //todo Заменить UserLogin на User
-    //todo В логинке парсить всю таблицы и записывать в Hash всех пользователей
-    //todo Изучить возможность осуществлять поиск пользователя на прямую в таблице данных
-
-    // Третья итерация
-    //todo Отображение данных в зависимости от ролей
-    //todo Проработать роль админа
-    //todo Проработать роль модератора
-    //todo Проработать роль пользователя
-
     public final static ValidateService work = ValidateService.getInstance(DbStore.getInstance());
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
                 req.setAttribute("size",work.getLogic().size()-1);
@@ -90,11 +72,18 @@ public class UserServlet extends HttpServlet {
             req.getRequestDispatcher("/WEB-INF/viewa/login.jsp").forward(req,resp);
             return;
         }
+        /*
+         * This condition - if choose button to choose role It start activities to update roles.
+         */
+        if(req.getParameter("submitRole") != null){
+            work.getLogic().updateRole(req.getParameter("ItemroleID"),req.getParameter("Itemrole"));
+        }
         doGet(req,resp);
     }
 
     public static ValidateService getWork() {
         return work;
     }
+
 }
 
