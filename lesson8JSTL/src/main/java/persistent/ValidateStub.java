@@ -1,5 +1,6 @@
-package logic;
+package persistent;
 
+import logic.User;
 import persistent.Store;
 
 import java.util.HashMap;
@@ -9,6 +10,13 @@ import java.util.Map;
 public class ValidateStub implements Store {
     private final Map<Integer, User> store = new HashMap<Integer,User>();
     private int ids = 0;
+
+    public ValidateStub() {
+        add(new User("root","root","root"));
+        add(new User("root1","root1","root1"));
+        add(new User("root2","root2","root2"));
+        add(new User("root3","root3","root3"));
+    }
 
     public void add(User user) {
         user.setId(String.valueOf(this.ids++));
@@ -34,7 +42,7 @@ public class ValidateStub implements Store {
     }
 
     public int size() {
-        return 0;
+        return store.size();
     }
 
     public User findById(String id) {

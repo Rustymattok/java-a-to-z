@@ -1,7 +1,15 @@
 package servlets;
+import com.sun.deploy.net.socket.UnixSocketException;
 import logic.User;
-import logic.ValidateStub;
+import logic.ValidateService;
+import persistent.DbStore;
+import persistent.ValidateStub;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 import persistent.Store;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -10,42 +18,34 @@ import java.io.IOException;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
-
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(ValidateService.class)
 public class UserServletTest {
-    Store store = new ValidateStub();
-    HttpServletRequest req = mock(HttpServletRequest.class);
-    HttpServletResponse resp = mock(HttpServletResponse.class);
-
-    public void initStore(){
-        store.add(new User("root","root","root"));
-        store.add(new User("root1","root1","root1"));
-        store.add(new User("root2","root2","root2"));
-        store.add(new User("root3","root3","root3"));
-    }
-
     @Test
     public void whenAddUserThenStoreIt() throws ServletException, IOException {
+        //создаем альтернативную базу данных для теста, она наследована от Store и автомотически заполняется.
+        ValidateStub validate = new ValidateStub();
+        //так как заглушка ставится на место статического класса ValidationSevice вызываем к ней PowerMockito.
+        PowerMockito.mockStatic(ValidateService.class);
+        //Создаю щаглушку мок для класса ValidationService
+        ValidateService mc  = Mockito.mock(ValidateService.class);
+        //При запуске теста если вызывается логика заглушки, то подставляем в нее альтернативную логику базы данных.
+        Mockito.when(mc.getLogic()).thenReturn(validate);
+        //Настройки заглушек под сервлет, для имитации.
+        HttpServletRequest req = mock(HttpServletRequest.class);
+        HttpServletResponse resp = mock(HttpServletResponse.class);
+        //Когда нажата клавиша в сервлете то автоматом возращается Макаров( это тест работоспособности ).
         when(req.getParameter("submitAdd")).thenReturn("Makarov");
-        store.add(new User(req.getParameter("submitAdd"),"root","root"));
+        //обращаемся к сервлету с посдтавленными заглушками.
         new UserServlet().doPost(req, resp);
-        assertThat(((ValidateStub) store).getStore().get(0).getName(), is("Makarov"));
+        //сама проверка условия. до конца не написана.
+        assertThat(validate.getStore().get(0).getName(), is("Makarov"));
     }
     @Test
     public void whenEditeUserThenStoreIt() throws ServletException, IOException {
-        initStore();
-        when(req.getParameter("subUpdate")).thenReturn("Makarov");
-        store.update("0",req.getParameter("subUpdate"),req.getParameter("subUpdate"),req.getParameter("subUpdate"));
-        new UserServlet().doPost(req, resp);
-        assertThat(((ValidateStub) store).getStore().get(0).getName(), is("Makarov"));
-        assertThat(((ValidateStub) store).getStore().get(0).getLogin(), is("Makarov"));
-        assertThat(((ValidateStub) store).getStore().get(0).getEmail(), is("Makarov"));
-    }
+   }
     @Test
     public void whenRemoveUserThenStoreIt() throws ServletException, IOException {
-        initStore();
-        when(req.getParameter("sub")).thenReturn("0");
-        new UserServlet().doPost(req, resp);
-        store.delete(req.getParameter("sub"));
     }
 
 }
