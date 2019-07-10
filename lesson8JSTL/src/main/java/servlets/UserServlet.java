@@ -2,6 +2,8 @@ package servlets;
 import logic.User;
 import logic.ValidateService;
 import persistent.DbStore;
+import persistent.Store;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +16,7 @@ public class UserServlet extends HttpServlet {
     /**
      * @param work - describe logic and database.
      */
-    public final static ValidateService work = ValidateService.getInstance(DbStore.getInstance());
+     public final static ValidateService work = ValidateService.getInstance(DbStore.getInstance());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -77,6 +79,11 @@ public class UserServlet extends HttpServlet {
          */
         if(req.getParameter("submitRole") != null){
             work.getLogic().updateRole(req.getParameter("ItemroleID"),req.getParameter("Itemrole"));
+        }
+        if(req.getParameter("index1") != null){
+            System.out.println("tesssssssssssssssssssssssssst");
+            req.getRequestDispatcher("/WEB-INF/viewa/index.html").forward(req,resp);
+            return;
         }
         doGet(req,resp);
     }

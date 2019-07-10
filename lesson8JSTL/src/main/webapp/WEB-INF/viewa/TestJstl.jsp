@@ -77,4 +77,7 @@
 <FORM method="POST" action="/">
     <input type="submit" name = "logout" value="LOGOUT" style="float: left;">
 </FORM>
+<FORM method="POST" action="/">
+    <input type="submit" name = "index1" value="index1" style="float: left;">
+</FORM>
 </html>
