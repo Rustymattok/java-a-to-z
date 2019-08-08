@@ -1,9 +1,6 @@
 package servlets;
-import com.sun.deploy.net.socket.UnixSocketException;
-import logic.User;
 import logic.ValidateService;
 import org.powermock.modules.junit4.PowerMockRunner;
-import persistent.DbStore;
 import persistent.ValidateStub;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,6 +11,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -42,7 +42,16 @@ public class UserServletTest {
     }
     @Test
     public void whenEditeUserThenStoreIt() throws ServletException, IOException {
-   }
+        String test  = "firstname=iy&secondname=iy&info=iy";
+        String result="";
+        Pattern p = Pattern.compile("info" + "=([^\\s]+)"); // the regex to be found
+        Matcher m = p.matcher(test);
+        if (m.find()) { // if found
+             result = m.group().replace("secondname" + "=", ""); // return found, except 'DTSTART:' / 'DTEND:'
+             String[] test1=result.split("=",result.length()-1);
+             System.out.println(test1[1]);
+        }
+    }
     @Test
     public void whenRemoveUserThenStoreIt() throws ServletException, IOException {
     }
