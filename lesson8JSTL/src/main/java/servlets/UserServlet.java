@@ -81,7 +81,6 @@ public class UserServlet extends HttpServlet {
             work.getLogic().updateRole(req.getParameter("ItemroleID"),req.getParameter("Itemrole"));
         }
         if(req.getParameter("index1") != null){
-            System.out.println("tesssssssssssssssssssssssssst");
             req.getRequestDispatcher("/WEB-INF/viewa/index.html").forward(req,resp);
             return;
         }

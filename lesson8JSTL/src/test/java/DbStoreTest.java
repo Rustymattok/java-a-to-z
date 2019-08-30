@@ -6,7 +6,6 @@ import logic.User;
 import logic.ValidateService;
 import org.junit.Test;
 import persistent.DbStore;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +29,7 @@ public class DbStoreTest {
     @Test
     public void findById(){
         DbStore dbStore =  DbStore.getInstance();
-        System.out.println(dbStore.findById("52").getName());
+        System.out.println(dbStore.findById("350").getName());
     }
 
     @Test
@@ -50,15 +49,15 @@ public class DbStoreTest {
         item.setInfoU("information");
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(item);
-        String dataFnew = "[{\"firstname\": \"text1\",\"lastname\": \"text2\",\"infoU\": \"text3\"},{\"firstname\": \"text4\",\"lastname\": \"text5\",\"infoU\": \"text6\"}]";
+        //String dataFnew = "[{\"firstname\": \"text1\",\"lastname\": \"text2\",\"infoU\": \"text3\"},{\"firstname\": \"text4\",\"lastname\": \"text5\",\"infoU\": \"text6\"}]";
         System.out.println(jsonString);
-        System.out.println(dataFnew);
+       // System.out.println(dataFnew);
         ConcurrentHashMap<Integer,Item> zero = new ConcurrentHashMap<Integer, Item>();
         zero.put(1,new Item("maksim1","maksim1","maksim1"));
         zero.put(2,new Item("maksim2","maksim2","maksim2"));
         zero.put(3,new Item("maksim3","maksim3","maksim3"));
         String testJson = mapper.writeValueAsString(zero);
-        System.out.println(testJson);
+        System.out.println("------------------------------>>>>>>"+testJson);
         Item newItem = mapper.readValue(jsonString, Item.class);
         System.out.println(newItem.getFirstname());
         List<Item> myList =new ArrayList<Item>();
@@ -67,13 +66,13 @@ public class DbStoreTest {
         String newJsonN = mapper.writeValueAsString(myList);
         System.out.println(newJsonN);
         //ConcurrentHashMap<Integer,Item> list = mapper.readValue(dataFnew, new TypeReference<ConcurrentHashMap(){});
-        List<Item> myObjects = mapper.readValue(dataFnew, new TypeReference<List<Item>>(){});
-        for (Item myItem:myObjects) {
-            System.out.println("-------new Item");
-            System.out.println(myItem.getFirstname() + "  " + myItem.getLastname() + "  " + myItem.getInfoU());
-        }
-        String newJson = mapper.writeValueAsString(myObjects);
-        System.out.println(newJson);
+       // List<Item> myObjects = mapper.readValue(dataFnew, new TypeReference<List<Item>>(){});
+        //for (Item myItem:myObjects) {
+         //   System.out.println("-------new Item");
+           // System.out.println(myItem.getFirstname() + "  " + myItem.getLastname() + "  " + myItem.getInfoU());
+        //}
+        //String newJson = mapper.writeValueAsString(myObjects);
+        //System.out.println(newJson);
 
 //        String firstname = "vova";
 //        String lastname =  "makarov";

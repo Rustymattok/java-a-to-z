@@ -10,8 +10,9 @@ import java.io.IOException;
 /**
  * This class has responsoble for login options.
  */
-public class UserControler extends HttpServlet {
-     public static HttpSession session;
+public class UserControler extends HttpServlet{
+
+    public static HttpSession session;
     public final static ValidateService pars = ValidateService.getInstance(DbStore.getInstance());
 
     @Override
