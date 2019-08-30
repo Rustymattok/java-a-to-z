@@ -11,7 +11,7 @@ public class DbStore implements Store {
     private static DbStore INSTANCE = new DbStore();
 
     public DbStore() {
-        String url = "jdbc:postgresql://localhost:5432";
+        String url = "jdbc:postgresql://localhost:5432/";
         String userName = "postgres";
         String admin = "admin";
         SOURCE.setUrl(url);
@@ -20,6 +20,7 @@ public class DbStore implements Store {
         SOURCE.setMinIdle(5);
         SOURCE.setMaxIdle(10);
         SOURCE.setMaxOpenPreparedStatements(100);
+        System.out.println("server done------------------------------------------------<");
     }
 
     public static DbStore getInstance() {

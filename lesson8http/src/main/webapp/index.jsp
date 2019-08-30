@@ -29,12 +29,12 @@
         <th>LOGIN</th>
         <th>MAIL</th>
     </tr>
-
     <%
         DbStore dbStoreNew = new DbStore();
         for( i = 0; i < work.getLogic().size(); i++) {
         String id = dbStoreNew.IndicateID(i);
     %>
+
     <tr>
         <td><%= work.getLogic().findById(id).getId()%> </td>
         <td><%= work.getLogic().findById(id).getName()%></td>
