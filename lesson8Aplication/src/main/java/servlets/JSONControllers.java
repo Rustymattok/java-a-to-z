@@ -51,14 +51,15 @@ public class JSONControllers extends HttpServlet {
         BufferedReader reader = req.getReader();
         String jsonLine = reader.readLine();
         System.out.println(jsonLine);
-        String id = parsText(jsonLine, "id");
-        String name = parsText(jsonLine, "name");
-        String login = parsText(jsonLine, "login");
-        String email = parsText(jsonLine, "email");
-        String role = parsText(jsonLine, "role");
-        String country = parsText(jsonLine, "country");
-        String city = parsText(jsonLine, "city");
-        list.put(generateID(), new User(id,name,login,email,role,country,city));
+//        System.out.println(jsonLine);
+//        String id = parsText(jsonLine, "id");
+//        String name = parsText(jsonLine, "name");
+//        String login = parsText(jsonLine, "login");
+//        String email = parsText(jsonLine, "email");
+//        String role = parsText(jsonLine, "role");
+//        String country = parsText(jsonLine, "country");
+//        String city = parsText(jsonLine, "city");
+//        list.put(generateID(), new User(id,name,login,email,role,country,city));
     }
 
     /**
@@ -70,7 +71,6 @@ public class JSONControllers extends HttpServlet {
         UUID uniqueKey = UUID.randomUUID();
         return uniqueKey;
     }
-
     /**
      * This method took line from json for parsing and get parameter.
      *

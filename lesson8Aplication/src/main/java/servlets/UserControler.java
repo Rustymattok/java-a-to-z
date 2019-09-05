@@ -1,5 +1,6 @@
 package servlets;
 import logic.*;
+import persistent.DbLocationStore;
 import persistent.DbStore;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,7 +14,7 @@ import java.io.IOException;
 public class UserControler extends HttpServlet{
 
     public static HttpSession session;
-    public final static ValidateService pars = ValidateService.getInstance(DbStore.getInstance());
+    public final static ValidateService pars = ValidateService.getInstance(DbLocationStore.getInstance());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -29,7 +30,7 @@ public class UserControler extends HttpServlet{
                  User user = pars.getLogic().findById(login,password);
                  session.setAttribute("loginrole",user.getRole());
                  session.setAttribute("login1",user.getLogin());
-             req.getRequestDispatcher(String.format("%s/",req.getContextPath())).forward(req,resp);
+                 req.getRequestDispatcher("/Items.html").forward(req,resp);
              return;
          }else {
              doGet(req,resp);
