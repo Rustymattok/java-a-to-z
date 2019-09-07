@@ -8,6 +8,7 @@
 </head>
 <body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <div class="container">
 <h2 class="row justify-content-center">List of Users</h2>
@@ -25,30 +26,56 @@
 </div>
 <script>
     var tabStoc = document.getElementById('stoc');
-    var list;
-
-    function getUsers() {
-        $.ajax('/json', {
-                method: 'get',
-                 complete: function (data){
-                 users = JSON.parse(data.responseText);
-                 console.log(users);
-                 var  i = 0;
-                 for(var key in users){
-                  tabStoc.getElementsByTagName('tbody')[0].appendChild(createRow('tabStoc',users,key));
-                     tabStoc.addEventListener('click', function(){
-                         console.log(users[key].id);
-                         delRow(users[key].id);
-                         updateJson(users[key].id);
-                         }
-                     );
-                     //delRow(users[key].id);
-                 }
-                }
+    let selectedTd;
+    // function getUsers() {
+    //     $.ajax('/json', {
+    //              method: 'get',
+    //              success: function (data){
+    //              users = JSON.parse(data.responseText);
+    //              return data;
+    //             }
+    //         }).responseText;
+    // }
+    function getJson(url) {
+        return JSON.parse($.ajax({
+            type: 'GET',
+            url: url,
+            dataType: 'json',
+            global: false,
+            async: false,
+            success: function (data) {
+                return data;
             }
-        );
-        return false;
+        }).responseText);
     }
+    var myJsonObj = getJson('/json');
+    function app() {
+        console.log(myJsonObj);
+        for (let key in myJsonObj) {
+            tabStoc.getElementsByTagName('tbody')[0].appendChild(createRow('tabStoc', myJsonObj, key));
+            console.log("--------------->" + myJsonObj[key].id);
+        }
+        tabStoc.onclick = function(event) {
+            let td = event.target.closest('button'); // (1)
+            //let id = event.target.dataset.toggleId;
+            if (!td) return; // (2)
+            if (!tabStoc.contains(td)) return; // (3)
+            deleteInfo(td); // (4)
+        };
+        getJson();
+    }
+    function deleteInfo(td) {
+        if(selectedTd){
+            console.log("aaa");
+        }
+        let b  = td.parentNode.parentNode;
+        console.log(b);
+        let id = b.getAttribute('prodid');
+        console.log(id);
+        updateJson(id);
+        b.remove();
+    }
+
     function createRow(tab,users,key){
         var tr = document.createElement('tr');
         var tdId = document.createElement('td');
@@ -83,19 +110,6 @@
         tr.appendChild(tdAction);
         return tr;
     }
-    function delRow(i){
-        var trs = tabStoc.getElementsByTagName('tr');
-        trs[i].parentNode.removeChild(trs[i]);
-        // for(var i=1; i<trs.length; i++){
-        //    var prodid = Number(trs[i].getAttribute('prodid'));
-        //     if(prodid == id){
-        //         updateJson(prodid);
-        //         trs[i].parentNode.removeChild(trs[i]);
-        //         break;
-        //     }
-        // }
-    }
-
     function updateJson(id){
         $.post("/json", {
             id:id,
@@ -104,7 +118,7 @@
        // $(getUsers());
         return false;
     }
-    getUsers();
+   app();
 </script>
 <!--<form method="post" action="/">-->
     <!--<select name="cars">-->

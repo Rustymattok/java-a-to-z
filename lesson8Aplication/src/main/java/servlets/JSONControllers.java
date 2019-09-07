@@ -3,6 +3,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import logic.Item;
 import logic.User;
+import logic.ValidateService;
 import persistent.DbLocationStore;
 
 import java.util.UUID;
@@ -21,16 +22,14 @@ import java.util.regex.Pattern;
  * Servlet responsoble for forming json.
  */
 public class JSONControllers extends HttpServlet {
+    public final static ValidateService work = ValidateService.getInstance(DbLocationStore.getInstance());
     //todo Отладить парсер для новой базы данных и обновления ее при вызывое POST().
     //todo Написать тест для данного сервлета.
 
     private ConcurrentHashMap<UUID, User> list = new ConcurrentHashMap<UUID, User>();
 
     public JSONControllers() {
-        DbLocationStore db = DbLocationStore.getInstance();
-        for (int i = 0; i < db.size(); i++) {
-            list.put(generateID(),db.findById(String.valueOf(i)));
-        }
+       init();
     }
 
     @Override
@@ -50,7 +49,10 @@ public class JSONControllers extends HttpServlet {
         resp.setContentType("text/json");
         BufferedReader reader = req.getReader();
         String jsonLine = reader.readLine();
-        System.out.println(jsonLine);
+        String id =  jsonLine.replace("id=","");
+        work.getLogic().delete(id);
+        init();
+        doGet(req,resp);
 //        System.out.println(jsonLine);
 //        String id = parsText(jsonLine, "id");
 //        String name = parsText(jsonLine, "name");
@@ -114,6 +116,15 @@ public class JSONControllers extends HttpServlet {
             }
         }
         return result;
+    }
+
+    public void init(){
+        if(list != null){
+            list.clear();
+        }
+        for (int i = 0; i < work.getLogic().size(); i++) {
+            list.put(generateID(),work.getLogic().findById(String.valueOf(i)));
+        }
     }
 }
 
