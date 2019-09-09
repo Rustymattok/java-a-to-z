@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<div class="container-fluid">
+    <form action="/Items.html" method="POST">
+        <div class="form-group">
+            <label for="nameUser">enter name:</label>
+            <input type="nameUser" class="form-control" id="nameUser" name ="nameUser">
+        </div>
+        <div class="form-group">
+            <label for="login">enter login:</label>
+            <input type="login" class="form-control" id="login" name = "login">
+        </div>
+        <div class="form-group">
+            <label for="email">enter email:</label>
+            <input type="email" class="form-control" id="email" name="email">
+        </div>
+        <div class="form-group">
+            <label for="role">choose role:</label>
+            <select  type="role" class="form-control" id="role" name="role" id="role">
+                <option value="user">USER</option>
+                <option value="guest">GUEST</option>
+                <option value="administrator">ADMINISTRATOR</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="country">choose country:</label>
+            <select  type="country" class="form-control" id="country" name="country">
+                <option value="user">RUSSIA</option>
+                <option value="guest">GERMANY</option>
+                <option value="administrator">USA</option>
+                <option value="administrator">ENGLAND</option>
+                <option value="administrator">FRANCE</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="city">choose city:</label>
+            <input type="city" class="form-control" id="city" name="city">
+        </div>
+        <table id="stocButtons" class="table">
+            <tr class="thead-dark">
+                <th><form action="/Add.html" style="float:left;"><button class="btn btn-primary" type="submit" name="subAdd" value="Add" id="submitB2"style="float: left;">ADD</button></form></th>
+                <th><form action="/Items.html"><button class="btn btn-primary" type="submit" name = "logout" value="LOGOUT" style="float: left;">Back</button></form></th>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>

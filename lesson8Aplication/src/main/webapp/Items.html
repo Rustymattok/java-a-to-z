@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -23,19 +22,17 @@
         <th scope="col">City</th>
     </tr>
 </table>
+    <table id="stocButtons" class="table">
+        <tr class="thead-dark">
+            <th><form action="/Add.html" style="float:left;"><button class="btn btn-primary" type="submit" name="subAdd" value="Add" id="submitB2"style="float: left;">ADD</button></form></th>
+            <th><form action="/login"><button class="btn btn-primary" type="submit" name = "logout" value="LOGOUT" style="float: left;">Logout</button></form></th>
+        </tr>
+    </table>
 </div>
 <script>
     var tabStoc = document.getElementById('stoc');
+    var tabStocButtons = document.getElementById('stocButtons');
     let selectedTd;
-    // function getUsers() {
-    //     $.ajax('/json', {
-    //              method: 'get',
-    //              success: function (data){
-    //              users = JSON.parse(data.responseText);
-    //              return data;
-    //             }
-    //         }).responseText;
-    // }
     function getJson(url) {
         return JSON.parse($.ajax({
             type: 'GET',
@@ -58,9 +55,16 @@
         tabStoc.onclick = function(event) {
             let td = event.target.closest('button'); // (1)
             //let id = event.target.dataset.toggleId;
+            console.log(td.value);
+            //console.log(td.parentNode.parentNode.childNodes[7]);
             if (!td) return; // (2)
             if (!tabStoc.contains(td)) return; // (3)
-            deleteInfo(td); // (4)
+            if (td.value === "remove"){
+                deleteInfo(td);
+            }
+            if (td.value === "update"){
+                document.location.href = '/Update.html';
+            }
         };
         getJson();
     }
@@ -86,8 +90,9 @@
         var tdCountry = document.createElement('td');
         var tdCity = document.createElement('td');
         var tdAction = document.createElement('td');
+        var tdAction2 = document.createElement('td');
         var btn = document.createElement('button');
-
+        var btn2 = document.createElement('button');
         tr.setAttribute('prodid', users[key].id);
         tr.setAttribute('scope', 'row');
         tdId.innerHTML = users[key].id;
@@ -98,7 +103,11 @@
         tdCountry.innerHTML = users[key].country;
         tdCity.innerHTML = users[key].city;
         btn.className = "btn btn-primary";
+        btn.value = "remove";
         btn.innerHTML = "Удалить";
+        btn2.className = "btn btn-primary";
+        btn2.value = "update";
+        btn2.innerHTML = "бновить";
         tr.appendChild(tdId);
         tr.appendChild(tdName);
         tr.appendChild(tdLogin);
@@ -107,111 +116,18 @@
         tr.appendChild(tdCountry);
         tr.appendChild(tdCity);
         tdAction.appendChild(btn);
+        tdAction2.appendChild(btn2);
         tr.appendChild(tdAction);
+        tr.appendChild(tdAction2);
         return tr;
     }
     function updateJson(id){
         $.post("/json", {
             id:id,
-         //   name: users[key].name,
         });
-       // $(getUsers());
         return false;
     }
    app();
 </script>
-<!--<form method="post" action="/">-->
-    <!--<select name="cars">-->
-        <!--<option value="volvo">Volvo</option>-->
-        <!--<option value="saab">Saab</option>-->
-        <!--<option value="fiat" selected>Fiat</option>-->
-        <!--<option value="audi">Audi</option>-->
-    <!--</select>-->
-<!--</form>-->
-<!--<div class="container">-->
-    <!--<br>-->
-    <!--<table class="table table-bordered table-striped" id="table">-->
-        <!--<script>$(getUsers());</script>-->
-    <!--</table>-->
-    <!--<button type="submit" class="btn btn-default" name = "submitA" onclick="return addRow()">ADD</button>-->
-<!--</div>-->
-<!--<div class="container-fluid">-->
-<!--</div>-->
-    <!--<script>-->
-        <!--function textButtom() {-->
-        <!--var text = "<td>" +-->
-            <!--"<form method='POST' action='/' style='float:left;'>" +-->
-                <!--"<button type='button' class='btn btn-default' data-toggle='modal' data-target='#myModal'>" +-->
-            <!--"Remove" + "</button>"+-->
-                <!--"</form>" + "</td>" +-->
-            <!--"<td>" +-->
-            <!--"<form method='POST' action='/' style='float:left;'>" +-->
-            <!--"<button type='button' class='btn btn-default' data-toggle='modal' data-target='#myModal'>" +-->
-            <!--"update" + "</button>"+-->
-            <!--"</form>" + "</td>" ;-->
-
-        <!--return text;-->
-        <!--}-->
-        <!--function dataText(text,users) {-->
-            <!--for (var key in users) {-->
-
-                <!--console.log(key);-->
-                <!--text +="<tr>" +-->
-                    <!--"<td>" + users[key].id + "</td>" +-->
-                    <!--"<td>" + users[key].name + "</td>" +-->
-                    <!--"<td>" + users[key].login + "</td>" +-->
-                    <!--"<td>" + users[key].email + "</td>" +-->
-                    <!--"<td>" +-->
-                    <!--"<select class='browser-default custom-select custom-select-lg mb-3' id='select1' name='select1'>"+-->
-                    <!--"<option selected >" + users[key].role + "</option>" +-->
-                    <!--"<option value='1' id='admin'>" + "Administrator" + "</option>"+-->
-                    <!--"<option value='2' id='user'>" + "USER" + "</option>"+-->
-                    <!--"<option value='3' id='manager'>" + "Manager" + "</option>"+-->
-                    <!--"</select>"+ "</td>"+-->
-                    <!--"<td>" + users[key].country + "</td>" +-->
-                    <!--"<td>" + users[key].city + "</td>" + textButtom()+-->
-                    <!--"</tr>";-->
-            <!--}-->
-            <!--return text;-->
-        <!--}-->
-          <!--function createUserA(){-->
-                  <!--$.post("/json", {-->
-                      <!--firstname: document.getElementById("#admin")[0].value,-->
-                      <!--secondname: document.getElementsByName("secondname")[0].value,-->
-                      <!--info: document.getElementsByName("info")[0].value-->
-                  <!--});-->
-                  <!--/*-->
-                  <!--for hide story in form.-->
-                   <!--*/-->
-                  <!--$('#info').val('');-->
-                  <!--$('#firstname').val('');-->
-                  <!--$('#secondname').val('');-->
-                  <!--$(getUsers());-->
-              <!--return false;-->
-          <!--}-->
-        <!--function getUsers() {-->
-            <!--$.ajax('/json', {-->
-                    <!--method: 'get',-->
-                    <!--complete: function (data) {-->
-                        <!--console.log(JSON.parse(data.responseText));-->
-                        <!--var users = JSON.parse(data.responseText);-->
-                        <!--var result = "<tr>" +-->
-                            <!--"<th>" + "ID" + "</th>" +-->
-                            <!--"<th>" + "Name" + "</th>" +-->
-                            <!--"<th>" + "Login" + "</th>" +-->
-                            <!--"<th>" + "EMAIL" + "</th>" +-->
-                            <!--"<th>" + "ROLE" + "</th>" +-->
-                            <!--"<th>" + "Country" + "</th>" +-->
-                            <!--"<th>" + "City" + "</th>" +-->
-                            <!--"</tr>";-->
-                        <!--result =  dataText(result,users);-->
-                        <!--var table = document.getElementById("table");-->
-                        <!--table.innerHTML = result;-->
-                    <!--}-->
-                <!--}-->
-            <!--);-->
-            <!--return false;-->
-        <!--}-->
-    <!--</script>-->
 </body>
 </html>

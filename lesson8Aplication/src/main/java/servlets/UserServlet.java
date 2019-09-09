@@ -1,9 +1,6 @@
 package servlets;
-import logic.User;
 import logic.ValidateService;
 import persistent.DbLocationStore;
-import persistent.DbStore;
-import persistent.Store;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -23,7 +20,7 @@ public class UserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
                 //req.setAttribute("size",work.getLogic().size()-1);
                // req.getRequestDispatcher("/WEB-INF/viewa/TestJstl.jsp").forward(req,resp);
-                req.getRequestDispatcher("Test.html").forward(req,resp);
+                req.getRequestDispatcher("Update.html").forward(req,resp);
     }
 
     @Override
@@ -73,7 +70,7 @@ public class UserServlet extends HttpServlet {
 //         */
 //        if (req.getParameter("logout") != null){
 //            req.getSession().invalidate();
-//            req.getRequestDispatcher("/WEB-INF/viewa/login.jsp").forward(req,resp);
+//            req.getRequestDispatcher("/WEB-INF/viewa/login.html").forward(req,resp);
 //            return;
 //        }
 //        /*
