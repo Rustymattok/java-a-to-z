@@ -31,19 +31,13 @@
                 <option value="administrator">ADMINISTRATOR</option>
             </select>
         </div>
-        <div class="form-group">
+        <div  id = "world" class="form-group">
             <label for="country">choose country:</label>
-            <select  type="country" class="form-control" id="country" name="country">
-                <option value="user">RUSSIA</option>
-                <option value="guest">GERMANY</option>
-                <option value="administrator">USA</option>
-                <option value="administrator">ENGLAND</option>
-                <option value="administrator">FRANCE</option>
-            </select>
+            <select  id = "country" type="country" class="form-control" id="country" name="country"></select>
         </div>
         <div class="form-group">
             <label for="city">choose city:</label>
-            <input type="city" class="form-control" id="city" name="city">
+            <select  id = "city" type="city" class="form-control"  name="city"></select>
         </div>
         <table id="stocButtons" class="table">
             <tr class="thead-dark">
@@ -53,5 +47,78 @@
         </table>
     </form>
 </div>
+<script>
+    var myJsonObj = getJson('/jsoncity');
+    var country = document.getElementById("country");
+    var city = document.querySelector("#city");
+    var btn = document.getElementById("submitB2");
+    var getRole = getJson('/jsonlog');
+    function updateJson(){
+        $.post('/jsoncity', {
+            name:document.getElementById("nameUser").value,
+            login:document.getElementById("login").value,
+            email:document.getElementById("email").value,
+            role:document.getElementById("role").value,
+            country:document.getElementById("country").value,
+            //todo выяснить с городами или представить что индекс и дальнешую работу дилегировать сревлету.
+            city:document.getElementById("city").value
+        });
+        return false;
+    }
+
+    function getJson(url) {
+        return JSON.parse($.ajax({
+            type: 'GET',
+            url: url,
+            dataType: 'json',
+            global: false,
+            async: false,
+            success: function (data) {
+                return data;
+            }
+        }).responseText);
+    }
+
+    function app() {
+        var roleList = document.getElementById("role");
+        for(let k in getRole){
+            compare = getRole[k]["role"];
+        }
+        if(compare === "USER" || compare === "GUEST"){
+            roleList.style.visibility = "hidden";
+        }
+        for (let key in myJsonObj) {
+            createCountry(key);
+            window.onload = createCity;
+            country.onchange = createCity;
+        }
+        btn.onclick = function (ev) {
+            console.log("start");
+            updateJson();
+        };
+    }
+
+    function createCountry(key) {
+        var sel = document.getElementById("country");
+        var opCountry = document.createElement('option');
+        opCountry.innerHTML = key;
+        opCountry.selected = "Russia";
+        opCountry.value = key;
+        sel.appendChild(opCountry);
+        return sel;
+    }
+
+    function createCity(ev) {
+        city.innerHTML = "";
+            var c = this.value || "Russia", o;
+            for(let i = 0; i < myJsonObj[c].length; i++){
+                o = new Option(myJsonObj[c][i],i,false,false);
+                console.log(o)
+                city.add(o);
+            };
+    }
+
+    app();
+</script>
 </body>
 </html>

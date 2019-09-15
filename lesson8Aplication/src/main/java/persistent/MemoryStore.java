@@ -25,13 +25,17 @@ public class MemoryStore implements Store {
             user.setId(String.valueOf(list.size()));
     }
 
+    public void update(String id, User user) {
+        //to do smth.
+    }
+
     public void update(String id, String name, String login, String email) {
         list.get(Integer.parseInt(id)).setName(name);
         list.get(Integer.parseInt(id)).setLogin(login);
         list.get(Integer.parseInt(id)).setEmail(email);
     }
 
-    public void updateRole(String id, String role) {
+    public void alterFindById(String id, String role) {
 
     }
 
@@ -47,6 +51,11 @@ public class MemoryStore implements Store {
     public User findById(String id) {
         return list.get(Integer.parseInt(id));
     }
+
+    public User findByIdAlternative(String id) {
+        return null;
+    }
+
     public User findById(String login,String password){
         User user = null;
         return user;

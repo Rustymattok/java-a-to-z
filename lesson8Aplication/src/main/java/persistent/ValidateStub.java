@@ -1,8 +1,6 @@
 package persistent;
-
 import logic.User;
 import persistent.Store;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +21,10 @@ public class ValidateStub implements Store {
         this.store.put(Integer.valueOf(user.getId()),user);
     }
 
+    public void update(String id, User user) {
+
+    }
+
     public Map<Integer, User> getStore() {
         return store;
     }
@@ -37,7 +39,7 @@ public class ValidateStub implements Store {
         store.remove(Integer.valueOf(id));
     }
 
-    public void updateRole(String id, String role) {
+    public void alterFindById(String id, String role) {
 
     }
 
@@ -46,6 +48,10 @@ public class ValidateStub implements Store {
     }
 
     public User findById(String id) {
+        return null;
+    }
+
+    public User findByIdAlternative(String id) {
         return null;
     }
 

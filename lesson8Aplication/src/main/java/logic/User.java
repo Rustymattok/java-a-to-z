@@ -41,12 +41,14 @@ public class User {
         this.role = role;
     }
 
-//    public User(String name, String login, String email,String role) {
-//        this.name = name;
-//        this.login = login;
-//        this.email = email;
-//        this.role = role;
-//    }
+    public User(String name, String login, String email,String role,String country, String city) {
+        this.name = name;
+        this.login = login;
+        this.email = email;
+        this.role = role;
+        this.country = country;
+        this.city = city;
+    }
 
 
 

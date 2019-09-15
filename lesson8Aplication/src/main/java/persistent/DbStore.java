@@ -84,6 +84,10 @@ public class DbStore implements Store {
         }
     }
 
+    public void update(String id, User user) {
+        //to do smth.
+    }
+
     public Integer position(){
        Integer position =  null;
         try {
@@ -176,6 +180,11 @@ public class DbStore implements Store {
         }
         return user;
     }
+
+    public User findByIdAlternative(String id) {
+        return null;
+    }
+
     /**
      * THis method select user from the database by login and name.
      * @param login- parameter in data sql login.
@@ -231,7 +240,7 @@ public class DbStore implements Store {
      * @param id -  element which we want to find in data.
      * @param role- element which we should update.
      */
-    public void updateRole(String id,String role) {
+    public void alterFindById(String id, String role) {
         String task = new StringBuilder().append(" UPDATE tablejsp SET role = '").append(role).
                 append("' WHERE id = '").append(id).append("';").toString();
         doTask(task);

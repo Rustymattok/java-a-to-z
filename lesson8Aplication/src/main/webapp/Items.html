@@ -10,7 +10,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <div class="container">
-<h2 class="row justify-content-center">List of Users</h2>
+<h2 class="row justify-content-center" id = 'intro'>List of Users</h2>
 <table id="stoc" class="table">
     <tr class="thead-dark">
         <th scope="col">ID</th>
@@ -32,7 +32,8 @@
 <script>
     var tabStoc = document.getElementById('stoc');
     var tabStocButtons = document.getElementById('stocButtons');
-    let selectedTd;
+    var myJsonObj = getJson('/json');
+    var compare;
     function getJson(url) {
         return JSON.parse($.ajax({
             type: 'GET',
@@ -45,37 +46,41 @@
             }
         }).responseText);
     }
-    var myJsonObj = getJson('/json');
     function app() {
-        console.log(myJsonObj);
+        var my= getJson('/jsonlog');
+        var addBtn = document.getElementById("submitB2");
+        var intro = document.getElementById("intro");
+        console.log(my);
+        for(let k in my){
+            compare = my[k]["role"];
+            console.log(compare);
+        }
+        intro.innerHTML = "List of Users  - you logined as: " + compare;
+        if(compare === "GUEST"){
+            addBtn.style.visibility = "hidden";
+        }
         for (let key in myJsonObj) {
             tabStoc.getElementsByTagName('tbody')[0].appendChild(createRow('tabStoc', myJsonObj, key));
-            console.log("--------------->" + myJsonObj[key].id);
         }
         tabStoc.onclick = function(event) {
             let td = event.target.closest('button'); // (1)
-            //let id = event.target.dataset.toggleId;
-            console.log(td.value);
-            //console.log(td.parentNode.parentNode.childNodes[7]);
             if (!td) return; // (2)
             if (!tabStoc.contains(td)) return; // (3)
             if (td.value === "remove"){
                 deleteInfo(td);
             }
             if (td.value === "update"){
+                let b  = td.parentNode.parentNode;
+                let id = b.getAttribute('prodid');
+                toUpdatePage(id);
                 document.location.href = '/Update.html';
             }
         };
         getJson();
     }
     function deleteInfo(td) {
-        if(selectedTd){
-            console.log("aaa");
-        }
         let b  = td.parentNode.parentNode;
-        console.log(b);
         let id = b.getAttribute('prodid');
-        console.log(id);
         updateJson(id);
         b.remove();
     }
@@ -102,12 +107,6 @@
         tdRole.innerHTML = users[key].role;
         tdCountry.innerHTML = users[key].country;
         tdCity.innerHTML = users[key].city;
-        btn.className = "btn btn-primary";
-        btn.value = "remove";
-        btn.innerHTML = "Удалить";
-        btn2.className = "btn btn-primary";
-        btn2.value = "update";
-        btn2.innerHTML = "бновить";
         tr.appendChild(tdId);
         tr.appendChild(tdName);
         tr.appendChild(tdLogin);
@@ -115,15 +114,29 @@
         tr.appendChild(tdRole);
         tr.appendChild(tdCountry);
         tr.appendChild(tdCity);
-        tdAction.appendChild(btn);
-        tdAction2.appendChild(btn2);
-        tr.appendChild(tdAction);
-        tr.appendChild(tdAction2);
+        if(compare === "ADMINISTRATOR") {
+            btn.className = "btn btn-primary";
+            btn.value = "remove";
+            btn.innerHTML = "Удалить";
+            btn2.className = "btn btn-primary";
+            btn2.value = "update";
+            btn2.innerHTML = "бновить";
+            tdAction.appendChild(btn);
+            tdAction2.appendChild(btn2);
+            tr.appendChild(tdAction);
+            tr.appendChild(tdAction2);
+        }
         return tr;
     }
     function updateJson(id){
         $.post("/json", {
             id:id,
+        });
+        return false;
+    }
+    function toUpdatePage(id) {
+        $.post("/update",{
+            id:id
         });
         return false;
     }

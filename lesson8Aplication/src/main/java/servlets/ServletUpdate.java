@@ -1,38 +1,29 @@
 package servlets;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import logic.Item;
 import logic.User;
 import logic.ValidateService;
 import persistent.DbLocationStore;
-
-import java.util.UUID;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 /**
- * Servlet responsoble for forming json.
+ * This servlet responsible for work with Update page. Form JSON for update.
  */
-public class JSONControllers extends HttpServlet {
+public class ServletUpdate  extends HttpServlet {
     public final static ValidateService work = ValidateService.getInstance(DbLocationStore.getInstance());
 
     private ConcurrentHashMap<UUID, User> list = new ConcurrentHashMap<UUID, User>();
 
-    public JSONControllers() {
-       init();
-    }
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        init();
         resp.setContentType("text/json");
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(list);
@@ -43,30 +34,26 @@ public class JSONControllers extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/json");
+        list.clear();
         BufferedReader reader = req.getReader();
         String jsonLine = reader.readLine();
-        String id =  jsonLine.replace("id=","");
-        work.getLogic().delete(id);
-        init();
+        String id = parsText(jsonLine,"id");
+        if(jsonLine.length()> 20){
+            String name = parsText(jsonLine,"name");
+            String login = parsText(jsonLine,"login");
+            String email = parsText(jsonLine,"email");
+            //Костыль
+            email = email.replace("%40","@");
+            String role = parsText(jsonLine,"role");
+            String country = parsText(jsonLine,"country");
+            String  city = parsText(jsonLine,"city");
+            work.getLogic().update(id,new User(name,login,email,role,country,city));
+        }else{
+            list.put(generateID(),work.getLogic().findByIdAlternative(id));
+        }
         doGet(req,resp);
     }
 
-    /**
-     * Method  for randomize id.
-     *
-     * @return id parameter.
-     */
-    public UUID generateID() {
-        UUID uniqueKey = UUID.randomUUID();
-        return uniqueKey;
-    }
-    /**
-     * This method took line from json for parsing and get parameter.
-     *
-     * @param text    - json line.
-     * @param keyword - word for value parameter.
-     * @return String parameter.
-     */
     public String parsText(String text, String keyword) {
         Pattern p = Pattern.compile(keyword + "=([^\\s]+)"); // the regex to be found
         Matcher m = p.matcher(text);
@@ -105,13 +92,8 @@ public class JSONControllers extends HttpServlet {
         return result;
     }
 
-    public void init(){
-        if(list != null){
-            list.clear();
-        }
-        for (int i = 0; i < work.getLogic().size(); i++) {
-            list.put(generateID(),work.getLogic().findById(String.valueOf(i)));
-        }
+    public UUID generateID() {
+        UUID uniqueKey = UUID.randomUUID();
+        return uniqueKey;
     }
 }
-

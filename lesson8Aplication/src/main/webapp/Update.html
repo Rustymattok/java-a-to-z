@@ -1,10 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
-<p>Тут скоро чтото будет)</p>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<div class="container-fluid">
+    <form action="/Items.html" method="POST">
+        <div class="form-group">
+            <label for="nameUser">enter name:</label>
+            <input type="nameUser" class="form-control" id="nameUser" name ="nameUser">
+        </div>
+        <div class="form-group">
+            <label for="login">enter login:</label>
+            <input type="login" class="form-control" id="login" name = "login">
+        </div>
+        <div class="form-group">
+            <label for="email">enter email:</label>
+            <input type="email" class="form-control" id="email" name="email">
+        </div>
+        <div class="form-group">
+            <label for="role">choose role:</label>
+            <select  type="role" class="form-control" id="role" name="role" id="role"></select>
+        </div>
+        <div  id = "world" class="form-group">
+            <label for="country">choose country:</label>
+            <select  id = "country" type="country" class="form-control" id="country" name="country"></select>
+        </div>
+        <div class="form-group">
+            <label for="city">choose city:</label>
+            <select  id = "city" type="city" class="form-control"  name="city"></select>
+        </div>
+        <table id="stocButtons" class="table">
+            <tr class="thead-dark">
+                <th><form action="/Add.html" style="float:left;"><button class="btn btn-primary" type="submit" name="subAdd" value="Add" id="submitB2"style="float: left;">ADD</button></form></th>
+                <th><form action="/Items.html"><button class="btn btn-primary" type="submit" name = "logout" value="LOGOUT" style="float: left;">Back</button></form></th>
+            </tr>
+        </table>
+    </form>
+</div>
+<script>
+    var myJsonObj = getJson('/update');
+    var myJsonCity = getJson('/jsoncity');
+    let arrRole = ["USER","GUEST","ADMINISTRATOR"];
+    var country = document.getElementById("country");
+    var city = document.querySelector("#city");
+    var btn = document.getElementById("submitB2");
+    var idValue;
+    let result;
+    let resultCountry;
+    let resultCity;
+    function getJson(url) {
+        return JSON.parse($.ajax({
+            type: 'GET',
+            url: url,
+            dataType: 'json',
+            global: false,
+            async: false,
+            success: function (data) {
+                return data;
+            }
+        }).responseText);
+    }
+    function toUpdatePage() {
+        $.post("/update",{
+            id:idValue,
+            name:document.getElementById("nameUser").value,
+            login:document.getElementById("login").value,
+            email:document.getElementById("email").value,
+            role:document.getElementById("role").value,
+            country:document.getElementById("country").value,
+            city:myJsonCity[document.getElementById("country").value][document.getElementById("city").value]
+        });
+        return false;
+    }
+
+    function app() {
+        var iNname = document.getElementById("nameUser");
+        var iNLogin = document.getElementById("login");
+        var iNemail = document.getElementById("email");
+       for (let key in myJsonObj){
+           if(myJsonObj[key] != null) {
+               iNname.value = myJsonObj[key].name;
+               iNLogin.value = myJsonObj[key].login;
+               iNemail.value = myJsonObj[key].email;
+               idValue = myJsonObj[key].id;
+           }
+           result = myJsonObj[key].role;
+           resultCountry = myJsonObj[key].country;
+           resultCity = myJsonObj[key].city;
+       }
+        // in this cicle we fill parameters of role options
+        for (let i = 0; i < arrRole.length; i++) {
+            createRole(arrRole[i],result);
+        }
+        // in this cycle we fill parameters for country options and city
+        for (let key in myJsonCity){
+            createCountry(key,resultCountry);
+            window.onload = createCity;
+            country.onchange = createCity;
+        }
+        btn.onclick = function (ev) {
+            toUpdatePage();
+        };
+    }
+
+    function createRole(key,result) {
+        let sel = document.getElementById("role");
+        let opRole = document.createElement("option");
+        opRole.value = key;
+        if(key === result){
+            opRole.selected = key;
+        }
+        opRole.innerHTML = key;
+        sel.appendChild(opRole);
+        return sel;
+    }
+    function createCity(ev) {
+        city.innerHTML = "";
+        var c = this.value || resultCountry, o;
+        for(let i = 0; i < myJsonCity[c].length; i++){
+            o = new Option(myJsonCity[c][i],i,false,false);
+            if(myJsonCity[c][i] === resultCity){
+                o.selected = myJsonCity[c][i];
+            }
+            city.add(o);
+        }
+    }
+
+    function createCountry(key,resultCountry) {
+        var sel = document.getElementById("country");
+        var opCountry = document.createElement('option');
+        if(key === resultCountry){
+            opCountry.selected = key;
+        }
+        opCountry.innerHTML = key;
+        opCountry.value = key;
+        sel.appendChild(opCountry);
+        return sel;
+    }
+
+    // function updateCountry() {
+    //     var socCountry = document.getElementById('country');
+    //     socCountry.onclick = function (ev) {
+    //         let td = ev.target.closest('select');
+    //         socCountry.selected = td.value;
+    //         var conResult = socCountry.selected;
+    //         return conResult;
+    //     };
+    // }
+    //
+    // function updateRole() {
+    //     var socRole = document.getElementById('role');
+    //     socRole.onclick = function (ev) {
+    //         let td = ev.target.closest('select');
+    //         socRole.selected = td.value;
+    //         var rolResult = socRole.selected;
+    //         console.log(rolResult);
+    //         toUpdatePage();
+    //         return rolResult;
+    //     };
+    // }
+
+    app();
+</script>
 </body>
 </html>

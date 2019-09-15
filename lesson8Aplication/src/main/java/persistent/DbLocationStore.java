@@ -69,7 +69,7 @@ public class DbLocationStore implements Store{
         /*
           add auto role. By default it is user.
          */
-        user.setRole(String.valueOf(ClientType.USER));
+       // user.setRole(String.valueOf(ClientType.USER));
      /*   user.setCountry(String.valueOf(CountryType.RUSSIA));
         user.setCity(String.valueOf(CityType.KOLN));*/
         try {
@@ -79,7 +79,7 @@ public class DbLocationStore implements Store{
             sta.setString(2,user.getName());
             sta.setString(3,user.getLogin());
             sta.setObject(4,user.getEmail());
-            sta.setObject(5,user.getRole());
+            sta.setObject(5,user.getRole().toUpperCase());
             sta.setObject(6,user.getCountry());
             sta.setObject(7,user.getCity());
             sta.executeUpdate();
@@ -87,6 +87,15 @@ public class DbLocationStore implements Store{
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void update(String id, User user) {
+        Integer idc = Integer.valueOf(id);
+        String task = new StringBuilder().append(" UPDATE tableDB SET name = '").append(user.getName()).append("',login = '").
+                append(user.getLogin()).append("',email = '").append(user.getEmail()).append("',role = '").append(user.getRole()).
+                append("',country = '").append(user.getCountry()).append("',city = '").
+                append(user.getCity()).append("' WHERE id = '").append(idc).append("';").toString();
+        doTask(task);
     }
 
     public Integer position(){
@@ -113,8 +122,9 @@ public class DbLocationStore implements Store{
      * @param email - email user.
      */
     public void update(String id, String name, String login, String email) {
+        Integer idc = Integer.valueOf(id);
         String task = new StringBuilder().append(" UPDATE tableDB SET name = '").append(name).append("',login = '").
-                append(login).append("',email = '").append(email).append("' WHERE id = '").append(id).append("';").toString();
+                append(login).append("',email = '").append(email).append("' WHERE id = '").append(idc).append("';").toString();
         doTask(task);
     }
     /**
@@ -175,7 +185,6 @@ public class DbLocationStore implements Store{
             ResultSet res = st.executeQuery(task);
             while (res.next()){
                 user = new User(res.getString(1), res.getString(2), res.getString(3), res.getString(4),res.getString(5),res.getString(6),res.getString(7));
-                //user = new User(res.getString(1), res.getString(2), res.getString(3), res.getString(4),res.getString(5));
             }
             connection.close();
         } catch (SQLException e) {
@@ -183,6 +192,26 @@ public class DbLocationStore implements Store{
         }
         return user;
     }
+
+    public User findByIdAlternative(String id) {
+        System.out.println();
+        Integer index = Integer.valueOf(id);
+        String task = new StringBuilder().append("select * from tableDB where id = '").append(index).append("';").toString();
+        User user = new User();
+        try {
+            Connection connection = SOURCE.getConnection();
+            Statement st = connection.createStatement();
+            ResultSet res = st.executeQuery(task);
+            while (res.next()){
+                user = new User(res.getString(1), res.getString(2), res.getString(3), res.getString(4),res.getString(5),res.getString(6),res.getString(7));
+            }
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+
     /**
      * THis method select user from the database by login and name.
      * @param login- parameter in data sql login.
@@ -238,7 +267,7 @@ public class DbLocationStore implements Store{
      * @param id -  element which we want to find in data.
      * @param role- element which we should update.
      */
-    public void updateRole(String id,String role) {
+    public void alterFindById(String id, String role) {
         String task = new StringBuilder().append(" UPDATE tableDB SET role = '").append(role).
                 append("' WHERE id = '").append(id).append("';").toString();
         doTask(task);

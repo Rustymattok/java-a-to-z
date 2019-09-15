@@ -1,38 +1,33 @@
 package servlets;
-import com.fasterxml.jackson.core.JsonProcessingException;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
-import logic.Item;
 import logic.User;
 import logic.ValidateService;
 import persistent.DbLocationStore;
-
-import java.util.UUID;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 /**
- * Servlet responsoble for forming json.
+ * This servlet responsible for List of city. Form JSON with list of cities.
  */
-public class JSONControllers extends HttpServlet {
+public class JSONCity extends HttpServlet {
     public final static ValidateService work = ValidateService.getInstance(DbLocationStore.getInstance());
+    private ConcurrentHashMap<String,String[]> list = new ConcurrentHashMap<String, String[]>();
 
-    private ConcurrentHashMap<UUID, User> list = new ConcurrentHashMap<UUID, User>();
-
-    public JSONControllers() {
-       init();
+    public JSONCity() {
+        init();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        init();
         resp.setContentType("text/json");
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(list);
@@ -45,28 +40,30 @@ public class JSONControllers extends HttpServlet {
         resp.setContentType("text/json");
         BufferedReader reader = req.getReader();
         String jsonLine = reader.readLine();
-        String id =  jsonLine.replace("id=","");
-        work.getLogic().delete(id);
-        init();
+        String name = parsText(jsonLine,"name");
+        String login = parsText(jsonLine,"login");
+        String email = parsText(jsonLine,"email");
+        //Костыль
+        email = email.replace("%40","@");
+        String role = parsText(jsonLine,"role");
+        String country = parsText(jsonLine,"country");
+        String index = parsText(jsonLine,"city");
+        String  city = list.get(country)[Integer.valueOf(index)];
+        work.getLogic().add(new User(name,login,email,role,country,city));
         doGet(req,resp);
     }
 
-    /**
-     * Method  for randomize id.
-     *
-     * @return id parameter.
-     */
-    public UUID generateID() {
-        UUID uniqueKey = UUID.randomUUID();
-        return uniqueKey;
+    public void init(){
+        if(list != null){
+            list.clear();
+        }
+        String[] Rcity = {"Moscow","Mitishi","Omsk","Korolev","Posad"};
+        list.put("Russia",Rcity);
+        String[] Ecity = {"London","Glasgou","Elm"};
+        list.put("England",Ecity);
+        String[] Gcity = {"Berlin","Ulm","Koln"};
+        list.put("Germany",Gcity);
     }
-    /**
-     * This method took line from json for parsing and get parameter.
-     *
-     * @param text    - json line.
-     * @param keyword - word for value parameter.
-     * @return String parameter.
-     */
     public String parsText(String text, String keyword) {
         Pattern p = Pattern.compile(keyword + "=([^\\s]+)"); // the regex to be found
         Matcher m = p.matcher(text);
@@ -104,14 +101,4 @@ public class JSONControllers extends HttpServlet {
         }
         return result;
     }
-
-    public void init(){
-        if(list != null){
-            list.clear();
-        }
-        for (int i = 0; i < work.getLogic().size(); i++) {
-            list.put(generateID(),work.getLogic().findById(String.valueOf(i)));
-        }
-    }
 }
-
