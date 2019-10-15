@@ -1,14 +1,27 @@
 package logic;
-
+/**
+ * Class descripe parameters of halls.
+ */
 public class Halls {
+    private Integer id;
     private String row;
     private String place;
     private String status;
+    private double price;
 
-    public Halls(String row, String place, String status) {
+    public Halls(Integer id,String row, String place, String status) {
+        this.id = id;
         this.row = row;
         this.place = place;
         this.status = status;
+    }
+
+    public Halls(Integer id, String row, String place, String status, double price) {
+        this.id = id;
+        this.row = row;
+        this.place = place;
+        this.status = status;
+        this.price = price;
     }
 
     public String getRow() {
@@ -33,5 +46,21 @@ public class Halls {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }

@@ -19,4 +19,7 @@ public class ValidateService {
         return instance;
     }
 
+    public Store getLogic() {
+        return logic;
+    }
 }

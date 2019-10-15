@@ -1,10 +1,17 @@
 package logic;
-
+/**
+ * Class describe parameter of users
+ */
 public class User {
     private String name;
     private String phone;
     private Double balance;
-    private Integer id;//todo как связать со список
+    private Integer id;
+
+    public User(String name, String phone) {
+        this.name = name;
+        this.phone = phone;
+    }
 
     public User(String name, String phone, Double balance) {
         this.name = name;

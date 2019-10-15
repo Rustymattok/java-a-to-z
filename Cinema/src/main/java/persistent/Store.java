@@ -1,5 +1,9 @@
 package persistent;
+import logic.Halls;
 import logic.User;
+
+import java.util.List;
+
 /**
  * Interface for work with DataBase.
  */
@@ -20,11 +24,21 @@ public interface Store {
       * Method for add to data User.
       * @param user - which you want to add.
       */
-     void addUser(User user,int rows,int places);
+     void addUser(User user, List<Integer> list);
      /**
       * Method for update balance of user.
       * @param user -  user which we want to update.
       * @param cost - price of ticket.
       */
      boolean checkTransactionUser(User user, Double cost);
+     /**
+      * This method calculate common size of data .
+      * @return - size of data.
+      */
+     int sizeData();
+     /**
+      * This method select Hall by ID .
+      * @return - value of Hall.
+      */
+     Halls selectByIDHalls(Integer id);
 }
