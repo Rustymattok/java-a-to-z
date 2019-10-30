@@ -2,6 +2,8 @@ package servlets;
 import logic.Halls;
 import logic.User;
 import logic.ValidateService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import persistent.DbStorePostgres;
 
 import javax.servlet.ServletException;

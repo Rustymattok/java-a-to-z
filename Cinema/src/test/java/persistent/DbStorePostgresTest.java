@@ -12,10 +12,6 @@ import static org.junit.Assert.assertThat;
 
 public class DbStorePostgresTest {
     DbStorePostgres store = DbStorePostgres.getINSTANCE();
-    @Test
-    public void initTable() {
-        store.initPlaces(10,19,200);
-    }
 
     @Test
     public void addUser() {

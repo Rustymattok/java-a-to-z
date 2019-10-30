@@ -15,12 +15,6 @@ public interface Store {
       */
      void updatePlace (String row,String place,String status);
      /**
-      * Method for init first DataBase - cinema.
-      * @param rows - value of rows.
-      * @param places - value of places.
-      */
-     void initPlaces(int rows,int places,double price);
-     /**
       * Method for add to data User.
       * @param user - which you want to add.
       */

@@ -25,65 +25,15 @@ public class DbStorePostgres implements Store {
         SOURCE.setMinIdle(5);
         SOURCE.setMaxIdle(10);
         SOURCE.setMaxOpenPreparedStatements(100);
-        initTable();
+        try {
+            connection = SOURCE.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public static DbStorePostgres getINSTANCE() {
         return INSTANCE;
-    }
-    /**
-     * Method to init dataBase if it not exists.
-     */
-    public void initTable() {
-        String taskCreatHalls = new StringBuilder().append("CREATE TABLE IF NOT EXISTS").append(" ")
-                .append("hallDB").append("(hall_no integer PRIMARY KEY, row text,place text,status text,price DOUBLE PRECISION);").toString();
-        String taskCreatUser = new StringBuilder().append("CREATE TABLE IF NOT EXISTS").append(" ")
-                .append("accountDB").append("(hall_no integer REFERENCES hallDB, name text,phone text,balance DOUBLE PRECISION);").toString();
-        try {
-            connection = SOURCE.getConnection();
-            /*
-            Operation to creation the table of Halls if not exists.
-             */
-            Statement stHalls = connection.prepareStatement(taskCreatHalls);
-            ((PreparedStatement) stHalls).executeUpdate();
-            stHalls.close();
-                   /*
-            Operation to creation the table of Accounts if not exists.
-             */
-            Statement stUser = connection.prepareStatement(taskCreatUser);
-            ((PreparedStatement) stUser).executeUpdate();
-            stUser.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    /**
-     * Method to form halls data.
-     *
-     * @param rows   - value of rows.
-     * @param places - value of places.
-     * @param price  - value of cost ticket.
-     */
-    public void initPlaces(int rows, int places, double price) {
-        try {
-            String task = new StringBuilder().append("INSERT INTO ").append("hallDB ").append("VALUES(?,?,?,?,?)").toString();
-            int num = 0;
-            for (int i = 1; i <= rows; i++) {
-                for (int j = 1; j <= places; j++) {
-                    connection = SOURCE.getConnection();
-                    PreparedStatement st = connection.prepareStatement(task);
-                    st.setInt(1, ++num);
-                    st.setString(2, String.valueOf(i));
-                    st.setString(3, String.valueOf(j));
-                    st.setString(4, "free");
-                    st.setDouble(5, price);
-                    st.executeUpdate();
-                    connection.close();
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
     /**
      * Method to update status of Hall.
@@ -92,8 +42,7 @@ public class DbStorePostgres implements Store {
      * @param status - block or free.
      */
     public void updatePlace(String row, String place, String status) {
-        String updateHall = new StringBuilder().append("UPDATE halldb SET status='").append(status).append("' WHERE row='")
-                .append(row).append("' and place='").append(place).append("'").toString();
+        String updateHall ="UPDATE halldb SET status='" + status +"' WHERE row='"+ row +"' and place='" + place +"'";
         try {
             PreparedStatement st = connection.prepareStatement(updateHall);
             st.executeUpdate();
@@ -111,8 +60,7 @@ public class DbStorePostgres implements Store {
     public boolean checkTransactionHall(String row, String place) {
         boolean flag = false;
         String result = "";
-        String selectIDHall = new StringBuilder().append("SELECT status FROM halldb WHERE ").append("row='").append(row).append("' and place='")
-                .append(place).append("'").toString();
+          String selectIDHall = "SELECT status FROM halldb WHERE row='" + row +"' and place='" + place +"'";
         try {
             Statement stReq = connection.createStatement();
             ResultSet res = stReq.executeQuery(selectIDHall);
@@ -166,9 +114,8 @@ public class DbStorePostgres implements Store {
      */
     public void updateStatus(User user,String row,String place){
         Integer id = null;
-        String selectIDHall = new StringBuilder().append("SELECT hall_no FROM halldb WHERE ").append("row='").append(row).append("' and place='")
-                .append(place).append("'").toString();
-        String task = new StringBuilder().append("INSERT INTO ").append("accountDB ").append("VALUES(?,?,?,?)").toString();
+        String selectIDHall ="SELECT hall_no FROM halldb WHERE row='" + row + "' and place='" + place + "'";
+        String task = "INSERT INTO accountDB VALUES(?,?,?,?)";
         try {
         PreparedStatement st = connection.prepareStatement(task);
         Statement stReq = null;
@@ -217,7 +164,6 @@ public class DbStorePostgres implements Store {
             ResultSet res = stReq.executeQuery(selectUser);
             while (res.next()) {
                 flag = true;
-                //Integer id = res.getInt(1);
             }
             res.close();
         } catch (SQLException e) {
@@ -262,8 +208,8 @@ public class DbStorePostgres implements Store {
             if (balance != null) {
                 if (cost <= balance) {
                     balance = balance - cost;
-                    String updateBalance = new StringBuilder().append("UPDATE accountdb SET balance='").append(balance).append("' WHERE name='")
-                            .append(user.getName()).append("' and phone='").append(user.getPhone()).append("'").toString();
+                    String updateBalance = "UPDATE accountdb SET balance='" + balance + "' WHERE name='"
+                            + user.getName() + "' and phone='" + user.getPhone() + "'";
                     PreparedStatement stBalance = connection.prepareStatement(updateBalance);
                     user.setBalance(balance);
                     stBalance.executeUpdate();
@@ -284,8 +230,7 @@ public class DbStorePostgres implements Store {
      */
     public double takePriceTicket(String row, String place) {
         Double price = null;
-        String selectPriceHall = new StringBuilder().append("SELECT price FROM halldb WHERE ").append("row='").append(row).append("' and place='")
-                .append(place).append("'").toString();
+        String selectPriceHall = "SELECT price FROM halldb WHERE row='" + row + "' and place='" + place +"'";
         try {
             Statement stReq = connection.createStatement();
             ResultSet res = stReq.executeQuery(selectPriceHall);
@@ -304,7 +249,7 @@ public class DbStorePostgres implements Store {
      */
     public int sizeData() {
         Integer i = null;
-        String task = new StringBuilder().append("select count(*) from halldb;").toString();
+        String task = "select count(*) from halldb;";
         try {
             Statement st = connection.createStatement();
             ResultSet res = st.executeQuery(task);
@@ -322,7 +267,7 @@ public class DbStorePostgres implements Store {
      */
     public Halls selectByIDHalls(Integer id) {
         Halls hall = null;
-        String selectHall = new StringBuilder().append("select * from halldb where hall_no='").append(id).append("'").toString();
+        String selectHall = "select * from halldb where hall_no='" + id + "'";
         try {
             Statement st = connection.createStatement();
             ResultSet res = st.executeQuery(selectHall);
