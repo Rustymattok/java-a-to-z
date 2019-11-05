@@ -9,7 +9,7 @@ Before building in maven you should init database tables by script - location
 ```
 # How it works
 Below you may see work-scheme of Cinema service
-[![ALT-ТЕКСТ ИЗОБРАЖЕНИЯ](https://github.com/Rustymattok/java-a-to-z/blob/master/Cinema/work-schem.JPG)](link github)
+[ALT-ТЕКСТ ИЗОБРАЖЕНИЯ](https://github.com/Rustymattok/java-a-to-z/blob/master/Cinema/work-schem.JPG)
 # Targets
 
 Education tasks.
