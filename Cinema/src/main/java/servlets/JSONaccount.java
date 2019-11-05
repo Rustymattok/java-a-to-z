@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 /**
@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
  */
 public class JSONaccount extends HttpServlet {
     public final static ValidateService work = ValidateService.getInstance(DbStorePostgres.getINSTANCE());
-    private ConcurrentHashMap<Integer,Halls> list = new ConcurrentHashMap<Integer,Halls>();
+    private HashMap<Integer,Halls> list = new HashMap<Integer,Halls>();
     /**
      * By get parameter json of id halls.
      * @param req - request.

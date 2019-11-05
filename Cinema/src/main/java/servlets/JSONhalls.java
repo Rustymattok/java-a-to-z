@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,7 +19,7 @@ import java.util.regex.Pattern;
  */
 public class JSONhalls extends HttpServlet {
     public final static ValidateService work = ValidateService.getInstance(DbStorePostgres.getINSTANCE());
-    private ConcurrentHashMap<Integer, Halls> list = new ConcurrentHashMap<Integer, Halls>();
+    private HashMap<Integer, Halls> list = new HashMap<Integer, Halls>();
 
     public JSONhalls() {
        initData();
@@ -59,7 +60,7 @@ public class JSONhalls extends HttpServlet {
         }
     }
 
-    public ConcurrentHashMap<Integer, Halls> getList() {
+    public HashMap<Integer, Halls> getList() {
         return list;
     }
     /**
