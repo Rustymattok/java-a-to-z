@@ -19,48 +19,43 @@ import java.util.regex.Pattern;
  */
 public class JSONhalls extends HttpServlet {
     public final static ValidateService work = ValidateService.getInstance(DbStorePostgres.getINSTANCE());
-    private HashMap<Integer, Halls> list = new HashMap<Integer, Halls>();
-
-    public JSONhalls() {
-       initData();
-    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/json");
-        initData();
         ObjectMapper mapper = new ObjectMapper();
-        String jsonString = mapper.writeValueAsString(list);
+        String jsonString = mapper.writeValueAsString(getData());
         resp.getWriter().write(jsonString);
         resp.getWriter().flush();
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("text/json");
-        BufferedReader reader = req.getReader();
-        String jsonLine = reader.readLine();
-        System.out.println(jsonLine);
-        ArrayList<Integer> listID = new ArrayList<Integer>();
-        listID = parsText(jsonLine);
-        for (int i = 0; i < listID.size() ; i++) {
-           Halls halls = work.getLogic().selectByIDHalls(listID.get(i));
-           work.getLogic().updatePlace(halls.getRow(),halls.getPlace(),"block");
-        }
-        doGet(req,resp);
+        /*
+        Don't use post for this servlet.
+         */
+//        resp.setContentType("text/json");
+//        BufferedReader reader = req.getReader();
+//        String jsonLine = reader.readLine();
+//        System.out.println(jsonLine);
+//        ArrayList<Integer> listID = new ArrayList<Integer>();
+//        listID = parsText(jsonLine);
+//        for (int i = 0; i < listID.size() ; i++) {
+//           Halls halls = work.getLogic().selectByIDHalls(listID.get(i));
+//           work.getLogic().updatePlace(halls.getRow(),halls.getPlace(),"block");
+//        }
+//        doGet(req,resp);
     }
     /**
      * Method for collect all halls in data.
      */
-    public void initData(){
+    public HashMap<Integer, Halls> getData(){
         int i = 1;
+        HashMap<Integer, Halls> list = new HashMap<Integer, Halls>();
         while (i<=work.getLogic().sizeData()){
             list.put(i,work.getLogic().selectByIDHalls(i));
             i++;
         }
-    }
-
-    public HashMap<Integer, Halls> getList() {
         return list;
     }
     /**

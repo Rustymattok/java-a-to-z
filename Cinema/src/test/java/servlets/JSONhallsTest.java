@@ -9,11 +9,6 @@ import static org.junit.Assert.*;
 public class JSONhallsTest {
     JSONhalls jsoNhalls =new JSONhalls();
 
-    @Test
-    public void initData() {
-        jsoNhalls.initData();
-        assertThat(jsoNhalls.getList().size(),is(190));
-    }
 
     @Test
     public void parsText() {
