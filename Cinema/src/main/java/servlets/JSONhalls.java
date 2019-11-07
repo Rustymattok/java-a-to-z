@@ -7,11 +7,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 /**
@@ -31,20 +29,6 @@ public class JSONhalls extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        /*
-        Don't use post for this servlet.
-         */
-//        resp.setContentType("text/json");
-//        BufferedReader reader = req.getReader();
-//        String jsonLine = reader.readLine();
-//        System.out.println(jsonLine);
-//        ArrayList<Integer> listID = new ArrayList<Integer>();
-//        listID = parsText(jsonLine);
-//        for (int i = 0; i < listID.size() ; i++) {
-//           Halls halls = work.getLogic().selectByIDHalls(listID.get(i));
-//           work.getLogic().updatePlace(halls.getRow(),halls.getPlace(),"block");
-//        }
-//        doGet(req,resp);
     }
     /**
      * Method for collect all halls in data.

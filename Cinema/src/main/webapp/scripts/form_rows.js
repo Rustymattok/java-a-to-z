@@ -1,5 +1,4 @@
 let json= getJson('/json');
-let jsonData= getJson('/jsonacc');
 let list =[];
 /**
  * Method responsible for forming <br> teg.
@@ -44,14 +43,6 @@ function getJson(url) {
         }
     }).responseText);
 }
-
-function updateJson(){
-    $.post("/json", {
-        list:list,
-    });
-    console.log(list);
-    return false;
-}
 /**
  * Send to ServletAccount data.
  * @param username - name of customer.
@@ -67,15 +58,8 @@ function sendAccount(username,phone) {
     });
     return false;
 }
-/**
- * Send to JSONAccount data of choosed places.
- * @returns {boolean}
- */
-function jsonAcc(){
-    $.post("/jsonacc", {
-        list:list,
-    });
-    console.log(list);
+function dataTorderPage(){
+    localStorage.setItem( 'objectToPass', list );
     return false;
 }
 /**
@@ -85,8 +69,17 @@ function jsonAcc(){
 function generateHatrib() {
     var h3form = document.createElement('h5');
     var text = " ";
-    for(var k in jsonData){
-        text = text + "row=" +jsonData[k].row + " place=" +jsonData[k].place + " ";
+    /*сделать что то
+    let meetup = {
+        name: "Vladimir",
+        phone: "444444",
+        id: list[0]
+    };
+    var result = JSON.stringify(meetup);
+    console.log(result);
+    */
+    for(var k in list){
+        text = text + "row=" +json[list[k]].row + " place=" +json[list[k]].place + " ";
     }
     h3form.innerText = "вы выбрали след места: " + text;
     return h3form;
@@ -98,10 +91,6 @@ function generateHatrib() {
 function fromOrderForm() {
     var name = document.getElementById("username").value;
     var phone = document.getElementById("phone").value;
-    for(let k in jsonData){
-        list.push(jsonData[k].id);
-    }
-    console.log(list);
     sendAccount(name,phone,list);
     return false;
 }
@@ -110,7 +99,8 @@ function fromOrderForm() {
  * @returns {boolean}
  */
 function orderapp() {
-    console.log(jsonData);
+    list = JSON.parse("[" + localStorage['objectToPass'] + "]");
+    localStorage.removeItem( 'objectToPass' ); // Clear the localStorage
     let tabH = document.getElementById("stocID");
     tabH.getElementsByTagName('tbody')[0].appendChild(generateHatrib());
     return false;
@@ -122,9 +112,6 @@ function orderapp() {
 function app() {
     var k = 1;
     let tabStoc = document.getElementById("stoc");
-    console.log(tabStoc);
-    let stocButtons = document.getElementById("stocButtons");
-    console.log(stocButtons);
     for (let i = 0; i < 10; i++) {
         for (let j = 0; j < 19 ; j++) {
             tabStoc.getElementsByTagName('tbody')[0].appendChild(generateButtons(j+1,k));

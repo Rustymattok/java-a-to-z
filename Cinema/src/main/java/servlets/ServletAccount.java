@@ -1,4 +1,5 @@
 package servlets;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import logic.Halls;
 import logic.User;
 import logic.ValidateService;
@@ -29,6 +30,8 @@ public class ServletAccount extends HttpServlet {
         resp.setContentType("text/json");
         BufferedReader reader = req.getReader();
         String jsonLine = reader.readLine();
+        System.out.println("==============1 " + jsonLine);
+//        User ronaldo = new ObjectMapper().readValue(jsonLine, User.class);
         String name = parseAccount(jsonLine,"name");
         String phone = parseAccount(jsonLine,"phone");
         ArrayList<Integer> idList = parsHallId(jsonLine);
