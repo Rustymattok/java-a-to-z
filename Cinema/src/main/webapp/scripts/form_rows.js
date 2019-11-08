@@ -51,10 +51,17 @@ function getJson(url) {
  * @returns {boolean}
  */
 function sendAccount(username,phone) {
+    let meetup = {
+        name: username,
+        phone: phone,
+        list: list
+    };
+    var result = JSON.stringify(meetup);
     $.post("/account", {
-        name:username,
-        phone:phone,
-        list:list,
+        result:result
+        // name:username,
+        // phone:phone,
+        // list:list,
     });
     return false;
 }
@@ -69,15 +76,6 @@ function dataTorderPage(){
 function generateHatrib() {
     var h3form = document.createElement('h5');
     var text = " ";
-    /*сделать что то
-    let meetup = {
-        name: "Vladimir",
-        phone: "444444",
-        id: list[0]
-    };
-    var result = JSON.stringify(meetup);
-    console.log(result);
-    */
     for(var k in list){
         text = text + "row=" +json[list[k]].row + " place=" +json[list[k]].place + " ";
     }
