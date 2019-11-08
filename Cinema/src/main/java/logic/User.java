@@ -1,4 +1,8 @@
 package logic;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Class describe parameter of users
  */
@@ -7,6 +11,10 @@ public class User {
     private String phone;
     private Double balance;
     private Integer id;
+    private ArrayList<Integer> list = new ArrayList<Integer>();
+
+    public User() {
+    }
 
     public User(String name, String phone) {
         this.name = name;
@@ -49,5 +57,9 @@ public class User {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public ArrayList<Integer> getList() {
+        return list;
     }
 }
