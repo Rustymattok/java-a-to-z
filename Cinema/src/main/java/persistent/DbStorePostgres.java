@@ -11,9 +11,9 @@ import java.util.List;
  */
 public class DbStorePostgres implements Store {
     private static final BasicDataSource SOURCE = new BasicDataSource();
-    private static DbStorePostgres INSTANCE = new DbStorePostgres();
+    private static final DbStorePostgres INSTANCE = new DbStorePostgres();
     private final static double USERBALANCE = 500;
-    private Connection connection = null;
+    private final static Connection connection = INSTANCE.getConnection();
 
     public DbStorePostgres() {
         String url = "jdbc:postgresql://localhost:5432";
@@ -25,11 +25,6 @@ public class DbStorePostgres implements Store {
         SOURCE.setMinIdle(5);
         SOURCE.setMaxIdle(10);
         SOURCE.setMaxOpenPreparedStatements(100);
-        try {
-            connection = SOURCE.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     public static DbStorePostgres getINSTANCE() {
@@ -201,9 +196,6 @@ public class DbStorePostgres implements Store {
     public boolean checkTransactionUser(User user, Double cost) {
         boolean flag = false;
         try {
-            if (connection.isClosed()) {
-                connection = SOURCE.getConnection();
-            }
             Double balance = user.getBalance();
             if (balance != null) {
                 if (cost <= balance) {
@@ -282,5 +274,15 @@ public class DbStorePostgres implements Store {
             e.printStackTrace();
         }
         return hall;
+    }
+
+    private   Connection getConnection() {
+        Connection connection = null;
+        try {
+            connection = SOURCE.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return connection;
     }
 }
