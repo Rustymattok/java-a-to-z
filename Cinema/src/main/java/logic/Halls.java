@@ -1,4 +1,7 @@
 package logic;
+
+import java.util.Objects;
+
 /**
  * Class descripe parameters of halls.
  */
@@ -22,6 +25,23 @@ public class Halls {
         this.place = place;
         this.status = status;
         this.price = price;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Halls)) return false;
+        Halls halls = (Halls) o;
+        return Double.compare(halls.price, price) == 0 &&
+                id.equals(halls.id) &&
+                row.equals(halls.row) &&
+                place.equals(halls.place) &&
+                status.equals(halls.status);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, row, place, status, price);
     }
 
     public String getRow() {

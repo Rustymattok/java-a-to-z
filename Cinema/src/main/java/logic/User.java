@@ -2,6 +2,7 @@ package logic;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Class describe parameter of users
@@ -25,6 +26,23 @@ public class User {
         this.name = name;
         this.phone = phone;
         this.balance = balance;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return Objects.equals(name, user.name) &&
+                Objects.equals(phone, user.phone) &&
+                Objects.equals(balance, user.balance) &&
+                Objects.equals(id, user.id) &&
+                Objects.equals(list, user.list);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, phone, balance, id, list);
     }
 
     public String getName() {
