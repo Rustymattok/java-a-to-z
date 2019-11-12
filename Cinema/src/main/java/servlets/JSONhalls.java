@@ -13,7 +13,8 @@ import java.util.HashMap;
  * Servlet responsible for HALLS data.
  */
 public class JSONhalls extends HttpServlet {
-    public final static ValidateService work = ValidateService.getInstance(DbStorePostgres.getINSTANCE());
+//    public final static ValidateService work = ValidateService.getINSTANCE(DbStorePostgres.getINSTANCE());
+private final static ValidateService work = ValidateService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
