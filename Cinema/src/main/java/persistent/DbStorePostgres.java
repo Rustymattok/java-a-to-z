@@ -13,7 +13,6 @@ public class DbStorePostgres implements Store {
     private static final BasicDataSource SOURCE = new BasicDataSource();
     private static final DbStorePostgres INSTANCE = new DbStorePostgres();
     private final static double USERBALANCE = 500;
-    private final static Connection connection = INSTANCE.getConnection();
 
     public DbStorePostgres() {
         String url = "jdbc:postgresql://localhost:5432";
@@ -38,10 +37,9 @@ public class DbStorePostgres implements Store {
      */
     public void updatePlace(String row, String place, String status) {
         String updateHall ="UPDATE halldb SET status='" + status +"' WHERE row='"+ row +"' and place='" + place +"'";
-        try {
-            PreparedStatement st = connection.prepareStatement(updateHall);
+        try(Connection connection = SOURCE.getConnection();
+            PreparedStatement st = connection.prepareStatement(updateHall)){
             st.executeUpdate();
-            st.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -56,13 +54,12 @@ public class DbStorePostgres implements Store {
         boolean flag = false;
         String result = "";
           String selectIDHall = "SELECT status FROM halldb WHERE row='" + row +"' and place='" + place +"'";
-        try {
+        try(Connection connection =SOURCE.getConnection();
             Statement stReq = connection.createStatement();
-            ResultSet res = stReq.executeQuery(selectIDHall);
+            ResultSet res = stReq.executeQuery(selectIDHall)) {
             while (res.next()) {
                 result = res.getString(1);
             }
-            res.close();
             if (result.equals("free")) {
                 flag = true;
             }
@@ -77,7 +74,7 @@ public class DbStorePostgres implements Store {
      * @param list  - list of halls.
      */
     public void addUser(User user, List<Integer> list) {
-        try {
+        try(Connection connection = SOURCE.getConnection()) {
             connection.setAutoCommit(false);
             if(selectUSER(user)){
                 user.setBalance(selectBalance(user));
@@ -111,15 +108,14 @@ public class DbStorePostgres implements Store {
         Integer id = null;
         String selectIDHall ="SELECT hall_no FROM halldb WHERE row='" + row + "' and place='" + place + "'";
         String task = "INSERT INTO accountDB VALUES(?,?,?,?)";
-        try {
-        PreparedStatement st = connection.prepareStatement(task);
-        Statement stReq = null;
-            stReq = connection.createStatement();
-        ResultSet res = stReq.executeQuery(selectIDHall);
+        try(Connection connection = SOURCE.getConnection();
+            PreparedStatement st = connection.prepareStatement(task);
+            Statement stReq = connection.createStatement();
+            ResultSet res = stReq.executeQuery(selectIDHall)) {
+            connection.setAutoCommit(false);
         while (res.next()) {
             id = res.getInt(1);
         }
-        res.close();
             /*
                 By this operation we take price of ticket from database of Halls.
              */
@@ -153,14 +149,12 @@ public class DbStorePostgres implements Store {
     public boolean selectUSER(User user){
         boolean flag = false;
         String selectUser ="SELECT hall_no FROM accountdb WHERE name='" + user.getName() + "'and phone='" + user.getPhone() + "'";
-        try {
-            PreparedStatement st = connection.prepareStatement(selectUser);
+        try(Connection connection = SOURCE.getConnection();
             Statement stReq = connection.createStatement();
-            ResultSet res = stReq.executeQuery(selectUser);
+            ResultSet res = stReq.executeQuery(selectUser)) {
             while (res.next()) {
                 flag = true;
             }
-            res.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -174,14 +168,12 @@ public class DbStorePostgres implements Store {
     public double selectBalance(User user) {
         Double id = null;
         String selectUser ="SELECT balance FROM accountdb WHERE name='" + user.getName() + "'and phone='" + user.getPhone() + "'";
-        try {
-            PreparedStatement st = connection.prepareStatement(selectUser);
+        try(Connection connection = SOURCE.getConnection();
             Statement stReq = connection.createStatement();
-            ResultSet res = stReq.executeQuery(selectUser);
+            ResultSet res = stReq.executeQuery(selectUser)) {
             while (res.next()) {
                 id = res.getDouble(1);
             }
-            res.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -195,17 +187,17 @@ public class DbStorePostgres implements Store {
      */
     public boolean checkTransactionUser(User user, Double cost) {
         boolean flag = false;
-        try {
+        try(Connection connection = SOURCE.getConnection()) {
             Double balance = user.getBalance();
             if (balance != null) {
                 if (cost <= balance) {
                     balance = balance - cost;
                     String updateBalance = "UPDATE accountdb SET balance='" + balance + "' WHERE name='"
                             + user.getName() + "' and phone='" + user.getPhone() + "'";
-                    PreparedStatement stBalance = connection.prepareStatement(updateBalance);
-                    user.setBalance(balance);
-                    stBalance.executeUpdate();
-                    stBalance.close();
+                    try(PreparedStatement stBalance = connection.prepareStatement(updateBalance)) {
+                        user.setBalance(balance);
+                        stBalance.executeUpdate();
+                    }
                     flag = true;
                 }
             }
@@ -223,13 +215,12 @@ public class DbStorePostgres implements Store {
     public double takePriceTicket(String row, String place) {
         Double price = null;
         String selectPriceHall = "SELECT price FROM halldb WHERE row='" + row + "' and place='" + place +"'";
-        try {
+        try(Connection connection = SOURCE.getConnection();
             Statement stReq = connection.createStatement();
-            ResultSet res = stReq.executeQuery(selectPriceHall);
+            ResultSet res = stReq.executeQuery(selectPriceHall)) {
             while (res.next()) {
                 price = res.getDouble(1);
             }
-            res.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -242,9 +233,9 @@ public class DbStorePostgres implements Store {
     public int sizeData() {
         Integer i = null;
         String task = "select count(*) from halldb;";
-        try {
+        try(Connection connection = SOURCE.getConnection();
             Statement st = connection.createStatement();
-            ResultSet res = st.executeQuery(task);
+            ResultSet res = st.executeQuery(task)) {
             while (res.next()){
                 i = Integer.valueOf(res.getString(1));
             }
@@ -260,9 +251,9 @@ public class DbStorePostgres implements Store {
     public Halls selectByIDHalls(Integer id) {
         Halls hall = null;
         String selectHall = "select * from halldb where hall_no='" + id + "'";
-        try {
+        try(Connection connection = SOURCE.getConnection();
             Statement st = connection.createStatement();
-            ResultSet res = st.executeQuery(selectHall);
+            ResultSet res = st.executeQuery(selectHall)) {
             while (res.next()){
                 String row = res.getString(2);
                 String place = res.getString(3);
@@ -274,15 +265,5 @@ public class DbStorePostgres implements Store {
             e.printStackTrace();
         }
         return hall;
-    }
-
-    private   Connection getConnection() {
-        Connection connection = null;
-        try {
-            connection = SOURCE.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return connection;
     }
 }
