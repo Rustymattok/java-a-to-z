@@ -1,0 +1,10 @@
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" version="2.4">
+    <servlet>
+    <servlet-name>ToDoServlet</servlet-name>
+    <servlet-class>servlet.ToDoServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+    <servlet-name>ToDoServlet</servlet-name>
+    <url-pattern>/json</url-pattern>
+    </servlet-mapping>
+</web-app>
