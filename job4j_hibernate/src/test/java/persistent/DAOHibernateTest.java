@@ -10,7 +10,7 @@ public class DAOHibernateTest {
     public void add() {
         DAOHibernate dao = DAOHibernate.getINSTANCE();
         User user = new User();
-        user.setName("Vladimir2");
+        user.setName("Vladimir23");
         user.setExpired(new GregorianCalendar(2017, 0 , 25));
         dao.add(user);
     }
@@ -18,15 +18,15 @@ public class DAOHibernateTest {
     @Test
     public void remove() {
         DAOHibernate dao = DAOHibernate.getINSTANCE();
-        dao.remove(3);
+        dao.remove(1);
     }
 
     @Test
     public void update() {
         DAOHibernate dao = DAOHibernate.getINSTANCE();
         User user = new User();
-        user.setName("Vladimir4");
+        user.setName("Vladimir34");
         user.setExpired(new GregorianCalendar(2019, 0 , 25));
-        dao.update(2,user);
+        dao.update(3,user);
     }
 }
