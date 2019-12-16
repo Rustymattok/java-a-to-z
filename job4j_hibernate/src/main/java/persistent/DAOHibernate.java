@@ -6,11 +6,9 @@ import org.hibernate.cfg.Configuration;
 /**
  * This class describe DAO using technology. Class is a singltone.
  */
-public class DAOHibernate implements Store {
+public class DAOHibernate implements StoreUser {
     private static  final  DAOHibernate INSTANCE = new DAOHibernate();
-    /*
-    Петр в поля можно выности сессию и фабрику? или прописывать везле это?
-     */
+
     private SessionFactory sessionFactory;
     private  Session session;
 
@@ -48,7 +46,7 @@ public class DAOHibernate implements Store {
 
     public void update(Integer id, User user) {
         initHibernate();
-        User userData = (User) session.createQuery("from User where id ="+id).list().get(0);
+        User userData = (User) session.createQuery("from users where id ="+id).list().get(0);
         userData.setName(user.getName());
         userData.setExpired(user.getExpired());
         session.update(userData);
