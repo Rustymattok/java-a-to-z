@@ -7,5 +7,6 @@
         <property name="connection.password">admin</property>
         <property name="dialect">org.hibernate.dialect.PostgreSQL91Dialect</property>
         <mapping resource="User.hbm.xml"/>
+        <mapping resource="Topic.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

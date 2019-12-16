@@ -1,3 +1,4 @@
+<!--suppress ALL -->
 <hibernate-mapping>
 <class name="models.User" table="users">
     <id name ="id" column="id">
