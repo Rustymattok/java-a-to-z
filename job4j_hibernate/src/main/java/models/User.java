@@ -31,4 +31,14 @@ public class User {
     public void setExpired(Calendar expired) {
         this.expired = expired;
     }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
 }
