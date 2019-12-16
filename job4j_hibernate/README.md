@@ -1,6 +1,6 @@
 # TODO list
 
-This project for hibernate research and soon update to TODO LIST
+This project for hibernate research by making TODO LIST
 
 # How to use
 Before start application include your porperties of data in pom file 
@@ -10,7 +10,8 @@ in mvn put
 liquibase:migrate
 ```
 # How it works
-Soon update info
+Below you may see work-scheme of ToDolist service
+[![ALT-ТЕКСТ ИЗОБРАЖЕНИЯ]()]
 # Targets
 
 Education tasks for Java Hibernate.
