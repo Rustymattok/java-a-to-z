@@ -1,0 +1,11 @@
+<!--suppress ALL -->
+<hibernate-mapping>
+    <class name="models.Topic" table="list">
+        <id name ="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="task" column="topic"/>
+        <property name="expired" column="expired"/>
+        <property name="status" column="status"/>
+    </class>
+</hibernate-mapping>
