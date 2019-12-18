@@ -28,12 +28,12 @@ public class DAOToDoHibernateTest {
         DAOToDoHibernate dao = DAOToDoHibernate.getINSTANCE();
         Topic task = new Topic();
         task.setStatus(true);
-        dao.update(7,task);
+        dao.update(47,task);
     }
 
     @Test
     public void remove() {
         DAOToDoHibernate dao = DAOToDoHibernate.getINSTANCE();
-        dao.remove(40);
+        dao.remove(49);
     }
 }
