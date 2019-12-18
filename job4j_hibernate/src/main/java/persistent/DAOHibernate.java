@@ -9,8 +9,8 @@ import org.hibernate.cfg.Configuration;
 public class DAOHibernate implements StoreUser {
     private static  final  DAOHibernate INSTANCE = new DAOHibernate();
 
-    private SessionFactory sessionFactory;
-    private  Session session;
+    private final SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory() ;
+    private final Session session = sessionFactory.openSession();
 
     private DAOHibernate() {
     }
@@ -21,8 +21,6 @@ public class DAOHibernate implements StoreUser {
 
     private void initHibernate(){
         if (sessionFactory == null){
-            sessionFactory = new Configuration().configure().buildSessionFactory();
-            session = sessionFactory.openSession();
             session.beginTransaction();
         }
     }
