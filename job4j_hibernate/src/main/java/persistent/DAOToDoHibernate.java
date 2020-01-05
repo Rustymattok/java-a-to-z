@@ -2,9 +2,11 @@ package persistent;
 import models.Topic;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.function.Function;
 /**
  * This class describe DAO using technology. Class is a singltone.
  */
@@ -17,50 +19,92 @@ public class DAOToDoHibernate implements StoreTask {
     public static DAOToDoHibernate getINSTANCE() {
         return INSTANCE;
     }
+    /**
+     * Function method for lambda.
+     * @param command - in description, session and tx.
+     * @param <T> -  void or Object.
+     * @return - Object or null.
+     */
+    private <T> T tx(final Function<Session, T> command) {
+        final SessionFactory factory = new Configuration().configure().buildSessionFactory();
+        final Session session = factory.openSession();
+        final Transaction tx = session.beginTransaction();
+        try {
+            T rsl = command.apply(session);
+            tx.commit();
+            return rsl;
+        } catch (final Exception e) {
+            session.getTransaction().rollback();
+            throw e;
+        }finally {
+            session.close();
+            factory.close();
+        }
+    }
+    /**
+     * Method for lambda - remove. 
+     * @param id -  by which id to remove.
+     */
+    private void lambdaRemove(Integer id){
+        this.tx(session -> {
+            Topic topic = (Topic) session.createQuery("from Topic where id =" + id).list().get(0);
+            session.remove(topic);
+            return null;
+        });
+    }
+    /**
+     * Method for lambda - add.
+     * @param task -  which topic should be add.
+     */
+    private void lambdaAdd(Topic task){
+        this.tx(session -> {
+            session.save(task);
+            return null;
+        });
+    }
+    /**
+     * Method for lambda - update
+     * @param id - which topic in data to update ( by id)
+     * @param task -  update [parameters for new task).
+     */
+    private void lambdaUpdate(Integer id, Topic task){
+        this.tx(session -> {
+            Topic topic = (Topic) session.createQuery("from Topic where id =" + id).list().get(0);
+            topic.setStatus(task.isStatus());
+            topic.setExpired(new GregorianCalendar());
+            session.update(topic);
+            return null;
+        });
+    }
+    /**
+     * Method for lambda - getData().
+     * @return - list of tasks in data(open and close).
+     */
+    private List<Topic> lambdagetData(){
+        return this.tx(session -> {
+            List<Topic> list = (List<Topic>)session.createQuery("from Topic ").list();
+            return list;
+        });
+    }
 
+    @Override
     public void add(Topic task) {
-        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.save(task);
-        session.getTransaction().commit();
-        session.close();
-        sessionFactory.close();
+        lambdaAdd(task);
     }
 
+    @Override
     public void remove(Integer id) {
-        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        Topic topic = (Topic) session.createQuery("from Topic where id =" + id).list().get(0);
-        session.remove(topic);
-        session.getTransaction().commit();
-        session.close();
-        sessionFactory.close();
+        lambdaRemove(id);
     }
 
+    @Override
     public void update(Integer id, Topic task) {
-        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        Topic topic = (Topic) session.createQuery("from Topic where id =" + id).list().get(0);
-        topic.setStatus(task.isStatus());
-        topic.setExpired(new GregorianCalendar());
-        session.update(topic);
-        session.getTransaction().commit();
-        session.close();
-        sessionFactory.close();
+        lambdaUpdate(id,task);
     }
 
+    @Override
     public List<Topic> getData() {
-        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        List<Topic> list = (List<Topic>)session.createQuery("from Topic ").list();
-        session.getTransaction().commit();
-        session.close();
-        sessionFactory.close();
-        return list;
+        return lambdagetData();
     }
 
 }
