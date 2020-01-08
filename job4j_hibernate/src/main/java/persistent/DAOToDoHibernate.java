@@ -26,8 +26,7 @@ public class DAOToDoHibernate implements StoreTask {
      * @return - Object or null.
      */
     private <T> T tx(final Function<Session, T> command) {
-        final SessionFactory factory = new Configuration().configure().buildSessionFactory();
-        final Session session = factory.openSession();
+        final Session session =  new Configuration().configure().buildSessionFactory().openSession();
         final Transaction tx = session.beginTransaction();
         try {
             T rsl = command.apply(session);
@@ -38,11 +37,10 @@ public class DAOToDoHibernate implements StoreTask {
             throw e;
         }finally {
             session.close();
-            factory.close();
         }
     }
     /**
-     * Method for lambda - remove. 
+     * Method for lambda - remove.
      * @param id -  by which id to remove.
      */
     private void lambdaRemove(Integer id){
