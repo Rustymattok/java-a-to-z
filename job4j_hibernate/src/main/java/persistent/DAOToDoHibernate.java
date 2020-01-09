@@ -12,6 +12,7 @@ import java.util.function.Function;
  */
 public class DAOToDoHibernate implements StoreTask {
     private static  final  DAOToDoHibernate INSTANCE = new DAOToDoHibernate();
+    private static final SessionFactory factory = new Configuration().configure().buildSessionFactory();
 
     private DAOToDoHibernate() {
     }
@@ -26,7 +27,7 @@ public class DAOToDoHibernate implements StoreTask {
      * @return - Object or null.
      */
     private <T> T tx(final Function<Session, T> command) {
-        final Session session =  new Configuration().configure().buildSessionFactory().openSession();
+        final Session session =  factory.openSession();
         final Transaction tx = session.beginTransaction();
         try {
             T rsl = command.apply(session);
