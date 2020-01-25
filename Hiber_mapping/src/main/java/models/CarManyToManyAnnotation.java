@@ -12,7 +12,7 @@ public class CarManyToManyAnnotation {
     private int id;
     @ManyToOne
     @JoinColumn(name = "engine_id", foreignKey = @ForeignKey(name = "ENGINE_ID_FK") )
-    private EngineAnn engine;
+    private EngineAnnotation engine;
     @Column(name = "name")
     private String name;
     @ManyToMany
@@ -38,11 +38,11 @@ public class CarManyToManyAnnotation {
         this.name = name;
     }
 
-    public EngineAnn getEngine() {
+    public EngineAnnotation getEngine() {
         return engine;
     }
 
-    public void setEngine(EngineAnn engine) {
+    public void setEngine(EngineAnnotation engine) {
         this.engine = engine;
     }
 

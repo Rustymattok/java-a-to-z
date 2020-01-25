@@ -1,6 +1,6 @@
 package presistens;
-import models.CarAnn;
-import models.EngineAnn;
+import models.CarAnnotation;
+import models.EngineAnnotation;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -20,7 +20,7 @@ public class DaoOneToManyAnnotationTest {
         SessionFactory factory = new Configuration().configure().buildSessionFactory();
         Session session = factory.openSession();
         session.beginTransaction();
-        EngineAnn engine = session.get(EngineAnn.class,6);
+        EngineAnnotation engine = session.get(EngineAnnotation.class,6);
         session.getTransaction().commit();
         session.close();
         factory.close();
@@ -28,7 +28,7 @@ public class DaoOneToManyAnnotationTest {
         This block to add car with engine to  DATABASE.
         */
         DaoOneToManyAnnotation dao = DaoOneToManyAnnotation.getINSTANCE();
-        CarAnn car = new CarAnn();
+        CarAnnotation car = new CarAnnotation();
         car.setName("Ford");
         car.setEngineAnn(engine);
         dao.add(car);

@@ -36,7 +36,7 @@ public class DaoManyToManyAnnotationTest {
         This block for init new engine in One to Many tables engine.
          */
         DaoOneToManyAnnotation daoEng = DaoOneToManyAnnotation.getINSTANCE();
-        EngineAnn engine = new EngineAnn();
+        EngineAnnotation engine = new EngineAnnotation();
         engine.setName("Z06");
         daoEng.add(engine);
         /*

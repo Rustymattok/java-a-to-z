@@ -1,24 +1,24 @@
 package models;
 import javax.persistence.*;
 /**
- * Entity CarAnn -  for annotation realise.
+ * Entity CarAnnotation -  for annotation realise.
  */
 @Entity(name = "car")
-public class CarAnn {
+public class CarAnnotation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
     @ManyToOne
     @JoinColumn(name = "engine_id", foreignKey = @ForeignKey(name = "ENGINE_ID_FK") )
-    private EngineAnn engineAnn;
+    private EngineAnnotation engineAnn;
     @Column(name = "name")
     private String name;
 
-    public CarAnn() {
+    public CarAnnotation() {
     }
 
-    public CarAnn(EngineAnn engineAnn, String name) {
+    public CarAnnotation(EngineAnnotation engineAnn, String name) {
         this.engineAnn = engineAnn;
         this.name = name;
     }
@@ -40,11 +40,11 @@ public class CarAnn {
         this.name = name;
     }
 
-    public EngineAnn getEngineAnn() {
+    public EngineAnnotation getEngineAnn() {
         return engineAnn;
     }
 
-    public void setEngineAnn(EngineAnn engineAnn) {
+    public void setEngineAnn(EngineAnnotation engineAnn) {
         this.engineAnn = engineAnn;
     }
 

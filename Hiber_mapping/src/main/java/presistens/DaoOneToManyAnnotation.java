@@ -1,7 +1,6 @@
 package presistens;
-import models.CarAnn;
-import models.Engine;
-import models.EngineAnn;
+import models.CarAnnotation;
+import models.EngineAnnotation;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -10,7 +9,7 @@ import java.util.function.Function;
 /**
  * DAO one to many by Annotation.
  */
-public class DaoOneToManyAnnotation implements StoreAnn {
+public class DaoOneToManyAnnotation implements StoreAnnotation {
     private static  final DaoOneToManyAnnotation INSTANCE = new DaoOneToManyAnnotation();
     private static final SessionFactory factory = new Configuration().configure().buildSessionFactory();
 
@@ -45,7 +44,7 @@ public class DaoOneToManyAnnotation implements StoreAnn {
      * @param car - car to add.
      */
     @Override
-    public void add(CarAnn car) {
+    public void add(CarAnnotation car) {
         this.tx(session -> {
             session.save(car);
             return null;
@@ -56,7 +55,7 @@ public class DaoOneToManyAnnotation implements StoreAnn {
      * @param engine - engine to add.
      */
     @Override
-    public void add(EngineAnn engine) {
+    public void add(EngineAnnotation engine) {
         this.tx(session -> {
             session.save(engine);
             return null;
@@ -69,7 +68,7 @@ public class DaoOneToManyAnnotation implements StoreAnn {
     @Override
     public void remove(Integer id) {
         this.tx(session -> {
-            CarAnn car = session.get(CarAnn.class,id);
+            CarAnnotation car = session.get(CarAnnotation.class,id);
             session.remove(car);
             return null;
         });
@@ -81,7 +80,7 @@ public class DaoOneToManyAnnotation implements StoreAnn {
     @Override
     public void update(Integer id) {
         this.tx(session -> {
-            CarAnn car= session.get(CarAnn.class,id);
+            CarAnnotation car= session.get(CarAnnotation.class,id);
             car.setName(car.getName() + ">" +"new");
             session.update(car);
             return null;

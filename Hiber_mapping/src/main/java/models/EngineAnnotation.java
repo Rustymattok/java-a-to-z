@@ -1,10 +1,10 @@
 package models;
 import javax.persistence.*;
 /**
- * Entity EngineAnn -  for annotation realise.
+ * Entity EngineAnnotation -  for annotation realise.
  */
 @Entity(name = "engine")
-public class EngineAnn {
+public class EngineAnnotation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -12,10 +12,10 @@ public class EngineAnn {
     @Column(name = "name")
     private String name;
 
-    public EngineAnn() {
+    public EngineAnnotation() {
     }
 
-    public EngineAnn(int id) {
+    public EngineAnnotation(int id) {
         this.id = id;
     }
 
