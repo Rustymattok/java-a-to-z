@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-configuration>
+    <session-factory>
+        <property name="connection.url">jdbc:postgresql://localhost:5432</property>
+        <property name="connection.driver_class">org.postgresql.Driver</property>
+        <property name="connection.username">postgres</property>
+        <property name="connection.password">admin</property>
+        <property name="dialect">org.hibernate.dialect.PostgreSQL91Dialect</property>
+        <!--For Annotation JPA ManyToOne-->
+        <!--<mapping class="models.CarAnn"/>-->
+        <!--<mapping class="models.EngineAnn"/>-->
+
+        <!--For xml type ManyToOne-->
+        <mapping resource="Car.hbm.xml"/>
+        <mapping resource="Engine.hbm.xml"/>
+        <!--For xml type ManyToMany-->
+        <mapping resource="CarManyToMany.hbm.xml"/>
+        <mapping resource="DriverManyToMany.hbm.xml"/>
+        <!--For Annotation JPA ManyToOne-->
+        <mapping class="models.EngineAnn"/>
+        <mapping class="models.CarManyToManyAnnotation"/>
+        <mapping class="models.DriverManyToManyAnnotation"/>
+    </session-factory>
+</hibernate-configuration>
