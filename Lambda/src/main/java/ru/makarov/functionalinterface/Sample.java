@@ -1,9 +1,5 @@
 package ru.makarov.functionalinterface;
 
-import ru.makarov.anonimclass.Attachment;
-
-import java.io.InputStream;
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
