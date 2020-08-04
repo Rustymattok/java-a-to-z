@@ -10,13 +10,19 @@ public class LambdaSamble {
                 new String("image1"),
                 new String("image12")
         };
-        Comparator<String> cmpText = (o1, o2) -> (o1.compareTo(o2));
+        Comparator<String> cmpText = (o1, o2) -> {
+            System.out.println("compare - " + o1.length() + " and " + o2.length());
+            return o1.compareTo(o2);
+        };
         System.out.println("Сортировка по возрастанию");
         Arrays.sort(atts, cmpText);
         for (String att : atts) {
             System.out.println(att);
         }
-        Comparator<String> cmpDescSize = (o1, o2) -> (-o1.compareTo(o2));
+        Comparator<String> cmpDescSize = (o1, o2) -> {
+            System.out.println("compare - " + o1.length() + " and " + o2.length());
+            return -o1.compareTo(o2);
+        };
         System.out.println("Сортировка по убывания");
         Arrays.sort(atts, cmpDescSize);
         for (String att : atts) {
