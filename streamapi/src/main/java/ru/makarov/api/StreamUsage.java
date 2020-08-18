@@ -10,6 +10,8 @@ public class StreamUsage {
         /*
         Filter by value > 0.
          */
-        List<Integer> newList = list.stream().filter(num -> num > 0).collect(Collectors.toList());
+        List<Integer> newList = list.stream()
+                .filter(num -> num > 0)
+                .collect(Collectors.toList());
     }
 }
