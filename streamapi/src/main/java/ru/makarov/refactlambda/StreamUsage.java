@@ -1,7 +1,9 @@
 package ru.makarov.refactlambda;
 
-import java.util.Arrays;
 import java.util.List;
+
+import static java.util.Arrays.asList;
+
 
 public class StreamUsage {
     public static class Task {
@@ -15,7 +17,8 @@ public class StreamUsage {
     }
 
     public static void main(String[] args) {
-        List<Task> tasks = Arrays.asList(
+
+        List<Task> tasks = asList(
                 new Task("Bug #1", 10),
                 new Task("Task #2", 20),
                 new Task("Bug #3", 40)
