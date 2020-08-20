@@ -1,5 +1,7 @@
 package ru.makarov.listofadress;
 
+import java.util.Objects;
+
 public class Address {
     private String city;
     private String street;
@@ -46,6 +48,22 @@ public class Address {
 
     public void setApartment(int apartment) {
         this.apartment = apartment;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (!(object instanceof Address)) return false;
+        Address address = (Address) object;
+        return getHome() == address.getHome() &&
+                getApartment() == address.getApartment() &&
+                getCity().equals(address.getCity()) &&
+                getStreet().equals(address.getStreet());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getCity(), getStreet(), getHome(), getApartment());
     }
 }
 
