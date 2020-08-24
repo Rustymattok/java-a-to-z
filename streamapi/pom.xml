@@ -12,5 +12,12 @@
     <artifactId>streamapi</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
+    </dependencies>
 
 </project>

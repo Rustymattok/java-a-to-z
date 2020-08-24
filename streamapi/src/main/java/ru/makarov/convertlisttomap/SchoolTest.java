@@ -5,6 +5,8 @@ import ru.makarov.filterstudent.Student;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BinaryOperator;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class SchoolTest {
@@ -17,12 +19,23 @@ public class SchoolTest {
                 new Student("Ivanov4", 20),
                 new Student("Ivanov5", 70),
                 new Student("Ivanov6", 10),
-                new Student("Ivanov7", 35)
+                new Student("Makarov", 35)
         );
+        Map<String, Student> groupMap = group.stream().collect(collector());
+    }
 
-        Map<String, Student> groupMap = group.stream().distinct().collect(Collectors.toMap(
+    public static BinaryOperator<Student> dublicate() {
+        return (a, b) -> {
+            System.out.println("found dublicate - return first");
+            return a;
+        };
+    }
+
+    public static Collector<Student, ?, Map<String,Student>>  collector(){
+        return Collectors.toMap(
                 Student::getSurname,
-                e -> e
-        ));
+                e -> e,
+                dublicate()
+        );
     }
 }
