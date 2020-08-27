@@ -16,7 +16,7 @@ public class Main {
 
         List<Address> addressList = new Profiles().collect(profileList);
         addressList.stream().map(Address::getCity).forEach(System.out::println);
-        System.out.println();
+        System.out.println("by city");
         addressList.stream().map(Address::getCity).distinct().forEach(System.out::println);
     }
 }
