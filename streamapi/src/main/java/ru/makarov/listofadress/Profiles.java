@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 public class Profiles {
     List<Address> collect(List<Profile> profiles) {
-        Comparator<Profile> comparable = (o1, o2)-> -o1.getAddress().getCity().compareTo(o2.getAddress().getCity());
-        return profiles.stream().sorted(comparable).map(Profile::getAddress).collect(Collectors.toList());
+        Comparator<Address> comparable = (o1, o2)-> -o1.getCity().compareTo(o2.getCity());
+    return  profiles.stream().map(Profile::getAddress).sorted(comparable).distinct().collect(Collectors.toList());
     }
 }
